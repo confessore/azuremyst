@@ -2,17 +2,9 @@
 
 &nbsp;
 
-## **debugging with microsoft net**
-set the variables inside of `appsettings.Development.json` and remove the `.Development` portion of the file extension
+this deployment guide is tailored for debian based operating systems
+and always a work in progress
 
-
-## **deploying to production with docker**
-# **THIS SHOULD ONLY BE DEPLOYED TO A SERVER WITH AN IP ADDRESS LINKED TO THE DOMAIN NAME**
-# **FAILURE TO ADHERE TO THIS WILL RESULT IN RATELIMITING BY 'LETSENCRYPT'**
-
-&nbsp;
-
-this deployment guide is tailored for debian based operating systems    
 it is tested against ubuntu 20.04
 
 &nbsp;
@@ -47,7 +39,6 @@ if you kinda-sorta already know what you are doing, you can install docker and d
     $ sudo chmod +x ~/azuremyst/scripts/define-secrets.sh
     $ ~/azuremyst/scripts/define-secrets.sh
 ```
-> note: you could also define and then remove the `.default` extension from each file in the `secrets` folder
 
 &nbsp;
 
@@ -71,7 +62,10 @@ if you kinda-sorta already know what you are doing, you can install docker and d
 
 ## **afterthoughts**
 
-the `nginx` service will generate the SSL certificate  
+avoid letsencrypt rate-limiting:
+only docker-compose-release in a domain linked environment with all the necessary ports open
+
+the `nginx` service will generate the SSL certificate
 it will also renew the certificate before it expires  
 
 &nbsp;
