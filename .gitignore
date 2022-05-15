@@ -374,6 +374,3 @@ appsettings.json
 
 # secrets
 secrets/*
-
-# openssl
-etc/openssl/*

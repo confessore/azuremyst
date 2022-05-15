@@ -1,6 +1,6 @@
 ﻿namespace azuremyst.models.abstractions
 {
-    public class Role
+    public abstract class Role : IdentityRole, IEntity<string>, IRole
     {
     }
 }
