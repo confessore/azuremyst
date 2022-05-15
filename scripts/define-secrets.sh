@@ -16,9 +16,11 @@ read -p "please enter the smtp from name (example - 'Elon Musk'): " smtpFromName
 read -p "please enter the smtp from address (example - 'noreply@example.com'): " smtpFromAddress
 if [ "$(dirname $0)" = "." ]
 then
+    mkdir -p ../secrets
     cd ../secrets
 else
     parent=$(dirname $(dirname "$0"))
+    mkdir -p "$parent"/secrets
     cd "$parent"/secrets
 fi
 echo "generating secrets..."
