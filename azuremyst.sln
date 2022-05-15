@@ -4,13 +4,14 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48BA2481-CAA3-4D76-AE21-5147FD02DA9E}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.gitmodules = .gitmodules
 		docker-compose-debug.yml = docker-compose-debug.yml
 		docker-compose-release.yml = docker-compose-release.yml
 		docker-compose-staging.yml = docker-compose-staging.yml
-		LICENSE.md = LICENSE.md
+		LICENSE = LICENSE
 		mangos-debug.Dockerfile = mangos-debug.Dockerfile
 		mangos-release.Dockerfile = mangos-release.Dockerfile
 		mangos-staging.Dockerfile = mangos-staging.Dockerfile
@@ -88,6 +89,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{1910
 		secrets\sql-username = secrets\sql-username
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{2F26C58C-65B2-4CB9-963D-37C9AF976821}"
+	ProjectSection(SolutionItems) = preProject
+		sql\mariadb-init.sql = sql\mariadb-init.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +117,7 @@ Global
 		{C10F8FB1-CFED-4E06-9C69-E58B3D8824E2} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
 		{8122276B-7890-4D46-8D6E-3A4B7973AD07} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
 		{19102EDC-D1EF-4BC3-B477-3005E29DB1AA} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
+		{2F26C58C-65B2-4CB9-963D-37C9AF976821} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E78D131-C2F2-4EBA-BC37-E2BE5081BECA}
