@@ -19,7 +19,7 @@ namespace azuremyst.extensions
             return Task.FromResult(stringBuilder.ToString());
         }
 
-        public static async Task<string> BuildAuthenticationConnectionStringAsync(this IConfiguration configuration) =>
+        public static async Task<string> BuildAuthConnectionStringAsync(this IConfiguration configuration) =>
             await configuration.BuildConnectionStringAsync("realmd");
 
         public static async Task<string> BuildCharacterConnectionStringAsync(this IConfiguration configuration) =>

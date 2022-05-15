@@ -10,6 +10,4 @@ fi
 
 date=$(date '+%H-%M-%S_%d-%m-%Y')
 
-dotnet ef migrations add _"$date" --context DefaultDbContext
-dotnet ef migrations add _"$date" --context KeyDbContext
 dotnet ef migrations add _"$date" --context AuthDbContext

@@ -30,5 +30,21 @@ namespace azuremyst.extensions
             await context.Database.MigrateAsync();
             return webApplication;
         }
+
+        public static async Task<WebApplication> MigrateKeyDbContextAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<KeyDbContext>();
+            await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> MigrateAuthDbContextAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+            await context.Database.MigrateAsync();
+            return webApplication;
+        }
     }
 }

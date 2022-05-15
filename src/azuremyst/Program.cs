@@ -48,6 +48,7 @@ Log.Information("configuration built!");
 
 var defaultConnection = await configuration.BuildDefaultConnectionStringAsync();
 var keyConnection = await configuration.BuildKeyConnectionStringAsync();
+var authConnection = await configuration.BuildAuthConnectionStringAsync();
 //var discordOptions = new DiscordOptions();
 //configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
 var options = new WebApplicationOptions()
@@ -96,6 +97,24 @@ builder.WebHost
         x.AddDbContextFactory<KeyDbContext>(x =>
         {
             x.UseMySql(keyConnection, ServerVersion.AutoDetect(keyConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextPool<AuthDbContext>(x =>
+        {
+            x.UseMySql(authConnection, ServerVersion.AutoDetect(authConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextFactory<AuthDbContext>(x =>
+        {
+            x.UseMySql(authConnection, ServerVersion.AutoDetect(authConnection), x =>
             {
                 x.MigrationsAssembly(executingAssemblyName);
             });
@@ -152,6 +171,8 @@ try
     var webApplication = builder.Build();
 
     await webApplication.MigrateDefaultDbContextAsync();
+    await webApplication.MigrateKeyDbContextAsync();
+    await webApplication.MigrateAuthDbContextAsync();
 
     //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
 
