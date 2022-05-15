@@ -105,6 +105,7 @@ builder.WebHost
         x.AddIdentity<User, Role>(x =>
         {
             x.User.RequireUniqueEmail = true;
+
         })
         .AddEntityFrameworkStores<DefaultDbContext>()
         .AddDefaultTokenProviders();
