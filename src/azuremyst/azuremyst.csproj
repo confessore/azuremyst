@@ -24,14 +24,4 @@
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="migrations\" />
-	  <Folder Include="handlers\" />
-	  <Folder Include="models\roles\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="models\roles\" />
-	</ItemGroup>
 </Project>
