@@ -373,7 +373,7 @@ appsettings.json
 *.log
 
 # secrets
-secrets/
+secrets/*
 
 # openssl
-etc/openssl/
+etc/openssl/*
