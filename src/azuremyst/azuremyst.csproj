@@ -28,6 +28,10 @@
 	<ItemGroup>
 	  <Folder Include="migrations\" />
 	  <Folder Include="handlers\" />
+	  <Folder Include="models\roles\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="models\roles\" />
+	</ItemGroup>
 </Project>
