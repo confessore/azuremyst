@@ -1,0 +1,131 @@
+version: "3.7"
+
+services:
+
+    mariadb:
+        image: mariadb:latest
+        ports:
+            - 3306:3306
+        volumes:
+            - azuremyst-db:/var/lib/mysql
+        secrets:
+            - sql-password-root
+            - sql-username
+            - sql-password
+        environment:
+            - MARIADB_USER_FILE=/run/secrets/sql-username
+            - MARIADB_PASSWORD_FILE=/run/secrets/sql-password
+            - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/sql-password-root
+        restart: always
+    
+    web:
+        depends_on:
+            - mariadb
+        build:
+            context: .
+            dockerfile: web-staging.Dockerfile
+        secrets:
+            - discord-clientid
+            - discord-secretid
+            - discord-bottoken
+            - sql-server
+            - sql-username
+            - sql-password
+            - sql-database
+            - smtp-host
+            - smtp-port
+            - smtp-username
+            - smtp-password
+            - smtp-fromname
+            - smtp-fromaddress
+        environment:
+            - APPLICATION__DISCORDOPTIONS__CLIENTID=/run/secrets/discord-clientid
+            - APPLICATION__DISCORDOPTIONS__SECRETID=/run/secrets/discord-secretid
+            - APPLICATION__DISCORDOPTIONS__BOTTOKEN=/run/secrets/discord-bottoken
+            - APPLICATION__SQLCLIENTOPTIONS__SERVER=/run/secrets/sql-server
+            - APPLICATION__SQLCLIENTOPTIONS__USERNAME=/run/secrets/sql-username
+            - APPLICATION__SQLCLIENTOPTIONS__PASSWORD=/run/secrets/sql-password
+            - APPLICATION__SQLCLIENTOPTIONS__DATABASE=/run/secrets/sql-database
+            - APPLICATION__SMTPCLIENTOPTIONS__HOST=/run/secrets/smtp-host
+            - APPLICATION__SMTPCLIENTOPTIONS__PORT=/run/secrets/smtp-port
+            - APPLICATION__SMTPCLIENTOPTIONS__USERNAME=/run/secrets/smtp-username
+            - APPLICATION__SMTPCLIENTOPTIONS__PASSWORD=/run/secrets/smtp-password
+            - APPLICATION__SMTPCLIENTOPTIONS__FROMNAME=/run/secrets/smtp-fromname
+            - APPLICATION__SMTPCLIENTOPTIONS__FROMADDRESS=/run/secrets/smtp-fromaddress
+        expose:
+            - 5000
+        restart: always
+
+    nginx:
+        depends_on:
+            - mariadb
+            - web
+        build:
+            context: .
+            dockerfile: nginx-staging.Dockerfile
+        ports:
+            - 80:80
+            - 443:443
+        restart: always
+
+    #realmd:
+    #    depends_on:
+    #        - mariadb
+    #    build:
+    #        context: .
+    #        dockerfile: mangos-staging.Dockerfile
+    #        target: realmd
+    #    ports:
+    #        - 3724:3724
+    #    restart: always
+
+    #mangosd:
+    #   depends_on:
+    #       - mariadb
+    #   build:
+    #       context: .
+    #       dockerfile: mangos-staging.Dockerfile
+    #      target: mangosd
+    #  ports:
+    #      - 8085:8085
+    #  restart: always
+
+secrets:
+
+    discord-clientid:
+        file: secrets/discord-clientid
+    discord-secretid:
+        file: secrets/discord-secretid
+    discord-bottoken:
+        file: secrets/discord-bottoken
+    sql-server:
+        file: secrets/sql-server
+    sql-password-root:
+        file: secrets/sql-password-root
+    sql-username:
+        file: secrets/sql-username
+    sql-password:
+        file: secrets/sql-password
+    sql-database:
+        file: secrets/sql-database
+    smtp-host:
+        file: secrets/smtp-host
+    smtp-port:
+        file: secrets/smtp-port
+    smtp-username:
+        file: secrets/smtp-username
+    smtp-password:
+        file: secrets/smtp-password
+    smtp-fromname:
+        file: secrets/smtp-fromname
+    smtp-fromaddress:
+        file: secrets/smtp-fromaddress
+         
+volumes:
+
+    azuremyst-db:
+        external: true
+    azuremyst-ssl:
+        external: true
+    azuremyst-data:
+        external: true

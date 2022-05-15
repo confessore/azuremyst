@@ -1,0 +1,118 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48BA2481-CAA3-4D76-AE21-5147FD02DA9E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		docker-compose-debug.yml = docker-compose-debug.yml
+		docker-compose-release.yml = docker-compose-release.yml
+		docker-compose-staging.yml = docker-compose-staging.yml
+		LICENSE = LICENSE
+		mangos-debug.Dockerfile = mangos-debug.Dockerfile
+		mangos-release.Dockerfile = mangos-release.Dockerfile
+		mangos-staging.Dockerfile = mangos-staging.Dockerfile
+		nginx-debug.Dockerfile = nginx-debug.Dockerfile
+		nginx-release.Dockerfile = nginx-release.Dockerfile
+		nginx-staging.Dockerfile = nginx-staging.Dockerfile
+		README = README
+		web-debug.Dockerfile = web-debug.Dockerfile
+		web-release.Dockerfile = web-release.Dockerfile
+		web-staging.Dockerfile = web-staging.Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{20C1BF66-C699-4CAB-9D38-B878CCB3C52E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "azuremyst", "src\azuremyst\azuremyst.csproj", "{78A4D0C5-CC7E-44AB-895E-D55431EA87EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "etc", "etc", "{FE2CC504-E36D-4B0E-B70F-8476AD861887}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "openssl", "openssl", "{E4005E7B-3932-408B-8B90-732B5BE4AD6F}"
+	ProjectSection(SolutionItems) = preProject
+		etc\openssl\localhost.cer = etc\openssl\localhost.cer
+		etc\openssl\localhost.conf = etc\openssl\localhost.conf
+		etc\openssl\localhost.crt = etc\openssl\localhost.crt
+		etc\openssl\localhost.key = etc\openssl\localhost.key
+		etc\openssl\localhost.pfx = etc\openssl\localhost.pfx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{3EAA47DF-3605-4EE9-9D1D-6BCD454B01FA}"
+	ProjectSection(SolutionItems) = preProject
+		etc\nginx\nginx-debug.conf = etc\nginx\nginx-debug.conf
+		etc\nginx\nginx-release.conf = etc\nginx\nginx-release.conf
+		etc\nginx\nginx-staging.conf = etc\nginx\nginx-staging.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mangos", "mangos", "{C10F8FB1-CFED-4E06-9C69-E58B3D8824E2}"
+	ProjectSection(SolutionItems) = preProject
+		etc\mangos\mangosd.conf = etc\mangos\mangosd.conf
+		etc\mangos\realmd.conf = etc\mangos\realmd.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{8122276B-7890-4D46-8D6E-3A4B7973AD07}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\add-migration-all.sh = scripts\add-migration-all.sh
+		scripts\add-migration-default.sh = scripts\add-migration-default.sh
+		scripts\add-migration-key.sh = scripts\add-migration-key.sh
+		scripts\define-secrets.sh = scripts\define-secrets.sh
+		scripts\docker-install.sh = scripts\docker-install.sh
+		scripts\healthcheck.sh = scripts\healthcheck.sh
+		scripts\mangosd-entrypoint-debug.sh = scripts\mangosd-entrypoint-debug.sh
+		scripts\nginx-entrypoint-debug.sh = scripts\nginx-entrypoint-debug.sh
+		scripts\nginx-entrypoint-release.sh = scripts\nginx-entrypoint-release.sh
+		scripts\nginx-entrypoint-staging.sh = scripts\nginx-entrypoint-staging.sh
+		scripts\openssl-generate.sh = scripts\openssl-generate.sh
+		scripts\purify-migrations-all.sh = scripts\purify-migrations-all.sh
+		scripts\purify-migrations-default.sh = scripts\purify-migrations-default.sh
+		scripts\purify-migrations-key.sh = scripts\purify-migrations-key.sh
+		scripts\realmd-entrypoint-debug.sh = scripts\realmd-entrypoint-debug.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{19102EDC-D1EF-4BC3-B477-3005E29DB1AA}"
+	ProjectSection(SolutionItems) = preProject
+		secrets\discord-bottoken = secrets\discord-bottoken
+		secrets\discord-clientid = secrets\discord-clientid
+		secrets\discord-secretid = secrets\discord-secretid
+		secrets\smtp-fromaddress = secrets\smtp-fromaddress
+		secrets\smtp-fromname = secrets\smtp-fromname
+		secrets\smtp-host = secrets\smtp-host
+		secrets\smtp-password = secrets\smtp-password
+		secrets\smtp-port = secrets\smtp-port
+		secrets\smtp-username = secrets\smtp-username
+		secrets\sql-database = secrets\sql-database
+		secrets\sql-password = secrets\sql-password
+		secrets\sql-password-root = secrets\sql-password-root
+		secrets\sql-server = secrets\sql-server
+		secrets\sql-username = secrets\sql-username
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78A4D0C5-CC7E-44AB-895E-D55431EA87EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A4D0C5-CC7E-44AB-895E-D55431EA87EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A4D0C5-CC7E-44AB-895E-D55431EA87EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A4D0C5-CC7E-44AB-895E-D55431EA87EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20C1BF66-C699-4CAB-9D38-B878CCB3C52E} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
+		{78A4D0C5-CC7E-44AB-895E-D55431EA87EF} = {20C1BF66-C699-4CAB-9D38-B878CCB3C52E}
+		{FE2CC504-E36D-4B0E-B70F-8476AD861887} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
+		{E4005E7B-3932-408B-8B90-732B5BE4AD6F} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
+		{3EAA47DF-3605-4EE9-9D1D-6BCD454B01FA} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
+		{C10F8FB1-CFED-4E06-9C69-E58B3D8824E2} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
+		{8122276B-7890-4D46-8D6E-3A4B7973AD07} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
+		{19102EDC-D1EF-4BC3-B477-3005E29DB1AA} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E78D131-C2F2-4EBA-BC37-E2BE5081BECA}
+	EndGlobalSection
+EndGlobal

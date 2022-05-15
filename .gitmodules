@@ -1,0 +1,3 @@
+[submodule "src/mangos"]
+	path = src/mangos
+	url = https://github.com/cmangos/mangos-tbc.git
