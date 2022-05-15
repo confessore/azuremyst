@@ -7,6 +7,7 @@ services:
         ports:
             - 3306:3306
         volumes:
+            - ./sql/mariadb-init.sql:/docker-entrypoint-initdb.d/init.sql
             - azuremyst-db:/var/lib/mysql
         secrets:
             - sql-password-root
