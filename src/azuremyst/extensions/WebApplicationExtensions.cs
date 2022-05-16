@@ -1,6 +1,10 @@
-﻿using azuremyst.contexts;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using azuremyst.contexts;
+using azuremyst.models.logs;
 using azuremyst.models.realmd;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 
 namespace azuremyst.extensions
 {
@@ -40,11 +44,34 @@ namespace azuremyst.extensions
             return webApplication;
         }
 
+        public static async Task<WebApplication> MigrateLogsDbContextAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<LogsDbContext>();
+            await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
         public static async Task<WebApplication> MigrateAuthDbContextAsync(this WebApplication webApplication)
         {
             using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> InitializeLogsDbAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<LogsDbContext>>();
+            using var context = await contextFactory.CreateDbContextAsync();
+            if (context.LogsDbVersions != null && !await context.LogsDbVersions.AnyAsync())
+            {
+                var sql = "INSERT INTO logs_db_version VALUES (@bit);";
+                var name = new MySqlParameter("@bit", null);
+                await context.Database.ExecuteSqlRawAsync(sql, name);
+                await context.SaveChangesAsync();
+            }
             return webApplication;
         }
 
@@ -70,7 +97,9 @@ namespace azuremyst.extensions
             }
             if (context.RealmdDbVersions != null && !await context.RealmdDbVersions.AnyAsync())
             {
-                await context.RealmdDbVersions.AddAsync(null!);
+                var sql = "INSERT INTO realmd_db_version VALUES (@bit);";
+                var name = new MySqlParameter("@bit", null);
+                await context.Database.ExecuteSqlRawAsync(sql, name);
                 await context.SaveChangesAsync();
             }
             return webApplication;

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace azuremyst.models.realmd
+namespace azuremyst.models.logs
 {
     /// <summary>
     /// Last applied sql update to DB
     /// </summary>
     [Keyless]
-    public partial class RealmdDbVersion
+    public partial class LogsDbVersion
     {
-        public ulong? RequiredS243301RealmdAnticheat { get; set; }
+        public ulong? RequiredS243301LogsAnticheat { get; set; }
     }
 }

@@ -31,6 +31,9 @@ namespace azuremyst.extensions
         public static async Task<string> BuildKeyConnectionStringAsync(this IConfiguration configuration) =>
             await configuration.BuildConnectionStringAsync("key");
 
+        public static async Task<string> BuildLogsConnectionStringAsync(this IConfiguration configuration) =>
+            await configuration.BuildConnectionStringAsync("logs");
+
         public static async Task<string> BuildWorldConnectionStringAsync(this IConfiguration configuration) =>
             await configuration.BuildConnectionStringAsync("mangosd");
 

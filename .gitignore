@@ -375,3 +375,4 @@ appsettings.json
 # dir
 secrets/*
 data/*
+!src/azuremyst/models/logs/

@@ -49,6 +49,7 @@ Log.Information("configuration built!");
 var defaultConnection = await configuration.BuildDefaultConnectionStringAsync();
 var keyConnection = await configuration.BuildKeyConnectionStringAsync();
 var authConnection = await configuration.BuildAuthConnectionStringAsync();
+var logsConnection = await configuration.BuildLogsConnectionStringAsync();
 //var discordOptions = new DiscordOptions();
 //configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
 var options = new WebApplicationOptions()
@@ -121,6 +122,24 @@ builder.WebHost
             x.EnableSensitiveDataLogging();
             x.EnableDetailedErrors();
         });
+        x.AddDbContextPool<LogsDbContext>(x =>
+        {
+            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextFactory<LogsDbContext>(x =>
+        {
+            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
         x.AddIdentity<User, Role>(x =>
         {
             x.User.RequireUniqueEmail = true;
@@ -172,8 +191,10 @@ try
 
     await webApplication.MigrateDefaultDbContextAsync();
     await webApplication.MigrateKeyDbContextAsync();
+    await webApplication.MigrateLogsDbContextAsync();
     await webApplication.MigrateAuthDbContextAsync();
 
+    await webApplication.InitializeLogsDbAsync();
     await webApplication.InitializeAuthDbAsync();
 
     //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);

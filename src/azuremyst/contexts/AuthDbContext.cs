@@ -12,7 +12,7 @@ namespace azuremyst.contexts
         public AuthDbContext(DbContextOptions<AuthDbContext> options)
             : base(options) { }
 
-        public virtual DbSet<Account> Accounts { get; set; } = null!;
+        public virtual DbSet<Account>? Accounts { get; set; } = null!;
         public virtual DbSet<AccountBanned> AccountBanneds { get; set; } = null!;
         public virtual DbSet<AccountLogon> AccountLogons { get; set; } = null!;
         public virtual DbSet<AccountRaf> AccountRafs { get; set; } = null!;
@@ -21,8 +21,8 @@ namespace azuremyst.contexts
         public virtual DbSet<AntispamUnicodeReplacement> AntispamUnicodeReplacements { get; set; } = null!;
         public virtual DbSet<IpBanned> IpBanneds { get; set; } = null!;
         public virtual DbSet<Realmcharacter> Realmcharacters { get; set; } = null!;
-        public virtual DbSet<RealmdDbVersion> RealmdDbVersions { get; set; } = null!;
-        public virtual DbSet<Realmlist> Realmlists { get; set; } = null!;
+        public virtual DbSet<RealmdDbVersion>? RealmdDbVersions { get; set; } = null!;
+        public virtual DbSet<Realmlist>? Realmlists { get; set; } = null!;
         public virtual DbSet<SystemFingerprintUsage> SystemFingerprintUsages { get; set; } = null!;
         public virtual DbSet<Uptime> Uptimes { get; set; } = null!;
 
