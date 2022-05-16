@@ -69,16 +69,16 @@ services:
             - 443:443
         restart: always
 
-    #realmd:
-    #    depends_on:
-    #        - mariadb
-    #    build:
-    #        context: .
-    #        dockerfile: mangos-debug.Dockerfile
-    #        target: realmd
-    #    ports:
-    #        - 3724:3724
-    #    restart: always
+    realmd:
+        depends_on:
+            - mariadb
+        build:
+            context: .
+            dockerfile: mangos-debug.Dockerfile
+            target: realmd
+        ports:
+            - 3724:3724
+        restart: always
 
     #mangosd:
     #   depends_on:
