@@ -174,6 +174,8 @@ try
     await webApplication.MigrateKeyDbContextAsync();
     await webApplication.MigrateAuthDbContextAsync();
 
+    await webApplication.InitializeAuthDbAsync();
+
     //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
 
     // Configure the HTTP request pipeline.

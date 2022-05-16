@@ -1,4 +1,5 @@
 ﻿using azuremyst.contexts;
+using azuremyst.models.realmd;
 using Microsoft.EntityFrameworkCore;
 
 namespace azuremyst.extensions
@@ -44,6 +45,34 @@ namespace azuremyst.extensions
             using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             using var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
             await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> InitializeAuthDbAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AuthDbContext>>();
+            using var context = await contextFactory.CreateDbContextAsync();
+            if (context.Realmlists != null && !await context.Realmlists.AnyAsync())
+            {
+                await context.Realmlists.AddAsync(new Realmlist()
+                {
+                    Address = "0.0.0.0",
+                    AllowedSecurityLevel = 0,
+                    Icon = 1,
+                    Name = "azuremyst",
+                    Population = 0f,
+                    Port = 8085,
+                    Realmflags = 0x40,
+                    Timezone = 0x00
+                });
+                await context.SaveChangesAsync();
+            }
+            if (context.RealmdDbVersions != null && !await context.RealmdDbVersions.AnyAsync())
+            {
+                await context.RealmdDbVersions.AddAsync(null!);
+                await context.SaveChangesAsync();
+            }
             return webApplication;
         }
     }
