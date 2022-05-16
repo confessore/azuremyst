@@ -9,9 +9,9 @@ namespace azuremyst.contexts
         public LogsDbContext(DbContextOptions<LogsDbContext> options)
             : base(options) { }
 
-        public virtual DbSet<LogsAnticheat> LogsAnticheats { get; set; } = null!;
-        public virtual DbSet<LogsDbVersion> LogsDbVersions { get; set; } = null!;
-        public virtual DbSet<LogsSpamdetect> LogsSpamdetects { get; set; } = null!;
+        public virtual DbSet<LogsAnticheat>? LogsAnticheats { get; set; } = null!;
+        public virtual DbSet<LogsDbVersion>? LogsDbVersions { get; set; } = null!;
+        public virtual DbSet<LogsSpamdetect>? LogsSpamdetects { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
