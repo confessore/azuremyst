@@ -131,7 +131,7 @@ ARG DOCKER_USER=mangos
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/etc/mangos/realmd.conf /azuremyst/src/mangos/run/etc/realmd.conf
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/realmd /azuremyst/src/mangos/run/bin/realmd
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/scripts/realmd-entrypoint-debug.sh /azuremyst/scripts/realmd-entrypoint-debug.sh
-
+RUN chmod +x /azuremyst/scripts/realmd-entrypoint-debug.sh
 ENTRYPOINT ["/azuremyst/scripts/realmd-entrypoint-debug.sh"]
 
 #================================================================
@@ -149,5 +149,5 @@ ARG DOCKER_USER=mangos
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/mangosd /azuremyst/src/mangos/run/bin/mangosd
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
-
+RUN chmod +x /azuremyst/scripts/mangosd-entrypoint-debug.sh
 ENTRYPOINT ["/azuremyst/scripts/mangosd-entrypoint-debug.sh"]
