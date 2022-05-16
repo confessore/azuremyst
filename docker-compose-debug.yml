@@ -24,7 +24,7 @@ services:
             - mariadb
         build:
             context: .
-            dockerfile: web-debug.Dockerfile
+            dockerfile: etc/docker/web-debug.Dockerfile
         secrets:
             - discord-clientid
             - discord-secretid
@@ -63,7 +63,7 @@ services:
             - web
         build:
             context: .
-            dockerfile: nginx-debug.Dockerfile
+            dockerfile: etc/docker/nginx-debug.Dockerfile
         ports:
             - 80:80
             - 443:443
@@ -74,7 +74,7 @@ services:
             - mariadb
         build:
             context: .
-            dockerfile: mangos-debug.Dockerfile
+            dockerfile: etc/docker/mangos-debug.Dockerfile
             target: realmd
         ports:
             - 3724:3724

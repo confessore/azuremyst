@@ -12,16 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose-release.yml = docker-compose-release.yml
 		docker-compose-staging.yml = docker-compose-staging.yml
 		LICENSE = LICENSE
-		mangos-debug.Dockerfile = mangos-debug.Dockerfile
-		mangos-release.Dockerfile = mangos-release.Dockerfile
-		mangos-staging.Dockerfile = mangos-staging.Dockerfile
-		nginx-debug.Dockerfile = nginx-debug.Dockerfile
-		nginx-release.Dockerfile = nginx-release.Dockerfile
-		nginx-staging.Dockerfile = nginx-staging.Dockerfile
 		README.md = README.md
-		web-debug.Dockerfile = web-debug.Dockerfile
-		web-release.Dockerfile = web-release.Dockerfile
-		web-staging.Dockerfile = web-staging.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{20C1BF66-C699-4CAB-9D38-B878CCB3C52E}"
@@ -104,6 +95,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mmaps", "mmaps", "{1255FB28
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vmaps", "vmaps", "{2047B09A-C27B-4D74-AC95-EF2E92EBB3D6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{908D9F9F-00EE-4672-BEC9-78477082FDF7}"
+	ProjectSection(SolutionItems) = preProject
+		etc\docker\mangos-debug.Dockerfile = etc\docker\mangos-debug.Dockerfile
+		etc\docker\mangos-release.Dockerfile = etc\docker\mangos-release.Dockerfile
+		etc\docker\mangos-staging.Dockerfile = etc\docker\mangos-staging.Dockerfile
+		etc\docker\nginx-debug.Dockerfile = etc\docker\nginx-debug.Dockerfile
+		etc\docker\nginx-release.Dockerfile = etc\docker\nginx-release.Dockerfile
+		etc\docker\nginx-staging.Dockerfile = etc\docker\nginx-staging.Dockerfile
+		etc\docker\web-debug.Dockerfile = etc\docker\web-debug.Dockerfile
+		etc\docker\web-release.Dockerfile = etc\docker\web-release.Dockerfile
+		etc\docker\web-staging.Dockerfile = etc\docker\web-staging.Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +137,7 @@ Global
 		{908A6FC7-AB26-43A7-A9BD-E02266D51DA9} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{1255FB28-9A69-4727-AD65-87205327F096} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{2047B09A-C27B-4D74-AC95-EF2E92EBB3D6} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
+		{908D9F9F-00EE-4672-BEC9-78477082FDF7} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E78D131-C2F2-4EBA-BC37-E2BE5081BECA}
