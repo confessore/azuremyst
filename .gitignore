@@ -372,5 +372,6 @@ appsettings.json
 # logs
 *.log
 
-# secrets
+# dir
 secrets/*
+data/*
