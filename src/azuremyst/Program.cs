@@ -48,8 +48,10 @@ Log.Information("configuration built!");
 
 var defaultConnection = await configuration.BuildDefaultConnectionStringAsync();
 var keyConnection = await configuration.BuildKeyConnectionStringAsync();
-var authConnection = await configuration.BuildAuthConnectionStringAsync();
 var logsConnection = await configuration.BuildLogsConnectionStringAsync();
+var authConnection = await configuration.BuildAuthConnectionStringAsync();
+var characterConnection = await configuration.BuildCharacterConnectionStringAsync();
+var worldConnection = await configuration.BuildWorldConnectionStringAsync();
 //var discordOptions = new DiscordOptions();
 //configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
 var options = new WebApplicationOptions()
@@ -66,7 +68,7 @@ builder.WebHost
     {
         x.AddConfiguration(configuration);
     })
-    .ConfigureServices(async x =>
+    .ConfigureServices(x =>
     {
         x.AddDbContextPool<DefaultDbContext>(x =>
         {
@@ -104,6 +106,24 @@ builder.WebHost
             x.EnableSensitiveDataLogging();
             x.EnableDetailedErrors();
         });
+        x.AddDbContextPool<LogsDbContext>(x =>
+        {
+            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextFactory<LogsDbContext>(x =>
+        {
+            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
         x.AddDbContextPool<AuthDbContext>(x =>
         {
             x.UseMySql(authConnection, ServerVersion.AutoDetect(authConnection), x =>
@@ -122,18 +142,36 @@ builder.WebHost
             x.EnableSensitiveDataLogging();
             x.EnableDetailedErrors();
         });
-        x.AddDbContextPool<LogsDbContext>(x =>
+        x.AddDbContextPool<CharacterDbContext>(x =>
         {
-            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            x.UseMySql(characterConnection, ServerVersion.AutoDetect(characterConnection), x =>
             {
                 x.MigrationsAssembly(executingAssemblyName);
             });
             x.EnableSensitiveDataLogging();
             x.EnableDetailedErrors();
         });
-        x.AddDbContextFactory<LogsDbContext>(x =>
+        x.AddDbContextFactory<CharacterDbContext>(x =>
         {
-            x.UseMySql(logsConnection, ServerVersion.AutoDetect(logsConnection), x =>
+            x.UseMySql(characterConnection, ServerVersion.AutoDetect(characterConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextPool<WorldDbContext>(x =>
+        {
+            x.UseMySql(worldConnection, ServerVersion.AutoDetect(worldConnection), x =>
+            {
+                x.MigrationsAssembly(executingAssemblyName);
+            });
+            x.EnableSensitiveDataLogging();
+            x.EnableDetailedErrors();
+        });
+        x.AddDbContextFactory<WorldDbContext>(x =>
+        {
+            x.UseMySql(worldConnection, ServerVersion.AutoDetect(worldConnection), x =>
             {
                 x.MigrationsAssembly(executingAssemblyName);
             });
@@ -191,11 +229,16 @@ try
 
     await webApplication.MigrateDefaultDbContextAsync();
     await webApplication.MigrateKeyDbContextAsync();
+
     await webApplication.MigrateLogsDbContextAsync();
     await webApplication.MigrateAuthDbContextAsync();
+    await webApplication.MigrateCharacterDbContextAsync();
+    await webApplication.MigrateWorldDbContextAsync();
 
     await webApplication.InitializeLogsDbAsync();
     await webApplication.InitializeAuthDbAsync();
+    await webApplication.InitializeCharacterDbAsync();
+    await webApplication.InitializeWorldDbAsync();
 
     //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
 

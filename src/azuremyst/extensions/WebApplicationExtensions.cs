@@ -60,6 +60,22 @@ namespace azuremyst.extensions
             return webApplication;
         }
 
+        public static async Task<WebApplication> MigrateCharacterDbContextAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<CharacterDbContext>();
+            await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> MigrateWorldDbContextAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<WorldDbContext>();
+            await context.Database.MigrateAsync();
+            return webApplication;
+        }
+
         public static async Task<WebApplication> InitializeLogsDbAsync(this WebApplication webApplication)
         {
             using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -100,6 +116,38 @@ namespace azuremyst.extensions
                 var sql = "INSERT INTO realmd_db_version VALUES (@bit);";
                 var name = new MySqlParameter("@bit", null);
                 await context.Database.ExecuteSqlRawAsync(sql, name);
+                await context.SaveChangesAsync();
+            }
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> InitializeCharacterDbAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<CharacterDbContext>>();
+            using var context = await contextFactory.CreateDbContextAsync();
+            if (context.CharacterDbVersions != null && !await context.CharacterDbVersions.AnyAsync())
+            {
+                var sql = "INSERT INTO character_db_version VALUES (@bit);";
+                var name = new MySqlParameter("@bit", null);
+                await context.Database.ExecuteSqlRawAsync(sql, name);
+                await context.SaveChangesAsync();
+            }
+            return webApplication;
+        }
+
+        public static async Task<WebApplication> InitializeWorldDbAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<WorldDbContext>>();
+            using var context = await contextFactory.CreateDbContextAsync();
+            if (context.DbVersions != null && !await context.DbVersions.AnyAsync())
+            {
+                var sql = "INSERT INTO db_version VALUES (@str1, @str2, @bit);";
+                var version = new MySqlParameter("@str1", "azuremyst");
+                var ai = new MySqlParameter("@str2", "no ai");
+                var required = new MySqlParameter("@bit", null);
+                await context.Database.ExecuteSqlRawAsync(sql, version, ai, required);
                 await context.SaveChangesAsync();
             }
             return webApplication;

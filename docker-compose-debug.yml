@@ -80,16 +80,18 @@ services:
             - 3724:3724
         restart: always
 
-    #mangosd:
-    #   depends_on:
-    #       - mariadb
-    #   build:
-    #       context: .
-    #       dockerfile: mangos-debug.Dockerfile
-    #      target: mangosd
-    #  ports:
-    #      - 8085:8085
-    #  restart: always
+    mangosd:
+       depends_on:
+           - mariadb
+       build:
+           context: .
+           dockerfile: etc/docker/mangos-debug.Dockerfile
+           target: mangosd
+       ports:
+          - 8085:8085
+       #volumes:
+       # - azuremyst-data:/data
+       restart: always
 
 secrets:
 

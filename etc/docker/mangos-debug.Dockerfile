@@ -146,6 +146,10 @@ LABEL description="worldserver"
 
 ARG DOCKER_USER=mangos
 
+COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/dbc/* /azuremyst/data/dbc/
+COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/maps/* /azuremyst/data/maps/
+COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/mmaps/* /azuremyst/data/mmaps/
+COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/vmaps/* /azuremyst/data/vmaps/
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/mangosd /azuremyst/src/mangos/run/bin/mangosd
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
