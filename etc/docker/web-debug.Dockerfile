@@ -25,6 +25,6 @@ RUN dotnet publish -c Debug --no-build --no-restore -o /app  src/azuremyst/azure
 FROM base AS final
 COPY --from=publish /app .
 COPY --from=publish /src/scripts/healthcheck.sh .
-COPY --from=publish /src/src/db/ACID/acid_tbc.sql .
+
 ENTRYPOINT ["dotnet", "azuremyst.dll"]
  
