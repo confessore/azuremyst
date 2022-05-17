@@ -146,13 +146,10 @@ LABEL description="worldserver"
 
 ARG DOCKER_USER=mangos
 
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/dbc/* /azuremyst/data/dbc/
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/maps/* /azuremyst/data/maps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/mmaps/* /azuremyst/data/mmaps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/vmaps/* /azuremyst/data/vmaps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/mangos/sql/* /azuremyst/src/mangos/sql/
-COPY --chown=#DOCKER_USER:$DOCKER_USER ./src/db/* /azuremyst/src/db/
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/db/InstallFullDB.config /azuremyst/src/db/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./data /azuremyst/data
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/db /azuremyst/src/db
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/mangos /azuremyst/src/mangos
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/db/InstallFullDB.config /azuremyst/src/db/InstallFullDB.config
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/mangosd /azuremyst/src/mangos/run/bin/mangosd
