@@ -230,15 +230,15 @@ try
     await webApplication.MigrateDefaultDbContextAsync();
     await webApplication.MigrateKeyDbContextAsync();
 
-    await webApplication.MigrateLogsDbContextAsync();
-    await webApplication.MigrateAuthDbContextAsync();
-    await webApplication.MigrateCharacterDbContextAsync();
-    await webApplication.MigrateWorldDbContextAsync();
+    //await webApplication.MigrateLogsDbContextAsync();
+    //await webApplication.MigrateAuthDbContextAsync();
+    //await webApplication.MigrateCharacterDbContextAsync();
+    //await webApplication.MigrateWorldDbContextAsync();
 
-    await webApplication.InitializeLogsDbAsync();
-    await webApplication.InitializeAuthDbAsync();
-    await webApplication.InitializeCharacterDbAsync();
-    await webApplication.InitializeWorldDbAsync();
+    //await webApplication.InitializeLogsDbAsync();
+    //await webApplication.InitializeAuthDbAsync();
+    //await webApplication.InitializeCharacterDbAsync();
+    //await webApplication.InitializeWorldDbAsync();
 
     //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
 

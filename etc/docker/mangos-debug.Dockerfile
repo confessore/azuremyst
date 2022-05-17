@@ -39,7 +39,7 @@ RUN --mount=type=cache,target=/var/cache/apt apt update && apt install -y build-
 # change timezone in container
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
-COPY --chown=$DOCKER_USER:$DOCKER_USER . /azuremyst
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/mangos /azuremyst/src/mangos
 
 USER $DOCKER_USER
 
@@ -128,9 +128,9 @@ LABEL description="authserver"
 
 ARG DOCKER_USER=mangos
 
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/etc/mangos/realmd.conf /azuremyst/src/mangos/run/etc/realmd.conf
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/mangos/realmd.conf /azuremyst/src/mangos/run/etc/realmd.conf
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/realmd-entrypoint-debug.sh /azuremyst/scripts/realmd-entrypoint-debug.sh
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/realmd /azuremyst/src/mangos/run/bin/realmd
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/scripts/realmd-entrypoint-debug.sh /azuremyst/scripts/realmd-entrypoint-debug.sh
 RUN chmod +x /azuremyst/scripts/realmd-entrypoint-debug.sh
 ENTRYPOINT ["/azuremyst/scripts/realmd-entrypoint-debug.sh"]
 
@@ -146,12 +146,12 @@ LABEL description="worldserver"
 
 ARG DOCKER_USER=mangos
 
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/dbc/* /azuremyst/data/dbc/
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/maps/* /azuremyst/data/maps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/mmaps/* /azuremyst/data/mmaps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/data/vmaps/* /azuremyst/data/vmaps/
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/dbc/* /azuremyst/data/dbc/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/maps/* /azuremyst/data/maps/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/mmaps/* /azuremyst/data/mmaps/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./data/vmaps/* /azuremyst/data/vmaps/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/mangosd /azuremyst/src/mangos/run/bin/mangosd
-COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
 RUN chmod +x /azuremyst/scripts/mangosd-entrypoint-debug.sh
 ENTRYPOINT ["/azuremyst/scripts/mangosd-entrypoint-debug.sh"]
