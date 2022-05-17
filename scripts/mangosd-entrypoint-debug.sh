@@ -37,7 +37,9 @@ then
 echo "mangos db does not exist";
 mysql -s -N -h mariadb -u$USERNAME -p$PASSWORD -e "CREATE DATABASE IF NOT EXISTS \`azuremyst.mangos\`;"
 mysql -s -N -h mariadb -u$USERNAME -p$PASSWORD azuremyst.mangos < /azuremyst/src/mangos/sql/base/mangos.sql
-cd /azuremyst/src/db && bash ./InstallFullDB.sh && cd
+cd /azuremyst/src/db && bash ./InstallFullDB.sh -World && cd
 echo "mangos db created and based";
 fi
-#/azuremyst/src/mangos/run/bin/mangosd -c /azuremyst/src/mangos/run/etc/mangosd.conf
+ls -l
+cat Server.log
+/azuremyst/src/mangos/run/bin/mangosd -c /azuremyst/src/mangos/run/etc/mangosd.conf
