@@ -76,6 +76,7 @@ if you kinda-sorta already know what you are doing, you can install docker and d
     $ sudo docker compose -f docker-compose-debug.yml build
     $ sudo docker compose -f docker-compose-debug.yml up -d
 ```
+- remember to set the realmd realmlist address to 'localhost' to avoid realmlist looping
 
 &nbsp;
 
