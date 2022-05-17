@@ -9,7 +9,7 @@ it is tested against ubuntu 20.04
 
 - remember the submodules
 ```sh
-$ git submodule update --init --recursive --remote
+$ git submodule init --recursive --remote
 ```
 
 &nbsp;
