@@ -89,6 +89,7 @@ services:
            target: mangosd
        ports:
           - 8085:8085
+          - 7878:7878
        restart: always
 
 secrets:

@@ -40,6 +40,4 @@ mysql -s -N -h mariadb -u$USERNAME -p$PASSWORD azuremyst.mangos < /azuremyst/src
 cd /azuremyst/src/db && bash ./InstallFullDB.sh -World && cd
 echo "mangos db created and based";
 fi
-ls -l
-cat Server.log
 /azuremyst/src/mangos/run/bin/mangosd -c /azuremyst/src/mangos/run/etc/mangosd.conf
