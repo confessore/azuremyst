@@ -3,6 +3,7 @@ using azuremyst.contexts;
 using azuremyst.extensions;
 using azuremyst.handlers;
 using azuremyst.models.abstractions;
+using azuremyst.models.options;
 using azuremyst.providers;
 using azuremyst.services;
 using azuremyst.services.interfaces;
@@ -52,8 +53,8 @@ var logsConnection = await configuration.BuildLogsConnectionStringAsync();
 var authConnection = await configuration.BuildAuthConnectionStringAsync();
 var characterConnection = await configuration.BuildCharacterConnectionStringAsync();
 var worldConnection = await configuration.BuildWorldConnectionStringAsync();
-//var discordOptions = new DiscordOptions();
-//configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
+var discordOptions = new DiscordOptions();
+configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
 var options = new WebApplicationOptions()
 {
     ApplicationName = executingAssemblyName,
@@ -220,7 +221,7 @@ builder.WebHost
             return provider;
         });
         x.AddScoped<CircuitHandler, DefaultCircuitHandler>();
-        //x.AddDiscordSocketClient();
+        x.AddDiscordSocketClient();
         //await x.AddQuartzAsync();
     });
 try
@@ -230,17 +231,7 @@ try
     await webApplication.MigrateDefaultDbContextAsync();
     await webApplication.MigrateKeyDbContextAsync();
 
-    //await webApplication.MigrateLogsDbContextAsync();
-    //await webApplication.MigrateAuthDbContextAsync();
-    //await webApplication.MigrateCharacterDbContextAsync();
-    //await webApplication.MigrateWorldDbContextAsync();
-
-    //await webApplication.InitializeLogsDbAsync();
-    //await webApplication.InitializeAuthDbAsync();
-    //await webApplication.InitializeCharacterDbAsync();
-    //await webApplication.InitializeWorldDbAsync();
-
-    //await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
+    await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
 
     // Configure the HTTP request pipeline.
     if (!webApplication.Environment.IsDevelopment())

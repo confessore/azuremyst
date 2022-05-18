@@ -27,7 +27,7 @@ services:
             dockerfile: etc/docker/web-debug.Dockerfile
         secrets:
             - discord-clientid
-            - discord-secretid
+            - discord-clientsecret
             - discord-bottoken
             - sql-server
             - sql-username
@@ -41,7 +41,7 @@ services:
             - smtp-fromaddress
         environment:
             - APPLICATION__DISCORDOPTIONS__CLIENTID=/run/secrets/discord-clientid
-            - APPLICATION__DISCORDOPTIONS__SECRETID=/run/secrets/discord-secretid
+            - APPLICATION__DISCORDOPTIONS__SECRETID=/run/secrets/discord-clientsecret
             - APPLICATION__DISCORDOPTIONS__BOTTOKEN=/run/secrets/discord-bottoken
             - APPLICATION__SQLCLIENTOPTIONS__SERVER=/run/secrets/sql-server
             - APPLICATION__SQLCLIENTOPTIONS__USERNAME=/run/secrets/sql-username
@@ -96,8 +96,8 @@ secrets:
 
     discord-clientid:
         file: secrets/discord-clientid
-    discord-secretid:
-        file: secrets/discord-secretid
+    discord-clientsecret:
+        file: secrets/discord-clientsecret
     discord-bottoken:
         file: secrets/discord-bottoken
     sql-server:

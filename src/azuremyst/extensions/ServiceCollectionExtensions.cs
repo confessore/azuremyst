@@ -1,4 +1,9 @@
-﻿namespace azuremyst.extensions
+﻿using azuremyst.services;
+using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+
+namespace azuremyst.extensions
 {
     static class ServiceCollectionExtensions
     {
@@ -71,16 +76,16 @@
             return services;
         }
 
-        //public static IServiceCollection AddDiscordSocketClient(this IServiceCollection services)
-        //{
-        //    services.AddSingleton<LoggingService>();
-        //    services.AddSingleton<MessageService>();
-        //    services.AddSingleton<CommandService>();
-        //    var config = new DiscordSocketConfig();
-        //    config.GatewayIntents |= GatewayIntents.GuildMembers;
-        //    var client = new DiscordSocketClient(config);
-        //    services.AddSingleton(client);
-        //    return services;
-        //}
+        public static IServiceCollection AddDiscordSocketClient(this IServiceCollection services)
+        {
+            services.AddSingleton<LoggingService>();
+            services.AddSingleton<MessageService>();
+            services.AddSingleton<CommandService>();
+            var config = new DiscordSocketConfig();
+            config.GatewayIntents |= GatewayIntents.GuildMembers;
+            var client = new DiscordSocketClient(config);
+            services.AddSingleton(client);
+            return services;
+        }
     }
 }
