@@ -94,7 +94,7 @@ namespace azuremyst.modules
 
         [Command("grant", RunMode = RunMode.Async)]
         [Summary("bot: grants a user for exceptional distinguishment" +
-            "\n >grant" +
+            "\n >grant" + 
             "\n >grant feeram")]
         async Task GrantAsync([Remainder] string name)
         {
