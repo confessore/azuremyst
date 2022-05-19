@@ -1,4 +1,6 @@
 ﻿using azuremyst.contexts;
+using azuremyst.extensions;
+using azuremyst.models.enums;
 using azuremyst.models.users;
 using Discord;
 using Discord.Commands;
@@ -13,17 +15,20 @@ namespace azuremyst.modules
         readonly DiscordSocketClient _client;
         readonly CommandService _commands;
         readonly IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
+        readonly IDbContextFactory<CharacterDbContext> _character;
 
         public CommandModule(
             IServiceProvider services,
             DiscordSocketClient client,
             CommandService commands,
-            IDbContextFactory<DefaultDbContext> defaultDbContextFactory)
+            IDbContextFactory<DefaultDbContext> defaultDbContextFactory,
+            IDbContextFactory<CharacterDbContext> character)
         {
             _services = services;
             _client = client;
             _commands = commands;
             _defaultDbContextFactory = defaultDbContextFactory;
+            _character = character;
         }
 
         readonly Random random = new Random();
@@ -58,32 +63,25 @@ namespace azuremyst.modules
             await _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id).ModifyAsync(x => x.Nickname = name);
         }
 
-        //[Command("sync", RunMode = RunMode.Async)]
-        //[Summary("all: sync a single guild user's membership role according to their nickname (character name)" +
-        //    "\n >sync")]
-        //async Task SyncAsync()
-        //{
-        //    await RemoveCommandMessageAsync();
-        //    var user = _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id);
-        //    var character = await _armory.LookupCharacterAsync(user.Nickname ?? user.Username);
-        //    character.Id = user.Id;
-        //    await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
-        //    await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
-        //    using var context = await _defaultDbContextFactory.CreateDbContextAsync();
-        //    if (context.Users != null)
-        //    {
-        //        var contextUser = await context.Users.Include(x => x.Character).FirstOrDefaultAsync(x => x.Id == user.Id);
-        //        if (contextUser == null)
-        //            context.Users.Add(new DefaultUser() { Id = user.Id, Name = user.Username, Discriminator = user.Discriminator, UserType = UserType.Default, Character = character, Chits = 0 });
-        //        else
-        //            contextUser.Character = character;
-        //        await context.SaveChangesAsync();
-        //    }
-        //    Log.Information($"{(character.FactionId is 1 ? "horde" : "alliance")} role was added for {character.Name.ToLower()}");
-        //    Log.Information($"{character.Class.ToLower()} role was added for {character.Name.ToLower()}");
-        //    //await ReplyAsync($"{character.Name} is a {character.Level} {character.Race} {character.Class} in the guild {character.GuildName}");
-        //    //await htmlService.VerifyGuildMemberAsync(Context.Guild, user, user.Nickname ?? user.Username);
-        //}
+        [Command("sync", RunMode = RunMode.Async)]
+        [Summary("all: sync a single guild user's membership role according to their nickname (character name)" +
+            "\n >sync")]
+        async Task SyncAsync()
+        {
+            await RemoveCommandMessageAsync();
+            var user = _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id);
+            //var character = await _armory.LookupCharacterAsync(user.Nickname ?? user.Username);
+            //character.Id = user.Id;
+            //await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
+            //await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
+            using var context = await _character.CreateDbContextAsync();
+            if (context.Characters != null)
+            {
+                var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
+                if (character != null)
+                    await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
+            }
+        }
 
         [Command("tip", RunMode = RunMode.Async)]
         [Summary("all: tips a user" +
