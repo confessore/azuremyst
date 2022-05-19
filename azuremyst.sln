@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitmodules = .gitmodules
 		docker-compose-debug.yml = docker-compose-debug.yml
 		docker-compose-release.yml = docker-compose-release.yml
-		docker-compose-staging.yml = docker-compose-staging.yml
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -34,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{3EAA47DF
 	ProjectSection(SolutionItems) = preProject
 		etc\nginx\nginx-debug.conf = etc\nginx\nginx-debug.conf
 		etc\nginx\nginx-release.conf = etc\nginx\nginx-release.conf
-		etc\nginx\nginx-staging.conf = etc\nginx\nginx-staging.conf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mangos", "mangos", "{C10F8FB1-CFED-4E06-9C69-E58B3D8824E2}"
@@ -54,7 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{8122
 		scripts\mangosd-entrypoint-debug.sh = scripts\mangosd-entrypoint-debug.sh
 		scripts\nginx-entrypoint-debug.sh = scripts\nginx-entrypoint-debug.sh
 		scripts\nginx-entrypoint-release.sh = scripts\nginx-entrypoint-release.sh
-		scripts\nginx-entrypoint-staging.sh = scripts\nginx-entrypoint-staging.sh
 		scripts\openssl-generate.sh = scripts\openssl-generate.sh
 		scripts\purify-migrations-all.sh = scripts\purify-migrations-all.sh
 		scripts\purify-migrations-default.sh = scripts\purify-migrations-default.sh
@@ -66,7 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{1910
 	ProjectSection(SolutionItems) = preProject
 		secrets\discord-bottoken = secrets\discord-bottoken
 		secrets\discord-clientid = secrets\discord-clientid
-		secrets\discord-secretid = secrets\discord-secretid
+		secrets\discord-clientsecret = secrets\discord-clientsecret
 		secrets\smtp-fromaddress = secrets\smtp-fromaddress
 		secrets\smtp-fromname = secrets\smtp-fromname
 		secrets\smtp-host = secrets\smtp-host
@@ -99,13 +96,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{908D9F
 	ProjectSection(SolutionItems) = preProject
 		etc\docker\mangos-debug.Dockerfile = etc\docker\mangos-debug.Dockerfile
 		etc\docker\mangos-release.Dockerfile = etc\docker\mangos-release.Dockerfile
-		etc\docker\mangos-staging.Dockerfile = etc\docker\mangos-staging.Dockerfile
 		etc\docker\nginx-debug.Dockerfile = etc\docker\nginx-debug.Dockerfile
 		etc\docker\nginx-release.Dockerfile = etc\docker\nginx-release.Dockerfile
-		etc\docker\nginx-staging.Dockerfile = etc\docker\nginx-staging.Dockerfile
 		etc\docker\web-debug.Dockerfile = etc\docker\web-debug.Dockerfile
 		etc\docker\web-release.Dockerfile = etc\docker\web-release.Dockerfile
-		etc\docker\web-staging.Dockerfile = etc\docker\web-staging.Dockerfile
 	EndProjectSection
 EndProject
 Global
