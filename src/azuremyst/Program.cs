@@ -216,7 +216,6 @@ builder.WebHost
         //x.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(Strings.CallingAssemblyName));
         x.AddScoped<IAuthService, AuthService>();
         x.AddScoped<ILocalStorageService, LocalStorageService>();
-        x.AddSingleton(mangosOptions);
         x.AddScoped<ISoapService, SoapService>();
         //x.AddScoped<IMarketService, MarketService>();
         //x.AddScoped<IAtomService, AtomService>();

@@ -11,15 +11,12 @@ namespace azuremyst.services
 {
     public class SoapService : ISoapService
     {
-        readonly MangosOptions _mangosOptions;
         readonly IHttpClientFactory _httpClientFactory;
 
         public SoapService(
-            MangosOptions mangosOptions,
             IHttpClientFactory httpClientFactory
         )
         {
-            _mangosOptions = mangosOptions;
             _httpClientFactory = httpClientFactory;
         }
 
