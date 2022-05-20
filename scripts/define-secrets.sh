@@ -1,5 +1,9 @@
 #!/bin/sh
 
+read -p "please enter the mangos host: " mangosHost
+read -p "please enter the mangos port: " mangosPort
+read -p "please enter the mangos username: " mangosUsername
+read -p "please enter the mangos password: " mangosPassword
 read -p "please enter the discord client id: " discordClientId
 read -p "please enter the discord secret id: " discordSecretId
 read -p "please enter the discord bot token: " discordBotToken
@@ -24,6 +28,10 @@ else
     cd "$parent"/secrets
 fi
 echo "generating secrets..."
+echo "$mangosHost" > mangos-host
+echo "$mangosPort" > mangos-port
+echo "$mangosUsername" > mangos-username
+echo "$mangosPassword" > mangos-password
 echo "$discordClientId" > discord-clientid
 echo "$discordSecretId" > discord-secretid
 echo "$discordBotToken" > discord-bottoken

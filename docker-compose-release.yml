@@ -26,6 +26,10 @@ services:
             context: .
             dockerfile: etc/docker/web-release.Dockerfile
         secrets:
+            - mangos-host
+            - mangos-port
+            - mangos-username
+            - mangos-password
             - discord-clientid
             - discord-clientsecret
             - discord-bottoken
@@ -40,6 +44,10 @@ services:
             - smtp-fromname
             - smtp-fromaddress
         environment:
+            - APPLICATION__MANGOSOPTIONS__HOST=/run/secrets/mangos-host
+            - APPLICATION__MANGOSOPTIONS__PORT=/run/secrets/mangos-port
+            - APPLICATION__MANGOSOPTIONS__USERNAME=/run/secrets/mangos-username
+            - APPLICATION__MANGOSOPTIONS__PASSWORD=/run/secrets/mangos-password
             - APPLICATION__DISCORDOPTIONS__CLIENTID=/run/secrets/discord-clientid
             - APPLICATION__DISCORDOPTIONS__SECRETID=/run/secrets/discord-clientsecret
             - APPLICATION__DISCORDOPTIONS__BOTTOKEN=/run/secrets/discord-bottoken
@@ -94,6 +102,14 @@ services:
 
 secrets:
 
+    mangos-host:
+        file: secrets/mangos-host
+    mangos-port:
+        file: secrets/mangos-port
+    mangos-username:
+        file: secrets/mangos-username
+    mangos-password:
+        file: secrets/mangos-password
     discord-clientid:
         file: secrets/discord-clientid
     discord-clientsecret:

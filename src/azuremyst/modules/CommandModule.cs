@@ -2,10 +2,15 @@
 using azuremyst.extensions;
 using azuremyst.models.enums;
 using azuremyst.models.users;
+using azuremyst.services.interfaces;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using SoapHttpClient;
+using SoapHttpClient.Enums;
+using System.Net;
+using System.Xml.Linq;
 
 namespace azuremyst.modules
 {
@@ -16,19 +21,22 @@ namespace azuremyst.modules
         readonly CommandService _commands;
         readonly IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
         readonly IDbContextFactory<CharacterDbContext> _character;
+        readonly ISoapService _soap;
 
         public CommandModule(
             IServiceProvider services,
             DiscordSocketClient client,
             CommandService commands,
             IDbContextFactory<DefaultDbContext> defaultDbContextFactory,
-            IDbContextFactory<CharacterDbContext> character)
+            IDbContextFactory<CharacterDbContext> character,
+            ISoapService soap)
         {
             _services = services;
             _client = client;
             _commands = commands;
             _defaultDbContextFactory = defaultDbContextFactory;
             _character = character;
+            _soap = soap;
         }
 
         readonly Random random = new Random();
@@ -74,13 +82,14 @@ namespace azuremyst.modules
             //character.Id = user.Id;
             //await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
             //await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
-            using var context = await _character.CreateDbContextAsync();
-            if (context.Characters != null)
-            {
-                var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
-                if (character != null)
-                    await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
-            }
+            //using var context = await _character.CreateDbContextAsync();
+            //if (context.Characters != null)
+            //{
+            //    var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
+            //    if (character != null)
+            //        await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
+            //}
+            await ReplyAsync(await _soap.TestAsync());
         }
 
         [Command("tip", RunMode = RunMode.Async)]

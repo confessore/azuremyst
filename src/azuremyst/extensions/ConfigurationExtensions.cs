@@ -43,5 +43,12 @@ namespace azuremyst.extensions
             configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(options);
             return Task.FromResult(options);
         }
+
+        public static Task<MangosOptions> BuildMangosOptionsAsync(this IConfiguration configuration)
+        {
+            var options = new MangosOptions();
+            configuration.GetSection("APPLICATION:MANGOSOPTIONS").Bind(options);
+            return Task.FromResult(options);
+        }
     }
 }

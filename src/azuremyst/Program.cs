@@ -18,7 +18,9 @@ using Serilog;
 using Serilog.Events;
 using System.Collections;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text;
 
 var executingAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
 var loggerConfig = new LoggerConfiguration()
@@ -53,8 +55,8 @@ var logsConnection = await configuration.BuildLogsConnectionStringAsync();
 var authConnection = await configuration.BuildAuthConnectionStringAsync();
 var characterConnection = await configuration.BuildCharacterConnectionStringAsync();
 var worldConnection = await configuration.BuildWorldConnectionStringAsync();
-var discordOptions = new DiscordOptions();
-configuration.GetSection("APPLICATION:DISCORDOPTIONS").Bind(discordOptions);
+var discordOptions = await configuration.BuildDiscordOptionsAsync();
+var mangosOptions = await configuration.BuildMangosOptionsAsync();
 var options = new WebApplicationOptions()
 {
     ApplicationName = executingAssemblyName,
@@ -196,19 +198,26 @@ builder.WebHost
         x.AddServerSideBlazor();
         x.AddControllers();
         x.AddHttpContextAccessor();
-        //x.AddHttpClient(
-        //    Assembly.GetCallingAssembly().GetName().Name,
-        //    x =>
-        //    {
-        //        //x.BaseAddress = new Uri("");
-        //        x.DefaultRequestHeaders.Add("User-Agent", "azuremyst");
-        //    });
+        x.AddHttpClient<ISoapService, SoapService>(
+            Assembly.GetExecutingAssembly().GetName().Name,
+            x =>
+            {
+                x.BaseAddress = new Uri($"http://{mangosOptions.Host.Trim()}:{mangosOptions.Port.Trim()}");
+                x.DefaultRequestHeaders.Add("User-Agent", "azuremyst");
+                x.DefaultRequestHeaders.Add("Authorization",
+                    "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(mangosOptions.Username.Trim(), ":", mangosOptions.Password.Trim()))));
+                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+                x.DefaultRequestHeaders.Add("Accept", "text/xml");
+                x.DefaultRequestHeaders.Add("Method", "POST");
+            });
         //x.AddScoped<RoleService>();
         //x.AddScoped<ArmoryService>();
         //x.AddHttpClient(Strings.CallingAssemblyName, client => client.BaseAddress = new Uri("http://localhost:5000"));
         //x.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(Strings.CallingAssemblyName));
         x.AddScoped<IAuthService, AuthService>();
         x.AddScoped<ILocalStorageService, LocalStorageService>();
+        x.AddSingleton(mangosOptions);
+        x.AddScoped<ISoapService, SoapService>();
         //x.AddScoped<IMarketService, MarketService>();
         //x.AddScoped<IAtomService, AtomService>();
         //x.AddScoped<IUserService, UserService>();
