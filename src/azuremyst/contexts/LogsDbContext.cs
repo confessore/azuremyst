@@ -1,6 +1,5 @@
 ﻿using azuremyst.models.logs;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace azuremyst.contexts
 {

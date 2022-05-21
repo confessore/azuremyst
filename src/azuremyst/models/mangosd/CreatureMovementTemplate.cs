@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace azuremyst.models.mangosd
+﻿namespace azuremyst.models.mangosd
 {
     /// <summary>
     /// Creature waypoint system

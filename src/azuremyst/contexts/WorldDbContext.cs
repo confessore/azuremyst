@@ -1,6 +1,5 @@
 ﻿using azuremyst.models.mangosd;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace azuremyst.contexts
 {

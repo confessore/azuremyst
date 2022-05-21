@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace azuremyst.models.realmd
+﻿namespace azuremyst.models.realmd
 {
     /// <summary>
     /// Last applied sql update to DB

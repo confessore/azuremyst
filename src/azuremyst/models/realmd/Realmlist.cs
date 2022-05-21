@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace azuremyst.models.realmd
+﻿namespace azuremyst.models.realmd
 {
     /// <summary>
     /// Realm System

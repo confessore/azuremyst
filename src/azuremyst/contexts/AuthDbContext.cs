@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using azuremyst.models.realmd;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using azuremyst.models.realmd;
 
 namespace azuremyst.contexts
 {

@@ -2,7 +2,8 @@
 {
     public interface ISoapService
     {
-        Task<string> TestAsync();
-        //Task<string> MailAsync(string name, int id);
+        Task<bool> SendItemAsync(string name, int id);
+        Task<string> ExecuteSOAPCommandAsync(string command);
+        Task<bool> ShutdownAsync();
     }
 }

@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using azuremyst.contexts;
-using azuremyst.models.logs;
+﻿using azuremyst.contexts;
 using azuremyst.models.options;
-using azuremyst.models.realmd;
 using azuremyst.services;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
+using System.Reflection;
 
 namespace azuremyst.extensions
 {
@@ -18,15 +13,19 @@ namespace azuremyst.extensions
     {
         public static async Task InitializeDiscordSocketClientAsync(this IApplicationBuilder app, DiscordOptions options)
         {
+            // need a better place for this. we're calling disposed objects with this nonsense.
+            // a scoped provider will not continue to live
+            // getting the required service from the scoped provider feels hacky
             using var scope = app.ApplicationServices.CreateScope();
-            var services = scope.ServiceProvider;
-            var logging = services.GetRequiredService<LoggingService>();
-            var messaging = services.GetRequiredService<MessageService>();
-            var commands = services.GetRequiredService<CommandService>();
+            var scopedServices = scope.ServiceProvider;
+            var logging = scopedServices.GetRequiredService<LoggingService>();
+            var messaging = scopedServices.GetRequiredService<MessageService>();
+            var commands = scopedServices.GetRequiredService<CommandService>();
+            var services = scopedServices.GetRequiredService<IServiceProvider>();
             await commands.AddModulesAsync(
                 Assembly.GetEntryAssembly(),
                 services);
-            var client = services.GetRequiredService<DiscordSocketClient>();
+            var client = scopedServices.GetRequiredService<DiscordSocketClient>();
             await client.LoginAsync(
                 TokenType.Bot,
                 options.BotToken);

@@ -3,7 +3,6 @@ using azuremyst.contexts;
 using azuremyst.extensions;
 using azuremyst.handlers;
 using azuremyst.models.abstractions;
-using azuremyst.models.options;
 using azuremyst.providers;
 using azuremyst.services;
 using azuremyst.services.interfaces;

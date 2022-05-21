@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace azuremyst.models.logs
+﻿namespace azuremyst.models.logs
 {
     public partial class LogsAnticheat
     {

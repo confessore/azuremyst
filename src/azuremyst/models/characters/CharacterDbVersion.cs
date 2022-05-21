@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace azuremyst.models.characters
+﻿namespace azuremyst.models.characters
 {
     /// <summary>
     /// Last applied sql update to DB

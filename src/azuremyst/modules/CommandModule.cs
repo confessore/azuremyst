@@ -1,16 +1,11 @@
 ﻿using azuremyst.contexts;
 using azuremyst.extensions;
 using azuremyst.models.enums;
-using azuremyst.models.users;
 using azuremyst.services.interfaces;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
-using SoapHttpClient;
-using SoapHttpClient.Enums;
-using System.Net;
-using System.Xml.Linq;
 
 namespace azuremyst.modules
 {
@@ -82,14 +77,39 @@ namespace azuremyst.modules
             //character.Id = user.Id;
             //await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
             //await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
-            //using var context = await _character.CreateDbContextAsync();
-            //if (context.Characters != null)
-            //{
-            //    var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
-            //    if (character != null)
-            //        await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
-            //}
-            await ReplyAsync(await _soap.TestAsync());
+            using var context = await _character.CreateDbContextAsync();
+            if (context.Characters != null)
+            {
+                var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
+                if (character != null)
+                    await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
+            }
+        }
+
+        [Command("senditem", RunMode = RunMode.Async)]
+        [Summary("bot: adds a specified item to a specified character" +
+            "\n >senditem")]
+        async Task SendItemAsync(string name, [Remainder] int id)
+        {
+            await RemoveCommandMessageAsync();
+            var result = await _soap.SendItemAsync(name, id);
+            if (result)
+                await ReplyAsync($"{id} sent to {name}");
+            else
+                await ReplyAsync($"something went wrong. blame booga 😂");
+        }
+
+        [Command("shutdown", RunMode = RunMode.Async)]
+        [Summary("bot: shuts down mangosd" +
+            "\n >sync")]
+        async Task ShutdownAsync()
+        {
+            await RemoveCommandMessageAsync();
+            var result = await _soap.ShutdownAsync();
+            if (result)
+                await ReplyAsync($"shutdown initiated");
+            else
+                await ReplyAsync($"something went wrong. blame booga 😂");
         }
 
         [Command("tip", RunMode = RunMode.Async)]
@@ -103,7 +123,7 @@ namespace azuremyst.modules
 
         [Command("grant", RunMode = RunMode.Async)]
         [Summary("bot: grants a user for exceptional distinguishment" +
-            "\n >grant" + 
+            "\n >grant" +
             "\n >grant feeram")]
         async Task GrantAsync([Remainder] string name)
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace azuremyst.models.logs
+﻿namespace azuremyst.models.logs
 {
     /// <summary>
     /// Last applied sql update to DB
