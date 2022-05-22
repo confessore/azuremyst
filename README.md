@@ -1,4 +1,9 @@
-# **azuremyst** 
+<a href="https://github.com/confessore/azuremyst">
+    <img src="https://raw.githubusercontent.com/confessore/azuremyst/main/src/azuremyst/wwwroot/images/azuremyst.png" height="200" />
+</a>
+
+&nbsp;
+
 ![open issues](https://img.shields.io/github/issues/confessore/azuremyst)
 ![forks](https://img.shields.io/github/forks/confessore/azuremyst)
 ![stars](https://img.shields.io/github/stars/confessore/azuremyst)
