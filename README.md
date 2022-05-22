@@ -1,4 +1,8 @@
 # **azuremyst** 
+![open issues](https://img.shields.io/github/issues/confessore/azuremyst)
+![forks](https://img.shields.io/github/forks/confessore/azuremyst)
+![stars](https://img.shields.io/github/stars/confessore/azuremyst)
+![license](https://img.shields.io/github/license/confessore/azuremyst)
 
 &nbsp;
 
