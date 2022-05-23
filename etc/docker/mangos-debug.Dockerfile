@@ -129,10 +129,10 @@ LABEL description="authserver"
 ARG DOCKER_USER=mangos
 
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/mangos/realmd.conf /azuremyst/src/mangos/run/etc/realmd.conf
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/realmd-entrypoint-debug.sh /azuremyst/scripts/realmd-entrypoint-debug.sh
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/realmd-entrypoint.sh /azuremyst/scripts/realmd-entrypoint.sh
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/realmd /azuremyst/src/mangos/run/bin/realmd
-RUN chmod +x /azuremyst/scripts/realmd-entrypoint-debug.sh
-ENTRYPOINT ["/azuremyst/scripts/realmd-entrypoint-debug.sh"]
+RUN chmod +x /azuremyst/scripts/realmd-entrypoint.sh
+ENTRYPOINT ["/azuremyst/scripts/realmd-entrypoint.sh"]
 
 #================================================================
 #
@@ -151,7 +151,7 @@ COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/db /azuremyst/src/db
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/mangos /azuremyst/src/mangos
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/db/InstallFullDB.config /azuremyst/src/db/InstallFullDB.config
 COPY --chown=$DOCKER_USER:$DOCKER_USER ./etc/mangos/mangosd.conf /azuremyst/src/mangos/run/etc/mangosd.conf
-COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/mangosd-entrypoint-debug.sh /azuremyst/scripts/mangosd-entrypoint-debug.sh
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./scripts/mangosd-entrypoint.sh /azuremyst/scripts/mangosd-entrypoint.sh
 COPY --chown=$DOCKER_USER:$DOCKER_USER --from=build /azuremyst/src/mangos/run/bin/mangosd /azuremyst/src/mangos/run/bin/mangosd
-RUN chmod +x /azuremyst/scripts/mangosd-entrypoint-debug.sh
-ENTRYPOINT ["/azuremyst/scripts/mangosd-entrypoint-debug.sh"]
+RUN chmod +x /azuremyst/scripts/mangosd-entrypoint.sh
+ENTRYPOINT ["/azuremyst/scripts/mangosd-entrypoint.sh"]
