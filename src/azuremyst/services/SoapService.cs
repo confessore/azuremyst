@@ -30,7 +30,7 @@ namespace azuremyst.services
 
         public async Task<bool> CreateAccountAsync(string name, string password)
         {
-            var command = $"account create {name} {password} 1";
+            var command = $"account create {name} {password}";
             return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
         }
 
@@ -42,7 +42,7 @@ namespace azuremyst.services
 
         public async Task<bool> SetGmLevelAsync(string name, int level)
         {
-            var command = $"account set gmlevel {name} {level} 1";
+            var command = $"account set gmlevel {name} {level}";
             return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
         }
 
