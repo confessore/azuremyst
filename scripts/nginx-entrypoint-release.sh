@@ -12,10 +12,17 @@ then
         -d azuremy.st \
         -d www.azuremy.st
     echo "SSL Certificate Generated!"
+    echo "Copying SSL Config..."
+    cp /nginx-release.conf /etc/nginx/nginx.conf
+    echo "SSL Config Copied!"
     echo "Reloading NGINX..."
     nginx -t && nginx -s reload
     echo "NGINX Reloaded!"
     service nginx stop
+else
+    echo "Copying SSL Config..."
+    cp /nginx-release.conf /etc/nginx/nginx.conf
+    echo "SSL Config Copied!"
 fi
 echo "Scheduling Cron Job..."
 echo "0 23 * * * root certbot -q renew --pre-hook='systemctl stop nginx' --post-hook='systemctl start nginx'" | crontab -
