@@ -112,6 +112,42 @@ namespace azuremyst.modules
                 await ReplyAsync($"something went wrong. blame booga 😂");
         }
 
+        [Command("setgmlevel", RunMode = RunMode.Async)]
+        [Summary("bot: sets gm level" +
+            "\n >setgmlevel")]
+        async Task SetGmLevelAsync(string name, [Remainder] int level)
+        {
+            await RemoveCommandMessageAsync();
+            if (await _soap.SetGmLevelAsync(name, level))
+                await ReplyAsync($"gm level on {name} set to {level}");
+            else
+                await ReplyAsync($"something went wrong. blame booga 😂");
+        }
+
+        [Command("createaccount", RunMode = RunMode.Async)]
+        [Summary("bot: creates an account with specified password" +
+            "\n >setgmlevel")]
+        async Task CreateAccountAsync(string name, [Remainder] string password)
+        {
+            await RemoveCommandMessageAsync();
+            if (await _soap.CreateAccountAsync(name, password))
+                await ReplyAsync($"account {name} created");
+            else
+                await ReplyAsync($"something went wrong. blame booga 😂");
+        }
+
+        [Command("setaddon", RunMode = RunMode.Async)]
+        [Summary("bot: sets addon expansion" +
+            "\n >setgmlevel")]
+        async Task SetAddonAsync(string name, [Remainder] int expansion)
+        {
+            await RemoveCommandMessageAsync();
+            if (await _soap.SetGmLevelAsync(name, expansion))
+                await ReplyAsync($"{name} addon set to {expansion}");
+            else
+                await ReplyAsync($"something went wrong. blame booga 😂");
+        }
+
         [Command("tip", RunMode = RunMode.Async)]
         [Summary("all: tips a user" +
             "\n >tip" +

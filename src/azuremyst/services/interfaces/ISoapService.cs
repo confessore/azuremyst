@@ -5,5 +5,10 @@
         Task<bool> SendItemAsync(string name, int id);
         Task<string> ExecuteSOAPCommandAsync(string command);
         Task<bool> ShutdownAsync();
+        Task<bool> CreateAccountAsync(string name, string password);
+
+        Task<bool> SetAddonAsync(string name, int expansion);
+
+        Task<bool> SetGmLevelAsync(string name, int level);
     }
 }

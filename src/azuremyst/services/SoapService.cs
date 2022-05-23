@@ -28,6 +28,24 @@ namespace azuremyst.services
             return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
         }
 
+        public async Task<bool> CreateAccountAsync(string name, string password)
+        {
+            var command = $"account create {name} {password} 1";
+            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+        }
+
+        public async Task<bool> SetAddonAsync(string name, int expansion)
+        {
+            var command = $"account set addon {name} {expansion}";
+            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+        }
+
+        public async Task<bool> SetGmLevelAsync(string name, int level)
+        {
+            var command = $"account set gmlevel {name} {level} 1";
+            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+        }
+
         public async Task<string> ExecuteSOAPCommandAsync(string command)
         {
             try
