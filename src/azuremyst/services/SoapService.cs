@@ -30,7 +30,7 @@ namespace azuremyst.services
 
         public async Task<bool> CreateAccountAsync(string name, string password)
         {
-            var command = $"account create {name} {password}";
+            var command = $"account create {name} {password} 3";
             return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
         }
 
