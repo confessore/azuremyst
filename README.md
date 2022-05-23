@@ -11,6 +11,49 @@
 
 &nbsp;
 
+azuremyst is a free project with the following goal:
+
+  **Doing Emulation Right!**
+
+this means, we want to focus on:
+
+* Doing
+  * This project is focused on developing software!
+  * Also there are many other aspects that need to be done and are
+    considered equally important.
+  * Anyone who wants to do stuff is very welcome to do so!
+
+* Emulation
+  * This project is about developing a server software that is able to
+    emulate a well known MMORPG service.
+
+* Right
+  * Our goal must always be to provide the best code that we can.
+  * Being 'right' is defined by the behaviour of the system
+    we want to emulate.
+  * Developing things right also includes documenting and discussing
+    _how_ to do things better, hence...
+  * Learning and teaching are very important in our view, and must
+    always be a part of what we do.
+
+To be able to accomplish these goals, we support and promote:
+
+* Freedom
+  * of our work: Our work - including our code - is released under the GPL.
+    So everybody is free to use and contribute to this open source project.
+  * for our developers and contributors on things that interest them.
+    No one here is telling anybody _what_ to do.
+    If you want somebody to do something for you, pay them,
+    but we are here to enjoy.
+  * to have FUN with developing.
+
+* A friendly environment
+  * We try to leave personal issues behind us.
+  * We only argue about content and not about thin air!
+  * We follow the [Netiquette](http://tools.ietf.org/html/rfc1855).
+
+-- the azuremyst team!
+
 this deployment guide is tailored for debian based operating systems
 and always a work in progress
 
