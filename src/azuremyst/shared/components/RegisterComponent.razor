@@ -1,0 +1,122 @@
+﻿@inject SignInManager<User> _signInManager;
+@inject UserManager<User> _userManager;
+@inject IUserStore<User> _userStore;
+@inject NavigationManager _navigationManager;
+@inject IHostEnvironmentAuthenticationStateProvider _hostEnvironmentAuthenticationStateProvider;
+@inject IAuthService _authService;
+@inject IEmailSender _emailSender;
+@inject ISoapService _soapService;
+@inject IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
+@inject IDbContextFactory<AuthDbContext> _authDbContextFactory;
+
+<div class="container my-1 py-1">
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center mt-1 pt-1">
+            <h1 class="text-center">register</h1>
+        </div>
+        <div class="d-flex justify-content-center my-1 py-1">
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center">
+                    @model.Feedback
+                </div>
+                <div class="d-flex justify-content-center">
+                    <UsernameInput Validate=true @bind-Username="model.Username" @bind-InputValid="model.UsernameValid" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <EmailInput Validate=true @bind-Email="model.Email" @bind-InputValid="model.EmailValid" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <PasswordInput Validate=true @bind-Password="model.Password" @bind-InputValid="model.PasswordValid" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary m-1" @onclick="async () => await OnClickedAsync()">register</button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mb-1 pb-1">
+            <a class="btn btn-secondary m-1" href="/login">have account?</a>
+            <a class="btn btn-secondary m-1" href="/reset">can't log in?</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    PageModel model = new();
+
+    class PageModel
+    {
+        public bool Initialized { get; set; }
+        public bool PasswordVisible { get; set; }
+        public bool UsernameValid { get; set; }
+        public bool EmailValid { get; set; }
+        public bool PasswordValid { get; set; }
+        public string? Feedback { get; set; }
+
+        string? username;
+        public string? Username { get => username ??= string.Empty; set => username = value; }
+
+        string? email;
+        public string? Email { get => email ??= string.Empty; set => email = value; }
+
+        string? password;
+        public string? Password { get => password ??= string.Empty; set => password = value; }
+
+        string? passwordConfirm;
+        public string? PasswordConfirm { get => passwordConfirm ??= string.Empty; set => passwordConfirm = value; }
+    }
+
+    protected override void OnInitialized()
+    {
+        model.Initialized = true;
+    }
+
+    async Task OnClickedAsync()
+    {
+        if (model.UsernameValid && model.EmailValid && model.PasswordValid)
+        {
+            using var authContext = await _authDbContextFactory.CreateDbContextAsync();
+            if (authContext.Accounts != null)
+            {
+                if (await authContext.Accounts.AnyAsync(x => x.Username.ToUpper() == model.Username.ToUpper()))
+                {
+                    model.Feedback = "this username already exists";
+                    return;
+                }
+            }
+            using var defaultContext = await _defaultDbContextFactory.CreateDbContextAsync();
+            if (defaultContext.Users != null)
+            {
+                if (await defaultContext.Users.AnyAsync(x => x.Email.ToUpper() == model.Email.ToUpper()))
+                {
+                    model.Feedback = "this email already exists";
+                    return;
+                }
+                else
+                {
+                    if (await _soapService.CreateAccountAsync(model.Username, model.Password))
+                    {
+                        var account = await authContext.Accounts.FirstOrDefaultAsync(x => x.Username == model.Username.ToUpper());
+                        if (account != null)
+                        {
+                            var user = new DefaultUser()
+                            {
+                                Email = model.Email.ToUpper(),
+                                UserName = model.Username.ToUpper(),
+                                Account = account,
+                                AccountId = account.Id
+                            };
+                            var result = await _userManager.CreateAsync(user, model.Password);
+                            if (result.Succeeded)
+                            {
+                                _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
+                                _navigationManager.NavigateTo("/");
+                            }
+                        }
+                    }
+                    else
+                        model.Feedback = "something went wrong. please wait a second before trying again...";
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@
 <div class="container my-1 py-1">
     <div class="d-flex justify-content-center">
         <div class="input-group">
-            <input type="email" class="@InputClass" placeholder="email" @oninput="async args => { await OnEmailChangedAsync(args); }" />
+            <input type="username" class="@InputClass" placeholder="username" @oninput="async args => { await OnUsernameChangedAsync(args); }" />
             <div class="@FeedbackClass">
                 @FeedbackContent
             </div>
@@ -14,9 +14,9 @@
 
 @code{
     [Parameter]
-    public string? Email { get; set; } 
+    public string? Username { get; set; } 
     [Parameter]
-    public EventCallback<string?> EmailChanged { get; set; }
+    public EventCallback<string?> UsernameChanged { get; set; }
     [Parameter]
     public bool Validate { get; set; }
     [Parameter]
@@ -28,7 +28,7 @@
 
     class Model
     {
-        public string? Email { get; set; }
+        public string? Username { get; set; }
         public bool InputValid { get; set; }
     }
 
@@ -45,23 +45,23 @@
     string? FeedbackClass =>
         model.InputValid ? "valid-feedback" : "invalid-feedback";
     string? FeedbackContent =>
-        model.InputValid ? "looks good!" : "should be an email address";
+        model.InputValid ? "looks good!" : "at least 6 letters and numbers only";
 
-    public async Task OnEmailChangedAsync(ChangeEventArgs args)
+    public async Task OnUsernameChangedAsync(ChangeEventArgs args)
     {
         var value = args.Value != null ? (string)args.Value : string.Empty;
-        model.Email = Email = value;
-        await EmailChanged.InvokeAsync(Email);
+        model.Username = Username = value;
+        await UsernameChanged.InvokeAsync(Username);
         await UpdateValidityAsync();
     }
 
     async Task UpdateValidityAsync()
     {
-        if (!string.IsNullOrEmpty(model.Email))
+        if (!string.IsNullOrEmpty(model.Username))
         {
             try
             {
-                var valid = model.Email == new MailAddress(model.Email).Address;
+                var valid = Regex.Match(model.Username, @"^(?=\S{5,})[a-zA-Z0-9]*$").Success;
                 model.InputValid = InputValid = valid;
             }
             catch

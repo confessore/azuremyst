@@ -12,7 +12,3 @@ date=$(date '+%H-%M-%S_%d-%m-%Y')
 
 dotnet ef migrations add _"$date" --context DefaultDbContext
 dotnet ef migrations add _"$date" --context KeyDbContext
-dotnet ef migrations add _"$date" --context LogsDbContext
-dotnet ef migrations add _"$date" --context AuthDbContext
-dotnet ef migrations add _"$date" --context CharacterDbContext
-dotnet ef migrations add _"$date" --context WorldDbContext
