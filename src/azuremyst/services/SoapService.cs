@@ -30,7 +30,8 @@ namespace azuremyst.services
 
         public async Task<bool> CreateAccountAsync(string name, string password)
         {
-            var command = $"account create {name.ToUpper()} {password.ToUpper()}";
+            // has optional tbc expansion at end
+            var command = $"account create {name} {password} 1";
             return await ExecuteSOAPCommandAsync(command);
         }
 

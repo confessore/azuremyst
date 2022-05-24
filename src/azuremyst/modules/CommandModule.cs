@@ -60,7 +60,7 @@ namespace azuremyst.modules
         [Command("nick", RunMode = RunMode.Async)]
         [Summary("all: change your nick" +
             "\n >nick 'your nick here'")]
-        async Task NickAsync([Remainder] string name)
+        async Task NickAsync(string name)
         {
             await RemoveCommandMessageAsync();
             await _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id).ModifyAsync(x => x.Nickname = name);
@@ -89,7 +89,7 @@ namespace azuremyst.modules
         [Command("senditem", RunMode = RunMode.Async)]
         [Summary("bot: adds a specified item to a specified character" +
             "\n >senditem")]
-        async Task SendItemAsync(string name, [Remainder] int id)
+        async Task SendItemAsync(string name, int id)
         {
             await RemoveCommandMessageAsync();
             var result = await _soap.SendItemAsync(name, id);
@@ -115,7 +115,7 @@ namespace azuremyst.modules
         [Command("setgm", RunMode = RunMode.Async)]
         [Summary("bot: sets gm level 0:player 1:mod 2:gm 3:admin" +
             "\n >setgmlevel")]
-        async Task SetGmAsync(string name, [Remainder] int level)
+        async Task SetGmAsync(string name, int level)
         {
             await RemoveCommandMessageAsync();
             if (await _soap.SetGmLevelAsync(name, level))
@@ -139,7 +139,7 @@ namespace azuremyst.modules
         [Command("setaddon", RunMode = RunMode.Async)]
         [Summary("bot: sets addon expansion (1 for tbc)" +
             "\n >setaddon")]
-        async Task SetAddonAsync(string name, [Remainder] int expansion)
+        async Task SetAddonAsync(string name, int expansion)
         {
             await RemoveCommandMessageAsync();
             if (await _soap.SetAddonAsync(name, expansion))
