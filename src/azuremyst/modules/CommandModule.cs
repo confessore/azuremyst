@@ -127,7 +127,7 @@ namespace azuremyst.modules
         [Command("createaccount", RunMode = RunMode.Async)]
         [Summary("bot: creates an account with specified password" +
             "\n >setgmlevel")]
-        async Task CreateAccountAsync(string name, [Remainder] string password)
+        async Task CreateAccountAsync(string name, string password)
         {
             await RemoveCommandMessageAsync();
             if (await _soap.CreateAccountAsync(name, password))
