@@ -1,0 +1,38 @@
+﻿<nav class="navbar navbar-light w-100">
+    <a class="navbar-brand mx-1" href="/">
+        <img src="/images/azuremyst_base.png" alt="" width="30" height="24" class="d-inline-block align-text-top" style="border-radius: 50%;" />
+        @Assembly.GetExecutingAssembly().GetName().Name
+    </a>
+    <div class="mx-1">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel" class="px-3">menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">  
+            <div class="navbar-nav m-1 p-1">
+                <NavItem Title="home" Icon="home" Active="true" />
+                @*<NavItem Title="services" Icon="script" />
+                <NavItem Title="technologies" Icon="compass" />
+                <NavItem Title="showcase" Icon="monitor" />
+                <NavItem Title="about" Icon="infinity" />
+                <NavItem Title="contact" Icon="envelope-open" />
+                <NavItem Title="cart" Icon="cart" />*@
+                <AuthorizeView>
+                    <Authorized>
+                        <NavItem Title="account" Icon="aperture" />
+                        <LogoutNavItem />
+                    </Authorized>
+                    <NotAuthorized>
+                        <NavItem Title="register" Icon="flag" />
+                        <NavItem Title="login" Icon="account-login" />
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
+</nav>

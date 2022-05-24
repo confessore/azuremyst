@@ -1,0 +1,26 @@
+﻿@using azuremyst.models.users;
+@using azuremyst.services.interfaces;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Components.Web;
+@using System.Security.Claims;
+@inject IHostEnvironmentAuthenticationStateProvider _hostEnvironmentAuthenticationStateProvider;
+@inject ILocalStorageService _localStorageService;
+
+<div class="nav-item p-3">
+    <NavLink class="nav-link" href="/" @onclick="OnClickedAsync" data-bs-dismiss="offcanvas">
+        <span class="oi oi-account-logout pe-3" aria-hidden="true"></span>
+        logout
+    </NavLink>
+</div>
+
+@code{
+        async Task OnClickedAsync()
+        {
+            var identity = new ClaimsIdentity();
+            var principal = new ClaimsPrincipal(identity);
+            var authenticationState = new AuthenticationState(principal);
+            var task = Task.FromResult(authenticationState);
+            await _localStorageService.DeleteDefaultUserAsync();
+            _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(task);
+        }
+}

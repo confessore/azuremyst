@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Components.Routing;
+
+<div class="nav-item p-3">
+    <NavLink class="@BuildNavLink()" href="@BuildHref()" data-bs-dismiss="offcanvas">
+        <span class="@BuildSpan()" aria-hidden="true"></span>
+        @Title
+    </NavLink>
+</div>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public string? Icon { get; set; }
+    [Parameter]
+    public bool Active { get; set; }
+
+    string BuildHref() =>
+        Title != "home" ? $"/{Title}" : "/";
+
+    string BuildSpan() =>
+        $"oi oi-{Icon} pe-3";
+
+    string BuildNavLink() =>
+        Active ? "nav-link active" : "nav-link";
+}
