@@ -30,7 +30,11 @@ namespace azuremyst.extensions
                 TokenType.Bot,
                 options.BotToken);
             await client.StartAsync();
+#if DEBUG
+            await client.SetGameAsync("'<help' for commands");
+#elif RELEASE
             await client.SetGameAsync("'>help' for commands");
+#endif
         }
 
         public static async Task<WebApplication> MigrateDefaultDbContextAsync(this WebApplication webApplication)

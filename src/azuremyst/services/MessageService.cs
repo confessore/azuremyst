@@ -27,7 +27,11 @@ namespace azuremyst.services
             var tmp = (SocketUserMessage)msg;
             if (tmp == null) return;
             var pos = 0;
+#if DEBUG
+            if (!(tmp.HasCharPrefix('<', ref pos) ||
+#elif RELEASE
             if (!(tmp.HasCharPrefix('>', ref pos) ||
+#endif
                 tmp.HasMentionPrefix(_client.CurrentUser, ref pos)) ||
                 tmp.Author.IsBot)
                 return;
