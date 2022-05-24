@@ -19,34 +19,34 @@ namespace azuremyst.services
 
         public async Task<bool> SendItemAsync(string name, int id)
         {
-            var command = $"send items {name} \"azuremy.st\" \" - the letter glows faintly...\" {id}";
-            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+            var command = $"send items {name.ToUpper()} \"azuremy.st\" \" - the letter glows faintly...\" {id}";
+            return await ExecuteSOAPCommandAsync(command);
         }
         public async Task<bool> ShutdownAsync()
         {
             var command = $"server shutdown 5";
-            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+            return await ExecuteSOAPCommandAsync(command);
         }
 
         public async Task<bool> CreateAccountAsync(string name, string password)
         {
-            var command = $"account create {name} {password}";
-            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+            var command = $"account create {name.ToUpper()} {password.ToUpper()}";
+            return await ExecuteSOAPCommandAsync(command);
         }
 
         public async Task<bool> SetAddonAsync(string name, int expansion)
         {
-            var command = $"account set addon {name} {expansion}";
-            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+            var command = $"account set addon {name.ToUpper()} {expansion}";
+            return await ExecuteSOAPCommandAsync(command);
         }
 
         public async Task<bool> SetGmLevelAsync(string name, int level)
         {
-            var command = $"account set gmlevel {name} {level}";
-            return !string.IsNullOrEmpty(await ExecuteSOAPCommandAsync(command));
+            var command = $"account set gmlevel {name.ToUpper()} {level}";
+            return await ExecuteSOAPCommandAsync(command);
         }
 
-        public async Task<string> ExecuteSOAPCommandAsync(string command)
+        public async Task<bool> ExecuteSOAPCommandAsync(string command)
         {
             try
             {
@@ -56,14 +56,14 @@ namespace azuremyst.services
                 if (result.IsSuccessStatusCode)
                 {
                     using var reader = new StreamReader(await result.Content.ReadAsStreamAsync());
-                    return await reader.ReadToEndAsync();
+                    return !string.IsNullOrEmpty(await reader.ReadToEndAsync());
                 }
-                return string.Empty;
+                return false;
             }
             catch (Exception)
             {
                 Log.Error("soap command failed...");
-                return string.Empty;
+                return false;
             }
         }
 

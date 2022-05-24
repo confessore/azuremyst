@@ -3,7 +3,7 @@
     public interface ISoapService
     {
         Task<bool> SendItemAsync(string name, int id);
-        Task<string> ExecuteSOAPCommandAsync(string command);
+        Task<bool> ExecuteSOAPCommandAsync(string command);
         Task<bool> ShutdownAsync();
         Task<bool> CreateAccountAsync(string name, string password);
 
