@@ -1,11 +1,11 @@
 #!/bin/sh
 
 read -p "please enter the mangos host: " mangosHost
-read -p "please enter the mangos port: " mangosPort
+read -p "please enter the mangos soap port: " mangosPort
 read -p "please enter the mangos username: " mangosUsername
 read -p "please enter the mangos password: " mangosPassword
 read -p "please enter the discord client id: " discordClientId
-read -p "please enter the discord secret id: " discordSecretId
+read -p "please enter the discord client secret: " discordClientSecret
 read -p "please enter the discord bot token: " discordBotToken
 read -p "please enter the sql server address (example - 'mariadb' for docker-compose): " sqlServer
 read -p "please enter the sql root password: " sqlPasswordRoot
@@ -33,7 +33,7 @@ echo "$mangosPort" > mangos-port
 echo "$mangosUsername" > mangos-username
 echo "$mangosPassword" > mangos-password
 echo "$discordClientId" > discord-clientid
-echo "$discordSecretId" > discord-secretid
+echo "$discordClientSecret" > discord-clientsecret
 echo "$discordBotToken" > discord-bottoken
 echo "$sqlServer" > sql-server
 echo "$sqlPasswordRoot" > sql-password-root
