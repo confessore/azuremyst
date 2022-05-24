@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -56,6 +57,7 @@ var characterConnection = await configuration.BuildCharacterConnectionStringAsyn
 var worldConnection = await configuration.BuildWorldConnectionStringAsync();
 var discordOptions = await configuration.BuildDiscordOptionsAsync();
 var mangosOptions = await configuration.BuildMangosOptionsAsync();
+var smtpOptions = await configuration.BuildSmtpOptionsAsync();
 var options = new WebApplicationOptions()
 {
     ApplicationName = executingAssemblyName,
@@ -216,6 +218,8 @@ builder.WebHost
         x.AddScoped<IAuthService, AuthService>();
         x.AddScoped<ILocalStorageService, LocalStorageService>();
         x.AddScoped<ISoapService, SoapService>();
+        x.AddSingleton(smtpOptions);
+        x.AddScoped<IEmailSender, EmailSender>();
         //x.AddScoped<IMarketService, MarketService>();
         //x.AddScoped<IAtomService, AtomService>();
         //x.AddScoped<IUserService, UserService>();

@@ -37,6 +37,13 @@ namespace azuremyst.extensions
         public static async Task<string> BuildWorldConnectionStringAsync(this IConfiguration configuration) =>
             await configuration.BuildConnectionStringAsync("mangos");
 
+        public static Task<SmtpOptions> BuildSmtpOptionsAsync(this IConfiguration configuration)
+        {
+            var options = new SmtpOptions();
+            configuration.GetSection("APPLICATION:SMTPOPTIONS").Bind(options);
+            return Task.FromResult(options);
+        }
+
         public static Task<DiscordOptions> BuildDiscordOptionsAsync(this IConfiguration configuration)
         {
             var options = new DiscordOptions();

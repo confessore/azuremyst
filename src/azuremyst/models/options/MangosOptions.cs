@@ -1,6 +1,6 @@
 ﻿namespace azuremyst.models.options
 {
-    public class MangosOptions
+    sealed class MangosOptions
     {
         public string? Username { get; set; }
         public string? Password { get; set; }

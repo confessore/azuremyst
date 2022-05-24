@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using System.Text.RegularExpressions;
+
+<div class="container my-1 py-1">
+    <div class="d-flex justify-content-center">
+        <div class="input-group">
+            <input type="email" class="@InputClass" placeholder="email" @onchange="async args => { await OnEmailChangedAsync(args); }" />
+            <div class="@FeedbackClass">
+                @FeedbackContent
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public string? Email { get; set; } 
+    [Parameter]
+    public EventCallback<string> EmailChanged { get; set; }
+    [Parameter]
+    public bool Validate { get; set; }
+
+    Model model = new();
+
+    class Model
+    {
+        public string? Email { get; set; }
+        public bool InputValid { get; set; }
+    }
+
+    string? InputClass
+    {
+        get
+        {
+            if (Validate)
+                return model.InputValid ? "form-control is-valid" : "form-control is-invalid";
+            return "form-control";
+        }
+    }
+
+    string? FeedbackClass =>
+        model.InputValid ? "valid-feedback" : "invalid-feedback";
+    string? FeedbackContent =>
+        model.InputValid ? "looks good!" : "should be an email address here";
+
+    public async Task OnEmailChangedAsync(ChangeEventArgs args)
+    {
+        var value = args.Value != null ? (string)args.Value : string.Empty;
+        model.Email = Email = value;
+        await EmailChanged.InvokeAsync(Email);
+    }
+
+    void UpdateValidity()
+    {
+        if (!string.IsNullOrEmpty(model.Email))
+            model.InputValid = Regex.Match(model.Email, @"^[a-zA-Z]*$").Success;
+        else
+            model.InputValid = false;
+    }
+}
+

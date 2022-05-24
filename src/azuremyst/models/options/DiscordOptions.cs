@@ -1,6 +1,6 @@
 ﻿namespace azuremyst.models.options
 {
-    public class DiscordOptions
+    sealed class DiscordOptions
     {
         public string? ClientId { get; set; }
         public string? ClientSecret { get; set; }

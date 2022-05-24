@@ -1,0 +1,70 @@
+﻿@inject NavigationManager _navigationManager;
+@inject IHostEnvironmentAuthenticationStateProvider _hostEnvironmentAuthenticationStateProvider;
+@inject IAuthService _authService;
+
+<div class="container my-1 py-1">
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center mt-1 pt-1">
+            <h1 class="text-center">login</h1>
+        </div>
+        <div class="d-flex justify-content-center my-1 py-1">
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center">
+                    <EmailInput @bind-Email="model.Email" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <PasswordInput @bind-Password="model.Password" />
+                </div>
+                <div class="d-flex justify-content-center my-1 py-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label">
+                        remember me?
+                        </label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary m-1" @onclick="async () => await OnClickedAsync()">login</button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mb-1 pb-1">
+            <a class="btn btn-secondary m-1" href="/register">need account?</a>
+            <a class="btn btn-secondary m-1" href="/reset">can't log in?</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    PageModel model = new();
+
+    class PageModel
+    {
+        public bool Initialized { get; set; }
+
+        string? email;
+        public string? Email { get => email ??= string.Empty; set => email = value; }
+
+        string? password;
+        public string? Password { get => password ??= string.Empty; set => password = value; }
+
+        public bool RememberMe { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        model.Initialized = true;
+    }
+
+    async Task OnClickedAsync()
+    {
+        if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Password))
+        {
+            if (await _authService.PasswordAuthenticateAsync(model.Email ?? string.Empty, model.Password ?? string.Empty))
+            {
+                _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
+                _navigationManager.NavigateTo("/");
+            }
+        }
+    }
+}

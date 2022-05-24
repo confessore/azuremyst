@@ -12,6 +12,7 @@
 		<PackageReference Include="Discord.Net.WebSocket" Version="3.6.1" />
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
 			<PrivateAssets>all</PrivateAssets>
@@ -24,5 +25,9 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 		<PackageReference Include="SoapCore" Version="1.1.0.29" />
 		<PackageReference Include="SoapHttpClient" Version="3.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="shared\components\" />
 	</ItemGroup>
 </Project>
