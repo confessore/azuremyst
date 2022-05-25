@@ -4,7 +4,7 @@
 @inject NavigationManager _navigationManager;
 @inject IHostEnvironmentAuthenticationStateProvider _hostEnvironmentAuthenticationStateProvider;
 @inject IAuthService _authService;
-@inject IEmailSender _emailSender;
+@inject IEmailService _emailService;
 @inject ISoapService _soapService;
 @inject IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
 @inject IDbContextFactory<AuthDbContext> _authDbContextFactory;
@@ -70,6 +70,7 @@
         model.Initialized = true;
     }
 
+    // modularize this disgusting if/else nightmare
     async Task OnClickedAsync()
     {
         if (model.UsernameValid && model.EmailValid && model.PasswordValid)
@@ -77,46 +78,55 @@
             using var authContext = await _authDbContextFactory.CreateDbContextAsync();
             if (authContext.Accounts != null)
             {
-                if (await authContext.Accounts.AnyAsync(x => x.Username.ToUpper() == model.Username.ToUpper()))
+                if (await authContext.Accounts.AnyAsync(x => x.Username.ToUpper() == model.Username!.ToUpper()))
                 {
                     model.Feedback = "this username already exists";
                     return;
                 }
-            }
-            using var defaultContext = await _defaultDbContextFactory.CreateDbContextAsync();
-            if (defaultContext.Users != null)
-            {
-                if (await defaultContext.Users.AnyAsync(x => x.Email.ToUpper() == model.Email.ToUpper()))
+                using var defaultContext = await _defaultDbContextFactory.CreateDbContextAsync();
+                if (defaultContext.Users != null)
                 {
-                    model.Feedback = "this email already exists";
-                    return;
-                }
-                else
-                {
-                    if (await _soapService.CreateAccountAsync(model.Username, model.Password))
+                    if (await defaultContext.Users.AnyAsync(x => x.Email.ToUpper() == model.Email!.ToUpper()))
                     {
-                        var account = await authContext.Accounts.FirstOrDefaultAsync(x => x.Username == model.Username.ToUpper());
-                        if (account != null)
-                        {
-                            var user = new DefaultUser()
-                            {
-                                Email = model.Email.ToUpper(),
-                                UserName = model.Username.ToUpper(),
-                                Account = account,
-                                AccountId = account.Id
-                            };
-                            var result = await _userManager.CreateAsync(user, model.Password);
-                            if (result.Succeeded)
-                            {
-                                _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
-                                _navigationManager.NavigateTo("/");
-                            }
-                        }
+                        model.Feedback = "this email already exists";
+                        return;
                     }
                     else
-                        model.Feedback = "something went wrong. please wait a second before trying again...";
+                    {
+                        if (await _soapService.CreateAccountAsync(model.Username!, model.Password!))
+                        {
+                            var account = await authContext.Accounts.FirstOrDefaultAsync(x => x.Username == model.Username.ToUpper());
+                            if (account != null)
+                            {
+                                var user = new DefaultUser()
+                                {
+                                    Email = model.Email!.ToUpper(),
+                                    UserName = model.Username!.ToUpper(),
+                                    Account = account,
+                                    AccountId = account.Id
+                                };
+                                var result = await _userManager.CreateAsync(user, model.Password);
+                                if (result.Succeeded)
+                                {
+                                    await _emailService.SendEmailAsync(model.Email!, "bruh", "bruh");
+                                    _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
+                                    _navigationManager.NavigateTo("/");
+                                }
+                                else
+                                    model.Feedback = "identity creation failed. please wait a second before trying again...";
+                            }
+                            else
+                                model.Feedback = "mangos creation failed. please wait a second before trying again...";
+                        }
+                        else
+                            model.Feedback = "something went wrong. please wait a second before trying again...";
+                    }
                 }
             }
+            else
+                model.Feedback = "accounts were not ready. please wait a second before trying again...";
         }
+        else
+            model.Feedback = "validation failed";
     }
 }

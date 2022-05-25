@@ -12,11 +12,11 @@ read -p "please enter the sql root password: " sqlPasswordRoot
 read -p "please enter the sql username (example - 'root'): " sqlUsername
 read -p "please enter the sql password: " sqlPassword
 read -p "please enter the sql database name (example - 'justchooseanydbname'): " sqlDatabase
-read -p "please enter the smtp host address (example -'mail.privateemail.com' for namecheap): " smtpHost
-read -p "please enter the smtp port (example - '465' for namecheap): " smtpPort
+read -p "please enter the smtp host address (example -'mail.gandi.net' for gandi): " smtpHost
+read -p "please enter the smtp port (example - '465' for ssl): " smtpPort
 read -p "please enter the smtp username (example 'noreply@example.com'): " smtpUsername
 read -p "please enter the smtp password: " smtpPassword
-read -p "please enter the smtp from name (example - 'Elon Musk'): " smtpFromName
+read -p "please enter the smtp from name (example - 'azuremyst'): " smtpFromName
 read -p "please enter the smtp from address (example - 'noreply@example.com'): " smtpFromAddress
 if [ "$(dirname $0)" = "." ]
 then

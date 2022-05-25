@@ -55,12 +55,12 @@ services:
             - APPLICATION__SQLCLIENTOPTIONS__USERNAME=/run/secrets/sql-username
             - APPLICATION__SQLCLIENTOPTIONS__PASSWORD=/run/secrets/sql-password
             - APPLICATION__SQLCLIENTOPTIONS__DATABASE=/run/secrets/sql-database
-            - APPLICATION__SMTPCLIENTOPTIONS__HOST=/run/secrets/smtp-host
-            - APPLICATION__SMTPCLIENTOPTIONS__PORT=/run/secrets/smtp-port
-            - APPLICATION__SMTPCLIENTOPTIONS__USERNAME=/run/secrets/smtp-username
-            - APPLICATION__SMTPCLIENTOPTIONS__PASSWORD=/run/secrets/smtp-password
-            - APPLICATION__SMTPCLIENTOPTIONS__FROMNAME=/run/secrets/smtp-fromname
-            - APPLICATION__SMTPCLIENTOPTIONS__FROMADDRESS=/run/secrets/smtp-fromaddress
+            - APPLICATION__SMTPOPTIONS__HOST=/run/secrets/smtp-host
+            - APPLICATION__SMTPOPTIONS__PORT=/run/secrets/smtp-port
+            - APPLICATION__SMTPOPTIONS__USERNAME=/run/secrets/smtp-username
+            - APPLICATION__SMTPOPTIONS__PASSWORD=/run/secrets/smtp-password
+            - APPLICATION__SMTPOPTIONS__FROMNAME=/run/secrets/smtp-fromname
+            - APPLICATION__SMTPOPTIONS__FROMADDRESS=/run/secrets/smtp-fromaddress
         restart: always
 
     nginx:
