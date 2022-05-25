@@ -108,9 +108,9 @@
                                 var result = await _userManager.CreateAsync(user, model.Password);
                                 if (result.Succeeded)
                                 {
-                                    await _emailService.SendEmailAsync(model.Email!, "bruh", "bruh");
                                     _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
                                     _navigationManager.NavigateTo("/");
+                                    await _emailService.SendEmailAsync(model.Email!, "bruh", "bruh");
                                 }
                                 else
                                     model.Feedback = "identity creation failed. please wait a second before trying again...";
