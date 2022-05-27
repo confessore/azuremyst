@@ -11,7 +11,7 @@ using azuremyst.contexts;
 namespace azuremyst.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20220524231841_init")]
+    [Migration("20220527202332_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -348,6 +348,13 @@ namespace azuremyst.Migrations
                     b.HasBaseType("azuremyst.models.abstractions.Token");
 
                     b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("azuremyst.models.tokens.ConfirmationToken", b =>
+                {
+                    b.HasBaseType("azuremyst.models.abstractions.Token");
+
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("azuremyst.models.tokens.DefaultToken", b =>

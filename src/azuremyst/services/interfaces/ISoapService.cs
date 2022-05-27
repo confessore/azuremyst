@@ -10,5 +10,8 @@
         Task<bool> SetAddonAsync(string name, int expansion);
 
         Task<bool> SetGmLevelAsync(string name, int level);
+        Task<bool> SetPasswordAsync(string accountId, string newPassword);
+        Task<bool> AccountsInitializedAsync();
+        Task<bool> RealmlistsInitializedAsync();
     }
 }

@@ -1,10 +1,12 @@
 ﻿using azuremyst.contexts;
 using azuremyst.models.options;
 using azuremyst.services;
+using azuremyst.services.interfaces;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Reflection;
 
 namespace azuremyst.extensions
@@ -35,6 +37,26 @@ namespace azuremyst.extensions
 #elif RELEASE
             await client.SetGameAsync("'>help' for commands");
 #endif
+        }
+
+        public static async Task<WebApplication> InitializeRealmdAsync(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ISoapService>();
+            _ = Task.Run(async () =>
+            {
+                while (!await context.AccountsInitializedAsync())
+                {
+                    Log.Warning("problem with account initialization. waiting 5 seconds");
+                    await Task.Delay(5000);
+                }
+                while (!await context.RealmlistsInitializedAsync())
+                {
+                    Log.Warning("problem with realmlist initialization. waiting 5 seconds");
+                    await Task.Delay(5000);
+                }
+            });
+            return webApplication;
         }
 
         public static async Task<WebApplication> MigrateDefaultDbContextAsync(this WebApplication webApplication)

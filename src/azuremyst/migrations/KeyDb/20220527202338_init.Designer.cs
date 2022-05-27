@@ -10,7 +10,7 @@ using azuremyst.contexts;
 namespace azuremyst.Migrations.KeyDb
 {
     [DbContext(typeof(KeyDbContext))]
-    [Migration("20220524231847_init")]
+    [Migration("20220527202338_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
