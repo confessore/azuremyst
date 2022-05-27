@@ -180,7 +180,7 @@ namespace azuremyst.modules
 
         async Task WarningAsync()
         {
-            await ReplyAsync($"something went wrong. blame booga 😂");
+            await ReplyAsync($"something went wrong. blame ducks 🦆🦆🦆");
         }
     }
 }

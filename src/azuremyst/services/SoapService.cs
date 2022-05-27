@@ -45,12 +45,6 @@ namespace azuremyst.services
             return await ExecuteSOAPCommandAsync(command);
         }
 
-        async Task<bool> InitAdministratorAccountsAsync()
-        {
-            var command = $"account set password 1 {_options.Password}";
-            return await ExecuteSOAPCommandAsync(command, "administrator", "administrator");
-        }
-
         public async Task<bool> SetPasswordAsync(string accountId, string newPassword)
         {
             // id or name
@@ -70,30 +64,12 @@ namespace azuremyst.services
             return await ExecuteSOAPCommandAsync(command);
         }
 
-        public async Task<bool> CheckSoapConnection()
-        {
-            var command = $"info";
-            while (!await ExecuteSOAPCommandAsync(command))
-            {
-                if (await InitAdministratorAccountsAsync())
-                {
-                    await SetPasswordAsync("2", _options.Password);
-                    await SetPasswordAsync("3", _options.Password);
-                    await SetPasswordAsync("4", _options.Password);
-                }
-                Log.Warning("unable to connect to soap. trying again in 5 seconds...");
-                await Task.Delay(5000);
-            }
-            return await ExecuteSOAPCommandAsync(command);
-        }
-
         public async Task<bool> ExecuteSOAPCommandAsync(string command)
         {
             try
             {
                 var envelope = EnvelopeSOAPCommand(string.Format($"{command}\n"));
                 var httpClient = _httpClientFactory.CreateClient(Assembly.GetExecutingAssembly().GetName().Name);
-                httpClient.DefaultRequestHeaders.Add("Authorization", SoapAuthorizationValue());
                 var result = await httpClient.PostAsync(string.Empty, new StringContent(envelope.OuterXml, Encoding.UTF8));
                 if (result.IsSuccessStatusCode)
                 {
@@ -102,46 +78,25 @@ namespace azuremyst.services
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Log.Error("soap command failed...");
+                Log.Error(e.Message);
                 return false;
             }
         }
-
-        public async Task<bool> ExecuteSOAPCommandAsync(string command, string username, string password)
-        {
-            try
-            {
-                var envelope = EnvelopeSOAPCommand(string.Format($"{command}\n"));
-                var httpClient = _httpClientFactory.CreateClient(Assembly.GetExecutingAssembly().GetName().Name);
-                httpClient.DefaultRequestHeaders.Add("Authorization", SoapAuthorizationValue(username, password));
-                var result = await httpClient.PostAsync(string.Empty, new StringContent(envelope.OuterXml, Encoding.UTF8));
-                if (result.IsSuccessStatusCode)
-                {
-                    using var reader = new StreamReader(await result.Content.ReadAsStreamAsync());
-                    return !string.IsNullOrEmpty(await reader.ReadToEndAsync());
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                Log.Error("soap command failed...");
-                return false;
-            }
-        }
-
-        string SoapAuthorizationValue() =>
-            SoapAuthorizationValue(_options.Username, _options.Password);
-
-        string SoapAuthorizationValue(string username, string password) =>
-            "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(username.Trim(), ":", password.Trim())));
 
         XmlDocument EnvelopeSOAPCommand(string command)
         {
             var soapEnvelopeDocument = new XmlDocument();
             soapEnvelopeDocument.LoadXml(string.Format(@"<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:SOAP-ENC=""http://schemas.xmlsoap.org/soap/encoding/"" xmlns:xsi=""http://www.w3.org/1999/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/1999/XMLSchema"" xmlns:ns1=""urn:MaNGOS""><SOAP-ENV:Body><ns1:executeCommand><command>{0}</command></ns1:executeCommand></SOAP-ENV:Body></SOAP-ENV:Envelope> ", command));
             return soapEnvelopeDocument;
+        }
+
+        public async Task<bool> CheckSoapConnection()
+        {
+            var command = "server info";
+            return await ExecuteSOAPCommandAsync(command);
         }
     }
 }

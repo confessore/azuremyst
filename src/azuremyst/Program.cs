@@ -205,6 +205,11 @@ builder.WebHost
             {
                 x.BaseAddress = new Uri($"http://{mangosOptions.Host.Trim()}:{mangosOptions.Port.Trim()}");
                 x.DefaultRequestHeaders.Add("User-Agent", "azuremyst");
+                x.DefaultRequestHeaders.Add("Authorization",
+                    "Basic " + 
+                    Convert.ToBase64String(
+                        Encoding.UTF8.GetBytes(
+                            string.Concat(mangosOptions.Username.Trim(), ":", mangosOptions.Password.Trim()))));
                 x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
                 x.DefaultRequestHeaders.Add("Accept", "text/xml");
                 x.DefaultRequestHeaders.Add("Method", "POST");
