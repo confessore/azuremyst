@@ -33,6 +33,7 @@ namespace azuremyst.converters
                 TokenType.Default => JsonSerializer.Deserialize<DefaultToken>(ref reader, options),
                 TokenType.Authentication => JsonSerializer.Deserialize<AuthenticationToken>(ref reader, options),
                 TokenType.Refresh => JsonSerializer.Deserialize<RefreshToken>(ref reader, options),
+                TokenType.Confirmation => JsonSerializer.Deserialize<ConfirmationToken>(ref reader, options),
                 _ => null,
             };
         }

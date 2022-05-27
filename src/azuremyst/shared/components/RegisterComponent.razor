@@ -110,7 +110,7 @@
                                 {
                                     _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(model.Email ?? string.Empty));
                                     _navigationManager.NavigateTo("/");
-                                    await _emailService.SendEmailAsync(model.Email!, "bruh", "bruh");
+                                    await _emailService.SendEmailAsync(model.Email!, $"{user.UserName} account  confirmation", AuthService.GenerateConfirmationToken(user).Hash);
                                 }
                                 else
                                     model.Feedback = "identity creation failed. please wait a second before trying again...";

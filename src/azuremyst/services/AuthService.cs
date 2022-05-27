@@ -251,7 +251,7 @@ namespace azuremyst.services
             }
         }
 
-        static Token GenerateAuthenticationToken(User user) =>
+        public static Token GenerateAuthenticationToken(User user) =>
             new AuthenticationToken()
             {
                 TokenType = TokenType.Authentication,
@@ -260,7 +260,7 @@ namespace azuremyst.services
                 UserId = user.Id
             };
 
-        static Token GenerateRefreshToken(User user) =>
+        public static Token GenerateRefreshToken(User user) =>
             new RefreshToken()
             {
                 TokenType = TokenType.Refresh,
@@ -269,7 +269,16 @@ namespace azuremyst.services
                 UserId = user.Id
             };
 
-        static Token GenerateDefaultToken(TokenType tokenType, int days) =>
+        public static Token GenerateConfirmationToken(User user) =>
+            new ConfirmationToken()
+            {
+                TokenType = TokenType.Confirmation,
+                Hash = Guid.NewGuid().ToString(),
+                Expiration = DateTimeOffset.UtcNow.AddDays(1).ToUnixTimeSeconds(),
+                UserId = user.Id
+            };
+
+        public static Token GenerateDefaultToken(TokenType tokenType, int days) =>
             new DefaultToken()
             {
                 TokenType = tokenType,

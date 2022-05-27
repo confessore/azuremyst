@@ -44,6 +44,7 @@ namespace azuremyst.contexts
                 .HasValue<DefaultToken>(TokenType.Default)
                 .HasValue<AuthenticationToken>(TokenType.Authentication)
                 .HasValue<RefreshToken>(TokenType.Refresh)
+                .HasValue<ConfirmationToken>(TokenType.Confirmation)
                 .IsComplete();
         }
     }
