@@ -198,14 +198,13 @@ builder.WebHost
         x.AddServerSideBlazor();
         x.AddControllers();
         x.AddHttpContextAccessor();
+        x.AddSingleton(mangosOptions);
         x.AddHttpClient<ISoapService, SoapService>(
             Assembly.GetExecutingAssembly().GetName().Name,
             x =>
             {
                 x.BaseAddress = new Uri($"http://{mangosOptions.Host.Trim()}:{mangosOptions.Port.Trim()}");
                 x.DefaultRequestHeaders.Add("User-Agent", "azuremyst");
-                x.DefaultRequestHeaders.Add("Authorization",
-                    "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Concat(mangosOptions.Username.Trim(), ":", mangosOptions.Password.Trim()))));
                 x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
                 x.DefaultRequestHeaders.Add("Accept", "text/xml");
                 x.DefaultRequestHeaders.Add("Method", "POST");

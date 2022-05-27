@@ -49,14 +49,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{8122
 		scripts\define-secrets.sh = scripts\define-secrets.sh
 		scripts\docker-install.sh = scripts\docker-install.sh
 		scripts\healthcheck.sh = scripts\healthcheck.sh
-		scripts\mangosd-entrypoint-debug.sh = scripts\mangosd-entrypoint-debug.sh
+		scripts\mangosd-entrypoint.sh = scripts\mangosd-entrypoint.sh
 		scripts\nginx-entrypoint-debug.sh = scripts\nginx-entrypoint-debug.sh
 		scripts\nginx-entrypoint-release.sh = scripts\nginx-entrypoint-release.sh
 		scripts\openssl-generate.sh = scripts\openssl-generate.sh
 		scripts\purify-migrations-all.sh = scripts\purify-migrations-all.sh
 		scripts\purify-migrations-default.sh = scripts\purify-migrations-default.sh
 		scripts\purify-migrations-key.sh = scripts\purify-migrations-key.sh
-		scripts\realmd-entrypoint-debug.sh = scripts\realmd-entrypoint-debug.sh
+		scripts\realmd-entrypoint.sh = scripts\realmd-entrypoint.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{19102EDC-D1EF-4BC3-B477-3005E29DB1AA}"
