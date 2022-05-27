@@ -6,6 +6,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Reflection;
 
 namespace azuremyst.extensions
@@ -38,11 +39,23 @@ namespace azuremyst.extensions
 #endif
         }
 
-        public static async Task<WebApplication> InitializeSoapConnection(this WebApplication webApplication)
+        public static async Task<WebApplication> InitializeRealmdAsync(this WebApplication webApplication)
         {
             using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ISoapService>();
-            await context.CheckSoapConnection();
+            _ = Task.Run(async () =>
+            {
+                while (!await context.AccountsInitializedAsync())
+                {
+                    Log.Warning("problem with account initialization. waiting 5 seconds");
+                    await Task.Delay(5000);
+                }
+                while (!await context.RealmlistsInitializedAsync())
+                {
+                    Log.Warning("problem with realmlist initialization. waiting 5 seconds");
+                    await Task.Delay(5000);
+                }
+            });
             return webApplication;
         }
 

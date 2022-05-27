@@ -1,6 +1,9 @@
-﻿using azuremyst.models.options;
+﻿using azuremyst.contexts;
+using azuremyst.models.options;
 using azuremyst.services.interfaces;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -11,14 +14,17 @@ namespace azuremyst.services
     {
         readonly IHttpClientFactory _httpClientFactory;
         readonly MangosOptions _options;
+        readonly IDbContextFactory<AuthDbContext> _authDbContextFactory;
 
         public SoapService(
             IHttpClientFactory httpClientFactory,
-            MangosOptions options
+            MangosOptions options,
+            IDbContextFactory<AuthDbContext> authDbContextFactory
         )
         {
             _httpClientFactory = httpClientFactory;
             _options = options;
+            _authDbContextFactory = authDbContextFactory;
         }
 
         public async Task<bool> SendItemAsync(string name, int id)
@@ -93,10 +99,69 @@ namespace azuremyst.services
             return soapEnvelopeDocument;
         }
 
-        public async Task<bool> CheckSoapConnection()
+        public async Task<bool> AccountsInitializedAsync()
         {
-            var command = "server info";
-            return await ExecuteSOAPCommandAsync(command);
+            try
+            {
+                using var context = await _authDbContextFactory.CreateDbContextAsync();
+                if (context != null)
+                {
+                    if (context.Accounts != null)
+                    {
+                        for (var i = 1; i < 5; i++)
+                        {
+                            var account = await context.Accounts.FirstOrDefaultAsync(x => x.Id == i);
+                            if (account != null)
+                            {
+                                if (account.Locked == 0)
+                                    account.Locked = 1;
+                            }
+                        }
+                        await context.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                Log.Warning("accounts have not been initialized...");
+                Log.Warning(e.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> RealmlistsInitializedAsync()
+        {
+            try
+            {
+                using var context = await _authDbContextFactory.CreateDbContextAsync();
+                if (context != null)
+                {
+                    if (context.Realmlists != null)
+                    {
+                        var realmlist = await context.Realmlists.FirstOrDefaultAsync();
+                        if (realmlist != null)
+                        {
+                            realmlist.Name = "azuremyst";
+                            //var ip = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
+                            //realmlist.Address = ip != null ? ip.ToString() : "0.0.0.0";
+                            await context.SaveChangesAsync();
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                Log.Warning("realmlists have not been initialized...");
+                Log.Warning(e.Message);
+                return false;
+            }
         }
     }
 }
