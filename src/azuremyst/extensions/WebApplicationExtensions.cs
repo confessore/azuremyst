@@ -1,6 +1,7 @@
 ﻿using azuremyst.contexts;
 using azuremyst.models.options;
 using azuremyst.services;
+using azuremyst.services.interfaces;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -35,6 +36,14 @@ namespace azuremyst.extensions
 #elif RELEASE
             await client.SetGameAsync("'>help' for commands");
 #endif
+        }
+
+        public static async Task<WebApplication> InitializeSoapConnection(this WebApplication webApplication)
+        {
+            using var scope = webApplication.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ISoapService>();
+            await context.CheckSoapConnection();
+            return webApplication;
         }
 
         public static async Task<WebApplication> MigrateDefaultDbContextAsync(this WebApplication webApplication)

@@ -241,6 +241,7 @@ try
     await webApplication.MigrateKeyDbContextAsync();
 
     await webApplication.InitializeDiscordSocketClientAsync(discordOptions);
+    await webApplication.InitializeSoapConnection();
 
     // Configure the HTTP request pipeline.
     if (!webApplication.Environment.IsDevelopment())
