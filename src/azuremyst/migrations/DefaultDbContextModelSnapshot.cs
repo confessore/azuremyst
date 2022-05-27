@@ -348,6 +348,13 @@ namespace azuremyst.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
+            modelBuilder.Entity("azuremyst.models.tokens.ConfirmationToken", b =>
+                {
+                    b.HasBaseType("azuremyst.models.abstractions.Token");
+
+                    b.HasDiscriminator().HasValue(3);
+                });
+
             modelBuilder.Entity("azuremyst.models.tokens.DefaultToken", b =>
                 {
                     b.HasBaseType("azuremyst.models.abstractions.Token");

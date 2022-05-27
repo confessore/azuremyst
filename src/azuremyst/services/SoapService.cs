@@ -47,7 +47,7 @@ namespace azuremyst.services
 
         async Task<bool> InitAdministratorAccountsAsync()
         {
-            var command = $"account set password administrator {_options.Password}";
+            var command = $"account set password 1 {_options.Password}";
             return await ExecuteSOAPCommandAsync(command, "administrator", "administrator");
         }
 
@@ -77,9 +77,9 @@ namespace azuremyst.services
             {
                 if (await InitAdministratorAccountsAsync())
                 {
-                    await SetPasswordAsync("gamemaster", _options.Password);
-                    await SetPasswordAsync("moderator", _options.Password);
-                    await SetPasswordAsync("player", _options.Password);
+                    await SetPasswordAsync("2", _options.Password);
+                    await SetPasswordAsync("3", _options.Password);
+                    await SetPasswordAsync("4", _options.Password);
                 }
                 Log.Warning("unable to connect to soap. trying again in 5 seconds...");
                 await Task.Delay(5000);
