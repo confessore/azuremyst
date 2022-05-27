@@ -1,3 +1,4 @@
+
 using azuremyst.auth.services;
 using azuremyst.contexts;
 using azuremyst.extensions;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -185,7 +185,6 @@ builder.WebHost
         x.AddIdentity<User, Role>(x =>
         {
             x.User.RequireUniqueEmail = true;
-
         })
         .AddEntityFrameworkStores<DefaultDbContext>()
         .AddDefaultTokenProviders();
@@ -219,7 +218,7 @@ builder.WebHost
         x.AddScoped<ILocalStorageService, LocalStorageService>();
         x.AddScoped<ISoapService, SoapService>();
         x.AddSingleton(smtpOptions);
-        x.AddScoped<IEmailSender, EmailSender>();
+        x.AddScoped<IEmailService, EmailService>();
         //x.AddScoped<IMarketService, MarketService>();
         //x.AddScoped<IAtomService, AtomService>();
         //x.AddScoped<IUserService, UserService>();

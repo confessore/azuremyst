@@ -2,11 +2,11 @@
 {
     sealed class SmtpOptions
     {
-        public string? SmtpHost { get; set; }
-        public string? SmtpPort { get; set; }
-        public string? SmtpUsername { get; set; }
-        public string? SmtpPassword { get; set; }
-        public string? SmtpFromAddress { get; set; }
-        public string? SmtpFromName { get; set; }
+        public string? Host { get; set; }
+        public string? Port { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+        public string? FromAddress { get; set; }
+        public string? FromName { get; set; }
     }
 }

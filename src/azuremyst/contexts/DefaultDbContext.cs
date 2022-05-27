@@ -1,18 +1,20 @@
 ﻿using azuremyst.models.abstractions;
 using azuremyst.models.enums;
+using azuremyst.models.roles;
 using azuremyst.models.tokens;
 using azuremyst.models.users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace azuremyst.contexts
 {
-    public class DefaultDbContext : DbContext
+    public class DefaultDbContext : IdentityDbContext<User, Role, string>
     {
         public DefaultDbContext(DbContextOptions<DefaultDbContext> options)
             : base(options) { }
 
-        public virtual DbSet<User>? Users { get; set; }
+        new public virtual DbSet<User>? Users { get; set; }
         public virtual DbSet<Token>? Tokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,12 +32,19 @@ namespace azuremyst.contexts
                 .HasValue<DefaultUser>(UserType.Default)
                 .IsComplete();
 
+            modelBuilder.Entity<Role>()
+                .ToTable("Roles")
+                .HasDiscriminator<RoleType>(nameof(RoleType))
+                .HasValue<DefaultRole>(RoleType.Default)
+                .IsComplete();
+
             modelBuilder.Entity<Token>()
                 .ToTable("Tokens")
                 .HasDiscriminator<TokenType>(nameof(TokenType))
                 .HasValue<DefaultToken>(TokenType.Default)
                 .HasValue<AuthenticationToken>(TokenType.Authentication)
                 .HasValue<RefreshToken>(TokenType.Refresh)
+                .HasValue<ConfirmationToken>(TokenType.Confirmation)
                 .IsComplete();
         }
     }

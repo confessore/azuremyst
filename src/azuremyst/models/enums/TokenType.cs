@@ -9,6 +9,8 @@ namespace azuremyst.models.enums
         [Description("Authentication")]
         Authentication,
         [Description("Refresh")]
-        Refresh
+        Refresh,
+        [Description("Confirmation")]
+        Confirmation
     }
 }
