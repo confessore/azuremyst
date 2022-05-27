@@ -61,6 +61,8 @@ services:
             - APPLICATION__SMTPOPTIONS__PASSWORD=/run/secrets/smtp-password
             - APPLICATION__SMTPOPTIONS__FROMNAME=/run/secrets/smtp-fromname
             - APPLICATION__SMTPOPTIONS__FROMADDRESS=/run/secrets/smtp-fromaddress
+        expose:
+            - 5000
         restart: always
 
     nginx:
