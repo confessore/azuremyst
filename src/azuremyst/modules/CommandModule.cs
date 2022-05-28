@@ -57,15 +57,6 @@ namespace azuremyst.modules
             await ReplyAsync("your mother");
         }
 
-        [Command("nick", RunMode = RunMode.Async)]
-        [Summary("all: change your nick" +
-            "\n >nick 'your nick here'")]
-        async Task NickAsync(string name)
-        {
-            await RemoveCommandMessageAsync();
-            await _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id).ModifyAsync(x => x.Nickname = name);
-        }
-
         [Command("sync", RunMode = RunMode.Async)]
         [Summary("all: sync a single guild user's membership role according to their nickname (character name)" +
             "\n >sync")]
@@ -86,8 +77,9 @@ namespace azuremyst.modules
             }
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("senditem", RunMode = RunMode.Async)]
-        [Summary("bot: adds a specified item to a specified character" +
+        [Summary("admin: adds a specified item to a specified character" +
             "\n >senditem")]
         async Task SendItemAsync(string name, int id)
         {
@@ -99,8 +91,9 @@ namespace azuremyst.modules
                 await WarningAsync();
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("shutdown", RunMode = RunMode.Async)]
-        [Summary("bot: shuts down mangosd" +
+        [Summary("admin: shuts down mangosd" +
             "\n >sync")]
         async Task ShutdownAsync()
         {
@@ -112,8 +105,9 @@ namespace azuremyst.modules
                 await WarningAsync();
         }
 
-        [Command("setgm", RunMode = RunMode.Async)]
-        [Summary("bot: sets gm level 0:player 1:mod 2:gm 3:admin" +
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("setgmlevel", RunMode = RunMode.Async)]
+        [Summary("admin: sets gm level 0:player 1:mod 2:gm 3:admin" +
             "\n >setgmlevel")]
         async Task SetGmAsync(string name, int level)
         {
@@ -124,9 +118,10 @@ namespace azuremyst.modules
                 await WarningAsync();
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("createaccount", RunMode = RunMode.Async)]
-        [Summary("bot: creates an account with specified password" +
-            "\n >setgmlevel")]
+        [Summary("admin: creates an account with specified password" +
+            "\n >createaccount")]
         async Task CreateAccountAsync(string name, string password)
         {
             await RemoveCommandMessageAsync();
@@ -136,8 +131,9 @@ namespace azuremyst.modules
                 await WarningAsync();
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("setaddon", RunMode = RunMode.Async)]
-        [Summary("bot: sets addon expansion (1 for tbc)" +
+        [Summary("admin: sets addon expansion (1 for tbc)" +
             "\n >setaddon")]
         async Task SetAddonAsync(string name, int expansion)
         {
@@ -157,8 +153,9 @@ namespace azuremyst.modules
             await RemoveCommandMessageAsync();
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("grant", RunMode = RunMode.Async)]
-        [Summary("bot: grants a user for exceptional distinguishment" +
+        [Summary("admin: grants a user for exceptional distinguishment" +
             "\n >grant" +
             "\n >grant feeram")]
         async Task GrantAsync([Remainder] string name)
@@ -166,10 +163,10 @@ namespace azuremyst.modules
             await RemoveCommandMessageAsync();
         }
 
-        [Command("droll", RunMode = RunMode.Async)]
+        [Command("deathroll", RunMode = RunMode.Async)]
         [Summary("all: begins a death roll with the specified name at the specified wager" +
-            "\n >droll" +
-            "\n >droll feeram 69")]
+            "\n >deathroll" +
+            "\n >deathroll feeram 69")]
         async Task DeathRollAsync([Remainder] string name)
         {
             await RemoveCommandMessageAsync();

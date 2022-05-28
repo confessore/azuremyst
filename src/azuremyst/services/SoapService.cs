@@ -45,6 +45,12 @@ namespace azuremyst.services
             return await ExecuteSOAPCommandAsync(command);
         }
 
+        public async Task<bool> DeleteAccountAsync(string name)
+        {
+            var command = $"account delete {name}";
+            return await ExecuteSOAPCommandAsync(command);
+        }
+
         async Task<bool> UpdatePasswordAsync(string oldPassword, string newPassword)
         {
             var command = $"account password {oldPassword} {newPassword}";
