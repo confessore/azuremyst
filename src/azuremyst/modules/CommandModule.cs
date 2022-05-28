@@ -132,6 +132,19 @@ namespace azuremyst.modules
         }
 
         [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("deleteaccount", RunMode = RunMode.Async)]
+        [Summary("admin: deletes an account with specified name" +
+            "\n >deleteaccount")]
+        async Task DeleteAccountAsync(string name)
+        {
+            await RemoveCommandMessageAsync();
+            if (await _soap.DeleteAccountAsync(name))
+                await ReplyAsync($"account {name} deleted");
+            else
+                await WarningAsync();
+        }
+
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("setaddon", RunMode = RunMode.Async)]
         [Summary("admin: sets addon expansion (1 for tbc)" +
             "\n >setaddon")]
