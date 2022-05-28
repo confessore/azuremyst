@@ -22,16 +22,16 @@ namespace azuremyst.services
             {
                 using var smtpClient = new SmtpClient()
                 {
-                    Host = _options.Host,
+                    Host = _options.Host.Trim(),
                     Port = int.TryParse(_options.Port, out var port) ? port : 465,
                     EnableSsl = true,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(_options.Username, _options.Password),
+                    Credentials = new NetworkCredential(_options.Username.Trim(), _options.Password.Trim()),
                     DeliveryMethod = SmtpDeliveryMethod.Network
                 };
-                using var message = new MailMessage(_options.FromAddress, recipient)
+                using var message = new MailMessage(_options.FromAddress.Trim(), recipient)
                 {
-                    From = new MailAddress(_options.FromAddress, _options.FromName),
+                    From = new MailAddress(_options.FromAddress.Trim(), _options.FromName.Trim()),
                     Subject = subject,
                     Body = body,
                     IsBodyHtml = true
