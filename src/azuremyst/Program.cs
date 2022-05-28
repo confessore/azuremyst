@@ -185,6 +185,9 @@ builder.WebHost
         x.AddIdentity<User, Role>(x =>
         {
             x.User.RequireUniqueEmail = true;
+            x.Password.RequireDigit = false;
+            x.Password.RequireNonAlphanumeric = false;
+            x.Password.RequireUppercase = false;
         })
         .AddEntityFrameworkStores<DefaultDbContext>()
         .AddDefaultTokenProviders();
