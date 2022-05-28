@@ -13,6 +13,6 @@
         Task<bool> SetPasswordAsync(string accountId, string newPassword);
         Task<bool> AccountsInitializedAsync();
         Task<bool> RealmlistsInitializedAsync();
-        Task<bool> DeleteAccountAsync(string name);
+        Task<bool> DeleteAccountAsync(string id);
     }
 }

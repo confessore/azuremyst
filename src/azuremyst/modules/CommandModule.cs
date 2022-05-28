@@ -133,13 +133,13 @@ namespace azuremyst.modules
 
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command("deleteaccount", RunMode = RunMode.Async)]
-        [Summary("admin: deletes an account with specified name" +
+        [Summary("admin: deletes an account with specified id" +
             "\n >deleteaccount")]
-        async Task DeleteAccountAsync(string name)
+        async Task DeleteAccountAsync(string id)
         {
             await RemoveCommandMessageAsync();
-            if (await _soap.DeleteAccountAsync(name))
-                await ReplyAsync($"account {name} deleted");
+            if (await _soap.DeleteAccountAsync(id))
+                await ReplyAsync($"account {id} deleted");
             else
                 await WarningAsync();
         }
