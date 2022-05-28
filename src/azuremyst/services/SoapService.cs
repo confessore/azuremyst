@@ -120,11 +120,8 @@ namespace azuremyst.services
                         await context.SaveChangesAsync();
                         return true;
                     }
-                    else
-                        return false;
                 }
-                else
-                    return false;
+                return false;
             }
             catch (Exception e)
             {
