@@ -93,6 +93,22 @@ namespace azuremyst.services
             return new RefreshToken();
         }
 
+        async Task<Token> GetConfirmationTokenAsync(User user)
+        {
+            using var context = await _defaultDbContextFactory.CreateDbContextAsync();
+            if (context.Users != null)
+            {
+                var userContext = await context.Users.Include(x => x.Tokens).FirstOrDefaultAsync(x => x.Id == user.Id);
+                if (userContext != null && userContext.Tokens != null)
+                {
+                    var token = userContext.Tokens.FirstOrDefault(x => x.TokenType == TokenType.Confirmation);
+                    if (token != null)
+                        return token;
+                }
+            }
+            return new ConfirmationToken();
+        }
+
         /// <inheritdoc cref="IAuthService.PasswordAuthenticateAsync(string, string)" />
         public async Task<bool> PasswordAuthenticateAsync(string email, string password)
         {
