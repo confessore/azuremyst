@@ -157,6 +157,19 @@ namespace azuremyst.modules
                 await WarningAsync();
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("sendbag", RunMode = RunMode.Async)]
+        [Summary("admin: sends that bag broh" +
+            "\n >sendbag")]
+        async Task SendBagAsync(string name)
+        {
+            await RemoveCommandMessageAsync();
+            if (await _soap.SendItemAsync(name, 23162))
+                await ReplyAsync($"{name} is a leaky boi");
+            else
+                await WarningAsync();
+        }
+
         [Command("tip", RunMode = RunMode.Async)]
         [Summary("all: tips a user" +
             "\n >tip" +
