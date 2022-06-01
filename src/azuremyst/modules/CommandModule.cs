@@ -17,6 +17,7 @@ namespace azuremyst.modules
         readonly IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
         readonly IDbContextFactory<CharacterDbContext> _character;
         readonly ISoapService _soap;
+        readonly IBoostService _boost;
 
         public CommandModule(
             IServiceProvider services,
@@ -24,7 +25,8 @@ namespace azuremyst.modules
             CommandService commands,
             IDbContextFactory<DefaultDbContext> defaultDbContextFactory,
             IDbContextFactory<CharacterDbContext> character,
-            ISoapService soap)
+            ISoapService soap,
+            IBoostService boost)
         {
             _services = services;
             _client = client;
@@ -32,6 +34,7 @@ namespace azuremyst.modules
             _defaultDbContextFactory = defaultDbContextFactory;
             _character = character;
             _soap = soap;
+            _boost = boost;
         }
 
         readonly Random random = new Random();
@@ -89,6 +92,16 @@ namespace azuremyst.modules
                 await ReplyAsync($"{id} sent to {name}");
             else
                 await WarningAsync();
+        }
+
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("boost", RunMode = RunMode.Async)]
+        [Summary("admin: boosts a character to 60 and provides some items" +
+            "\n >senditem")]
+        async Task BoostAsync(string name)
+        {
+            await RemoveCommandMessageAsync();
+            await _boost.MailMageSetAsync(name);
         }
 
         [RequireUserPermission(GuildPermission.Administrator)]

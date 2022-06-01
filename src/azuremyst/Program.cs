@@ -224,6 +224,7 @@ builder.WebHost
         x.AddScoped<IAuthService, AuthService>();
         x.AddScoped<ILocalStorageService, LocalStorageService>();
         x.AddScoped<ISoapService, SoapService>();
+        x.AddScoped<IBoostService, BoostService>();
         x.AddSingleton(smtpOptions);
         x.AddScoped<IEmailService, EmailService>();
         //x.AddScoped<IMarketService, MarketService>();
