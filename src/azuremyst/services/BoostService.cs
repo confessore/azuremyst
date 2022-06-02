@@ -37,6 +37,7 @@ namespace azuremyst.services
                         case WoWClass.Druid:
                             {
                                 await _soapService.SendItemsAsync(name, druid);
+                                await _soapService.SendItemsAsync(name, druidMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 await _soapService.SendItemsAsync(name, sharedHealer);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
@@ -45,18 +46,21 @@ namespace azuremyst.services
                         case WoWClass.Hunter:
                             {
                                 await _soapService.SendItemsAsync(name, hunter);
+                                await _soapService.SendItemsAsync(name, hunterMisc);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
                                 return true;
                             }
                         case WoWClass.Mage:
                             {
                                 await _soapService.SendItemsAsync(name, mage);
+                                await _soapService.SendItemsAsync(name, mageMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 return true;
                             }
                         case WoWClass.Paladin:
                             {
                                 await _soapService.SendItemsAsync(name, paladin);
+                                await _soapService.SendItemsAsync(name, paladinMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 await _soapService.SendItemsAsync(name, sharedHealer);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
@@ -65,19 +69,22 @@ namespace azuremyst.services
                         case WoWClass.Priest:
                             {
                                 await _soapService.SendItemsAsync(name, priest);
+                                await _soapService.SendItemsAsync(name, priestMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 await _soapService.SendItemsAsync(name, sharedHealer);
                                 return true;
                             }
                         case WoWClass.Rogue:
                             {
-                                await _soapService.SendItemsAsync(name, warrior);
+                                await _soapService.SendItemsAsync(name, rogue);
+                                await _soapService.SendItemsAsync(name, rogueMisc);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
                                 return true;
                             }
                         case WoWClass.Shaman:
                             {
                                 await _soapService.SendItemsAsync(name, shaman);
+                                await _soapService.SendItemsAsync(name, shamanMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 await _soapService.SendItemsAsync(name, sharedHealer);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
@@ -86,12 +93,14 @@ namespace azuremyst.services
                         case WoWClass.Warlock:
                             {
                                 await _soapService.SendItemsAsync(name, warlock);
+                                await _soapService.SendItemsAsync(name, warlockMisc);
                                 await _soapService.SendItemsAsync(name, sharedCaster);
                                 return true;
                             }
                         case WoWClass.Warrior:
                             {
                                 await _soapService.SendItemsAsync(name, warrior);
+                                await _soapService.SendItemsAsync(name, warriorMisc);
                                 await _soapService.SendItemsAsync(name, sharedPhysical);
                                 return true;
                             }
@@ -109,6 +118,11 @@ namespace azuremyst.services
 
         };
 
+        public static readonly int[] druidMisc =
+        {
+
+        };
+
         // limit 12 per mail
         public static readonly int[] hunter =
         {
@@ -120,6 +134,10 @@ namespace azuremyst.services
             22017, // pants
             22060, // tunic
             22061, // boots
+        };
+
+        public static readonly int[] hunterMisc =
+        {
             18473, // hunter seal
             12651, // blackcrow
             18520, // barbarous blade
@@ -137,7 +155,18 @@ namespace azuremyst.services
             22069
         };
 
+        public static readonly int[] mageMisc =
+        {
+            22335, // lord valthalak's staff of command
+            22408, // ritssyn's wand of bad mojo
+        };
+
         public static readonly int[] paladin =
+        {
+
+        };
+
+        public static readonly int[] paladinMisc =
         {
 
         };
@@ -147,12 +176,27 @@ namespace azuremyst.services
 
         };
 
+        public static readonly int[] priestMisc =
+        {
+
+        };
+
         public static readonly int[] rogue =
         {
 
         };
 
+        public static readonly int[] rogueMisc =
+        {
+
+        };
+
         public static readonly int[] shaman =
+        {
+
+        };
+
+        public static readonly int[] shamanMisc =
         {
 
         };
@@ -169,21 +213,30 @@ namespace azuremyst.services
             22077
         };
 
+        public static readonly int[] warlockMisc =
+        {
+            22335, // lord valthalak's staff of command
+            22408, // ritssyn's wand of bad mojo
+        };
+
         public static readonly int[] warrior =
+        {
+
+        };
+
+        public static readonly int[] warriorMisc =
         {
 
         };
 
         public static readonly int[] sharedCaster =
         {
-            12103,
-            12968,
-            22335,
-            22408,
-            22433,
-            22339,
-            12930,
-            22268
+            12103, // star of mystaria
+            12968, // frostweaver cape
+            22433, // don mauricio's band of domination
+            22339, // rune band of wizardry
+            12930, // briarwood reed
+            22268, // draconic infused emblem
         };
 
         public static readonly int[] sharedHealer =
@@ -196,6 +249,8 @@ namespace azuremyst.services
             13965, // blackhand's breadth
             18500, // tarnished elven ring
             18500, // tarnished elven ring
+            22340, // pendant of celerity
+            13340, // cape of the black baron
         };
     }
 }
