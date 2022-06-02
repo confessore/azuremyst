@@ -14,5 +14,7 @@
         Task<bool> AccountsInitializedAsync();
         Task<bool> RealmlistsInitializedAsync();
         Task<bool> DeleteAccountAsync(string id);
+        Task<bool> CharacterLevel(string name, int level);
+        Task<bool> SendItemsAsync(string name, int[] ids);
     }
 }

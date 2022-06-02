@@ -22,20 +22,24 @@ namespace azuremyst.services
             22067,
             22068,
             22069,
+            18468
+        };
+
+        public static readonly int[] sharedCaster =
+        {
             12103,
             12968,
             22335,
             22408,
             22433,
             22339,
-            12930,
-            18468
+            12930
         };
 
         public async Task MailMageSetAsync(string name)
         {
-            foreach (var item in mage)
-                await _soapService.SendItemAsync(name, item);
+            await _soapService.SendItemsAsync(name, mage);
+            await _soapService.SendItemsAsync(name, sharedCaster);
         }
     }
 }

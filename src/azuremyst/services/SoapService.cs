@@ -32,6 +32,17 @@ namespace azuremyst.services
             var command = $"send items {name.ToUpper()} \"azuremy.st\" \" - the letter glows faintly...\" {id}";
             return await ExecuteSOAPCommandAsync(command);
         }
+
+        public async Task<bool> SendItemsAsync(string name, int[] ids)
+        {
+            var command = $"send items {name.ToUpper()} \"azuremy.st\" \" - the letter glows faintly...\" ";
+            var builder = new StringBuilder();
+            builder.Append(command);
+            foreach (var id in ids)
+                builder.Append(string.Concat(id, " "));
+            return await ExecuteSOAPCommandAsync(builder.ToString());
+        }
+
         public async Task<bool> ShutdownAsync()
         {
             var command = $"server shutdown 5";
@@ -73,6 +84,12 @@ namespace azuremyst.services
         public async Task<bool> SetGmLevelAsync(string name, int level)
         {
             var command = $"account set gmlevel {name.ToUpper()} {level}";
+            return await ExecuteSOAPCommandAsync(command);
+        }
+
+        public async Task<bool> CharacterLevel(string name, int level)
+        {
+            var command = $"character level {name.ToUpper()} {level}";
             return await ExecuteSOAPCommandAsync(command);
         }
 

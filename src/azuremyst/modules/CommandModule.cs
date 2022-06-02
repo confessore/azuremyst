@@ -101,7 +101,19 @@ namespace azuremyst.modules
         async Task BoostAsync(string name)
         {
             await RemoveCommandMessageAsync();
-            await _boost.MailMageSetAsync(name);
+            using var context = await _character.CreateDbContextAsync();
+            if (context.Characters != null)
+            {
+                var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+                if (character != null)
+                {
+                    if (character.Level < 60)
+                    {
+                        await _soap.CharacterLevel(name, 60);
+                        await _boost.MailMageSetAsync(name);
+                    }
+                }
+            }
         }
 
         [RequireUserPermission(GuildPermission.Administrator)]
