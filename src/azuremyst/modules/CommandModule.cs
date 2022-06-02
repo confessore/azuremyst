@@ -15,7 +15,7 @@ namespace azuremyst.modules
         readonly DiscordSocketClient _client;
         readonly CommandService _commands;
         readonly IDbContextFactory<DefaultDbContext> _defaultDbContextFactory;
-        readonly IDbContextFactory<CharacterDbContext> _character;
+        readonly IDbContextFactory<CharacterDbContext> _characterDbContextFactory;
         readonly ISoapService _soap;
         readonly IBoostService _boost;
 
@@ -24,7 +24,7 @@ namespace azuremyst.modules
             DiscordSocketClient client,
             CommandService commands,
             IDbContextFactory<DefaultDbContext> defaultDbContextFactory,
-            IDbContextFactory<CharacterDbContext> character,
+            IDbContextFactory<CharacterDbContext> characterDbContextFactory,
             ISoapService soap,
             IBoostService boost)
         {
@@ -32,7 +32,7 @@ namespace azuremyst.modules
             _client = client;
             _commands = commands;
             _defaultDbContextFactory = defaultDbContextFactory;
-            _character = character;
+            _characterDbContextFactory = characterDbContextFactory;
             _soap = soap;
             _boost = boost;
         }
@@ -71,7 +71,7 @@ namespace azuremyst.modules
             //character.Id = user.Id;
             //await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
             //await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
-            using var context = await _character.CreateDbContextAsync();
+            using var context = await _characterDbContextFactory.CreateDbContextAsync();
             if (context.Characters != null)
             {
                 var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
@@ -101,19 +101,10 @@ namespace azuremyst.modules
         async Task BoostAsync(string name)
         {
             await RemoveCommandMessageAsync();
-            using var context = await _character.CreateDbContextAsync();
-            if (context.Characters != null)
-            {
-                var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
-                if (character != null)
-                {
-                    if (character.Level < 60)
-                    {
-                        await _soap.CharacterLevel(name, 60);
-                        await _boost.MailMageSetAsync(name);
-                    }
-                }
-            }
+            if (await _boost.Boost60Async(name))
+                await ReplyAsync($"{name} boosted to 60");
+            else
+                await WarningAsync();
         }
 
         [RequireUserPermission(GuildPermission.Administrator)]

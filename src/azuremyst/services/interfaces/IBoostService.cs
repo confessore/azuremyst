@@ -2,6 +2,6 @@
 {
     public interface IBoostService
     {
-        Task MailMageSetAsync(string name);
+        Task<bool> Boost60Async(string name);
     }
 }
