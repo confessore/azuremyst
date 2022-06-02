@@ -109,9 +109,20 @@ namespace azuremyst.services
 
         };
 
+        // limit 12 per mail
         public static readonly int[] hunter =
         {
-
+            22010, // girdle
+            22011, // bindings
+            22013, // cap
+            22015, // gloves
+            22016, // mantle
+            22017, // pants
+            22060, // tunic
+            22061, // boots
+            18473, // hunter seal
+            12651, // blackcrow
+            18520, // barbarous blade
         };
 
         public static readonly int[] mage =
@@ -182,7 +193,9 @@ namespace azuremyst.services
 
         public static readonly int[] sharedPhysical =
         {
-
+            13965, // blackhand's breadth
+            18500, // tarnished elven ring
+            18500, // tarnished elven ring
         };
     }
 }
