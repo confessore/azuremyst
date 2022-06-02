@@ -163,7 +163,14 @@ namespace azuremyst.services
 
         public static readonly int[] paladin =
         {
-
+            22086, // soulforge belt
+            22087, // soulforge boots
+            22088, // soulforge bracers
+            22089, // soulforge breastplate
+            22090, // soulforge guantlets
+            22091, // soulforge helm
+            22092, // soulforge legplates
+            22093, // soulforge spaulders
         };
 
         public static readonly int[] paladinMisc =

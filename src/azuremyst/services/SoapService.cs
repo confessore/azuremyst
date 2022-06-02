@@ -29,13 +29,13 @@ namespace azuremyst.services
 
         public async Task<bool> SendItemAsync(string name, int id)
         {
-            var command = $"send items {name.ToUpper()} \"azuremy.st\" \" - the letter glows faintly...\" {id}";
+            var command = $"send items {name.ToUpper()} \"azuremyst\" \" - the letter glows faintly...\" {id}";
             return await ExecuteSOAPCommandAsync(command);
         }
 
         public async Task<bool> SendItemsAsync(string name, int[] ids)
         {
-            var command = $"send items {name.ToUpper()} \"azuremy.st\" \" - the letter glows faintly...\" ";
+            var command = $"send items {name.ToUpper()} \"azuremyst\" \" - the letter glows faintly...\" ";
             var builder = new StringBuilder();
             builder.Append(command);
             foreach (var id in ids)
