@@ -115,12 +115,12 @@ namespace azuremyst.services
 
         public static readonly int[] druid =
         {
-
+            
         };
 
         public static readonly int[] druidMisc =
         {
-
+            22335, // lord valthalak's staff of command
         };
 
         // limit 12 per mail
@@ -141,6 +141,7 @@ namespace azuremyst.services
             18473, // hunter seal
             12651, // blackcrow
             18520, // barbarous blade
+            18500, // tarnished elven ring
         };
 
         public static readonly int[] mage =
@@ -175,12 +176,13 @@ namespace azuremyst.services
 
         public static readonly int[] paladinMisc =
         {
-
+            18520, // barbarous blade
         };
 
         public static readonly int[] priest =
         {
-
+            22335, // lord valthalak's staff of command
+            22408, // ritssyn's wand of bad mojo
         };
 
         public static readonly int[] priestMisc =
@@ -233,7 +235,7 @@ namespace azuremyst.services
 
         public static readonly int[] warriorMisc =
         {
-
+            18520, // barbarous blade
         };
 
         public static readonly int[] sharedCaster =
@@ -248,13 +250,17 @@ namespace azuremyst.services
 
         public static readonly int[] sharedHealer =
         {
-
+            11923, // the hammer of grace
+            22319, // tome of divine right
+            18723, // animated chain necklace
+            18371, // mindtap talisman,
+            13178, // rosewine circle
+            16058, // fordring's seal
         };
 
         public static readonly int[] sharedPhysical =
         {
             13965, // blackhand's breadth
-            18500, // tarnished elven ring
             18500, // tarnished elven ring
             22340, // pendant of celerity
             13340, // cape of the black baron
