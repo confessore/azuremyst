@@ -127,14 +127,14 @@ namespace azuremyst.services
         // limit 12 per mail
         public static readonly int[] hunter =
         {
-            22010, // girdle
-            22011, // bindings
-            22013, // cap
-            22015, // gloves
-            22016, // mantle
-            22017, // pants
-            22060, // tunic
-            22061, // boots
+            22010, // beastmaster's girdle
+            22011, // beastmaster's bindings
+            22013, // beastmaster's cap
+            22015, // beastmaster's gloves
+            22016, // beastmaster's mantle
+            22017, // beastmaster's pants
+            22060, // beastmaster's tunic
+            22061, // beastmaster's boots
         };
 
         public static readonly int[] hunterMisc =
@@ -142,18 +142,20 @@ namespace azuremyst.services
             18473, // hunter seal
             12651, // blackcrow
             18520, // barbarous blade
+            18737, // bone slicing hatchet
+            18737, // bone slicing hatchet
         };
 
         public static readonly int[] mage =
         {
-            22062,
-            22063,
-            22064,
-            22065,
-            22066,
-            22067,
-            22068,
-            22069
+            22062, // sorcerer's belt
+            22063, // sorcerer's bindings
+            22064, // sorcerer's boots
+            22065, // sorcerer's crown
+            22066, // sorcerer's gloves
+            22067, // sorcerer's leggings
+            22068, // sorcerer's mantle
+            22069, // sorcerer's robes
         };
 
         public static readonly int[] mageMisc =
@@ -184,7 +186,14 @@ namespace azuremyst.services
 
         public static readonly int[] priest =
         {
-            
+            22078, // virtuous belt
+            22079, // virtuous bracers
+            22080, // virtuous crown
+            22081, // virtuous gloves
+            22082, // virtuous mantle
+            22083, // virtuous robe
+            22084, // virtuous sandals
+            22085, // virtuous skirt
         };
 
         public static readonly int[] priestMisc =
@@ -227,14 +236,14 @@ namespace azuremyst.services
 
         public static readonly int[] warlock =
         {
-            22070,
-            22071,
-            22072,
-            22073,
-            22074,
-            22075,
-            22076,
-            22077
+            22070, // deathmist belt
+            22071, // deathmist braces
+            22072, // deathmist leggings
+            22073, // deathmist mantle
+            22074, // deathmist mask
+            22075, // deathmist robe
+            22076, // deathmist sandals
+            22077, // deathmist wraps
         };
 
         public static readonly int[] warlockMisc =
@@ -262,6 +271,8 @@ namespace azuremyst.services
             12939, // dal'rend's tribal guardian
             12940, // dal'rend's sacred charge
             11815, // hand of justice
+            12602, // draconian deflector
+            18737, // bone slicing hatchet
         };
 
         public static readonly int[] sharedCaster =
