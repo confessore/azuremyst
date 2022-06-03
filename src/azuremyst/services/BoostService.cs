@@ -141,7 +141,6 @@ namespace azuremyst.services
             18473, // hunter seal
             12651, // blackcrow
             18520, // barbarous blade
-            18500, // tarnished elven ring
         };
 
         public static readonly int[] mage =
@@ -181,13 +180,13 @@ namespace azuremyst.services
 
         public static readonly int[] priest =
         {
-            22335, // lord valthalak's staff of command
-            22408, // ritssyn's wand of bad mojo
+            
         };
 
         public static readonly int[] priestMisc =
         {
-
+            22335, // lord valthalak's staff of command
+            22408, // ritssyn's wand of bad mojo
         };
 
         public static readonly int[] rogue =
@@ -197,7 +196,9 @@ namespace azuremyst.services
 
         public static readonly int[] rogueMisc =
         {
-
+            18323, // satyr's bow
+            12939, // dal'rend's tribal guardian
+            12940, // dal'rend's sacred charge
         };
 
         public static readonly int[] shaman =
@@ -230,12 +231,22 @@ namespace azuremyst.services
 
         public static readonly int[] warrior =
         {
-
+            21994, // belt of heroism
+            21995, // boots of heroism
+            21996, // bracers of heroism
+            21997, // breastplate of heroism
+            21998, // guantlets of heroism
+            21999, // helm of heroism
+            22000, // legplates of heroism
+            22001, // spaulders of heroism
         };
 
         public static readonly int[] warriorMisc =
         {
             18520, // barbarous blade
+            18323, // satyr's bow
+            12939, // dal'rend's tribal guardian
+            12940, // dal'rend's sacred charge
         };
 
         public static readonly int[] sharedCaster =
@@ -261,6 +272,7 @@ namespace azuremyst.services
         public static readonly int[] sharedPhysical =
         {
             13965, // blackhand's breadth
+            17713, // blackstone ring
             18500, // tarnished elven ring
             22340, // pendant of celerity
             13340, // cape of the black baron
