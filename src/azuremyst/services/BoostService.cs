@@ -121,6 +121,7 @@ namespace azuremyst.services
         public static readonly int[] druidMisc =
         {
             22335, // lord valthalak's staff of command
+            11815, // hand of justice
         };
 
         // limit 12 per mail
@@ -176,6 +177,9 @@ namespace azuremyst.services
         public static readonly int[] paladinMisc =
         {
             18520, // barbarous blade
+            11815, // hand of justice
+            12602, // draconian deflector
+            18396, // mind carver
         };
 
         public static readonly int[] priest =
@@ -191,7 +195,14 @@ namespace azuremyst.services
 
         public static readonly int[] rogue =
         {
-
+            22002, // darkmantle belt
+            22003, // darkmantle boots
+            22004, // darkmantle bracers
+            22005, // darkmantle cap
+            22006, // darkmantle gloves
+            22007, // darkmantle pants
+            22008, // darkmantle spaulders
+            22009, // darkmantle tunic
         };
 
         public static readonly int[] rogueMisc =
@@ -199,6 +210,9 @@ namespace azuremyst.services
             18323, // satyr's bow
             12939, // dal'rend's tribal guardian
             12940, // dal'rend's sacred charge
+            11815, // hand of justice
+            19100, // electrified dagger
+            18392, // distracting dagger
         };
 
         public static readonly int[] shaman =
@@ -208,7 +222,7 @@ namespace azuremyst.services
 
         public static readonly int[] shamanMisc =
         {
-
+            11815, // hand of justice
         };
 
         public static readonly int[] warlock =
@@ -247,6 +261,7 @@ namespace azuremyst.services
             18323, // satyr's bow
             12939, // dal'rend's tribal guardian
             12940, // dal'rend's sacred charge
+            11815, // hand of justice
         };
 
         public static readonly int[] sharedCaster =
