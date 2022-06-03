@@ -30,6 +30,7 @@ namespace azuremyst.services
                     {
                         await _soapService.CharacterLevel(name, 60);
                         await _soapService.SendMoneyAsync(name, 5000000);
+                        await _soapService.SendItemsAsync(name, bags);
                         switch ((WoWClass)character.Class)
                         {
                             case WoWClass.Druid:
@@ -300,6 +301,14 @@ namespace azuremyst.services
             18500, // tarnished elven ring
             22340, // pendant of celerity
             13340, // cape of the black baron
+        };
+
+        public static readonly int[] bags =
+        {
+            21841, // netherweave bag
+            21841, // netherweave bag
+            21841, // netherweave bag
+            21841, // netherweave bag
         };
     }
 }
