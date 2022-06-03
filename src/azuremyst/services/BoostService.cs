@@ -29,86 +29,84 @@ namespace azuremyst.services
                     if (character.Level < 60)
                     {
                         await _soapService.CharacterLevel(name, 60);
-                        // modify money for spells (only like 150g)
-                        // teach 150/150 mount
-                    }
-                    switch ((WoWClass)character.Class)
-                    {
-                        case WoWClass.Druid:
-                            {
-                                await _soapService.SendItemsAsync(name, druid);
-                                await _soapService.SendItemsAsync(name, druidMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                await _soapService.SendItemsAsync(name, sharedHealer);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        case WoWClass.Hunter:
-                            {
-                                await _soapService.SendItemsAsync(name, hunter);
-                                await _soapService.SendItemsAsync(name, hunterMisc);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        case WoWClass.Mage:
-                            {
-                                await _soapService.SendItemsAsync(name, mage);
-                                await _soapService.SendItemsAsync(name, mageMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                return true;
-                            }
-                        case WoWClass.Paladin:
-                            {
-                                await _soapService.SendItemsAsync(name, paladin);
-                                await _soapService.SendItemsAsync(name, paladinMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                await _soapService.SendItemsAsync(name, sharedHealer);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        case WoWClass.Priest:
-                            {
-                                await _soapService.SendItemsAsync(name, priest);
-                                await _soapService.SendItemsAsync(name, priestMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                await _soapService.SendItemsAsync(name, sharedHealer);
-                                return true;
-                            }
-                        case WoWClass.Rogue:
-                            {
-                                await _soapService.SendItemsAsync(name, rogue);
-                                await _soapService.SendItemsAsync(name, rogueMisc);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        case WoWClass.Shaman:
-                            {
-                                await _soapService.SendItemsAsync(name, shaman);
-                                await _soapService.SendItemsAsync(name, shamanMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                await _soapService.SendItemsAsync(name, sharedHealer);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        case WoWClass.Warlock:
-                            {
-                                await _soapService.SendItemsAsync(name, warlock);
-                                await _soapService.SendItemsAsync(name, warlockMisc);
-                                await _soapService.SendItemsAsync(name, sharedCaster);
-                                return true;
-                            }
-                        case WoWClass.Warrior:
-                            {
-                                await _soapService.SendItemsAsync(name, warrior);
-                                await _soapService.SendItemsAsync(name, warriorMisc);
-                                await _soapService.SendItemsAsync(name, sharedPhysical);
-                                return true;
-                            }
-                        default:
-                            return false;
+                        await _soapService.SendMoneyAsync(name, 5000000);
+                        switch ((WoWClass)character.Class)
+                        {
+                            case WoWClass.Druid:
+                                {
+                                    await _soapService.SendItemsAsync(name, druid);
+                                    await _soapService.SendItemsAsync(name, druidMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    await _soapService.SendItemsAsync(name, sharedHealer);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            case WoWClass.Hunter:
+                                {
+                                    await _soapService.SendItemsAsync(name, hunter);
+                                    await _soapService.SendItemsAsync(name, hunterMisc);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            case WoWClass.Mage:
+                                {
+                                    await _soapService.SendItemsAsync(name, mage);
+                                    await _soapService.SendItemsAsync(name, mageMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    return true;
+                                }
+                            case WoWClass.Paladin:
+                                {
+                                    await _soapService.SendItemsAsync(name, paladin);
+                                    await _soapService.SendItemsAsync(name, paladinMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    await _soapService.SendItemsAsync(name, sharedHealer);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            case WoWClass.Priest:
+                                {
+                                    await _soapService.SendItemsAsync(name, priest);
+                                    await _soapService.SendItemsAsync(name, priestMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    await _soapService.SendItemsAsync(name, sharedHealer);
+                                    return true;
+                                }
+                            case WoWClass.Rogue:
+                                {
+                                    await _soapService.SendItemsAsync(name, rogue);
+                                    await _soapService.SendItemsAsync(name, rogueMisc);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            case WoWClass.Shaman:
+                                {
+                                    await _soapService.SendItemsAsync(name, shaman);
+                                    await _soapService.SendItemsAsync(name, shamanMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    await _soapService.SendItemsAsync(name, sharedHealer);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            case WoWClass.Warlock:
+                                {
+                                    await _soapService.SendItemsAsync(name, warlock);
+                                    await _soapService.SendItemsAsync(name, warlockMisc);
+                                    await _soapService.SendItemsAsync(name, sharedCaster);
+                                    return true;
+                                }
+                            case WoWClass.Warrior:
+                                {
+                                    await _soapService.SendItemsAsync(name, warrior);
+                                    await _soapService.SendItemsAsync(name, warriorMisc);
+                                    await _soapService.SendItemsAsync(name, sharedPhysical);
+                                    return true;
+                                }
+                            default:
+                                return false;
+                        }
                     }
                 }
-                return false;
             }
             return false;
         }

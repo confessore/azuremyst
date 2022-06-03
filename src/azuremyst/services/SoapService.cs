@@ -27,6 +27,12 @@ namespace azuremyst.services
             _authDbContextFactory = authDbContextFactory;
         }
 
+        public async Task<bool> SendMoneyAsync(string name, int copper)
+        {
+            var command = $"send money {name.ToUpper()} \"azuremyst\" \" - the letter glows faintly...\" {copper}";
+            return await ExecuteSOAPCommandAsync(command);
+        }
+
         public async Task<bool> SendItemAsync(string name, int id)
         {
             var command = $"send items {name.ToUpper()} \"azuremyst\" \" - the letter glows faintly...\" {id}";
