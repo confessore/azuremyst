@@ -129,7 +129,10 @@ namespace azuremyst.services
         {
             22335, // lord valthalak's staff of command
             11815, // hand of justice,
-            18420, // bonecrusher
+            18420, // bonecrusher,
+            22397, // idol of ferocity
+            23198, // idol of brutality,
+            22398, // idol of rejuvenation
         };
 
         public static readonly int[] hunter =
@@ -188,7 +191,10 @@ namespace azuremyst.services
             18520, // barbarous blade
             11815, // hand of justice
             22336, // draconian aegis of the legion
-            18396, // mind carver
+            18396, // mind carver,
+            22400, // libram of truth
+            22401, // libram of hope
+            23201, // libram of divinity
         };
 
         public static readonly int[] priest =
@@ -250,6 +256,9 @@ namespace azuremyst.services
             13964, // witchblade,
             20648, // cold forged hammer
             14487, // bonechill hammer
+            22395, // totem of rage
+            22345, // totem of rebirth
+            23200, // totem of sustaining
         };
 
         public static readonly int[] warlock =
@@ -310,7 +319,8 @@ namespace azuremyst.services
             18723, // animated chain necklace
             18371, // mindtap talisman,
             13178, // rosewine circle
-            16058, // fordring's seal
+            16058, // fordring's seal,
+            18389, // cloak of the cosmos
         };
 
         public static readonly int[] sharedPhysical =
