@@ -60,5 +60,14 @@ namespace azuremyst.services
             WoWRace.Troll,
             WoWRace.Orc,
         };
+
+        public readonly static WoWRace[] alliance = new WoWRace[5]
+{
+            WoWRace.Gnome,
+            WoWRace.Dwarf,
+            WoWRace.Draenei,
+            WoWRace.Human,
+            WoWRace.NightElf,
+};
     }
 }
