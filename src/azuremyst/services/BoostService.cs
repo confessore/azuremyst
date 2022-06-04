@@ -112,18 +112,26 @@ namespace azuremyst.services
             return false;
         }
 
+        // limit 12 per mail
         public static readonly int[] druid =
         {
-            
+            22106, // feralheart belt
+            22107, // feralheart boots
+            22108, // feralheart bracers
+            22109, // feralheart cowl
+            22110, // feralheart gloves
+            22111, // feralheart kilt
+            22112, // feralheart spaulders
+            22113, // feralheart vest
         };
 
         public static readonly int[] druidMisc =
         {
             22335, // lord valthalak's staff of command
-            11815, // hand of justice
+            11815, // hand of justice,
+            18420, // bonecrusher
         };
 
-        // limit 12 per mail
         public static readonly int[] hunter =
         {
             22010, // beastmaster's girdle
@@ -179,7 +187,7 @@ namespace azuremyst.services
         {
             18520, // barbarous blade
             11815, // hand of justice
-            12602, // draconian deflector
+            22336, // draconian aegis of the legion
             18396, // mind carver
         };
 
@@ -225,12 +233,23 @@ namespace azuremyst.services
 
         public static readonly int[] shaman =
         {
-
+            22095, // bindings of the five thunders
+            22096, // boots of the five thunders
+            22097, // coif of the five thunders
+            22098, // cord of the five thunders
+            22099, // gauntlets of the five thunders
+            22100, // kilt of the five thunders
+            22101, // pauldrons of the five thunders
+            22102, // vest of the five thunders
         };
 
         public static readonly int[] shamanMisc =
         {
             11815, // hand of justice
+            22336, // draconian aegis of the legion
+            13964, // witchblade,
+            20648, // cold forged hammer
+            14487, // bonechill hammer
         };
 
         public static readonly int[] warlock =
