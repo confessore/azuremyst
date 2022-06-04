@@ -11,6 +11,10 @@
 
 &nbsp;
 
+[join us on discord!](https://discord.gg/B44vuM2xxG)
+
+&nbsp;
+
 azuremyst is a free project with the following goal:
 
   **Doing Emulation Right!**

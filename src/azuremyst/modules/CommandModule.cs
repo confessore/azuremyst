@@ -1,6 +1,7 @@
 ﻿using azuremyst.contexts;
 using azuremyst.extensions;
 using azuremyst.models.enums;
+using azuremyst.services;
 using azuremyst.services.interfaces;
 using Discord;
 using Discord.Commands;
@@ -18,6 +19,7 @@ namespace azuremyst.modules
         readonly IDbContextFactory<CharacterDbContext> _characterDbContextFactory;
         readonly ISoapService _soap;
         readonly IBoostService _boost;
+        readonly IRoleService _role;
 
         public CommandModule(
             IServiceProvider services,
@@ -26,7 +28,8 @@ namespace azuremyst.modules
             IDbContextFactory<DefaultDbContext> defaultDbContextFactory,
             IDbContextFactory<CharacterDbContext> characterDbContextFactory,
             ISoapService soap,
-            IBoostService boost)
+            IBoostService boost,
+            IRoleService role)
         {
             _services = services;
             _client = client;
@@ -35,6 +38,7 @@ namespace azuremyst.modules
             _characterDbContextFactory = characterDbContextFactory;
             _soap = soap;
             _boost = boost;
+            _role = role;
         }
 
         readonly Random random = new Random();
@@ -67,16 +71,15 @@ namespace azuremyst.modules
         {
             await RemoveCommandMessageAsync();
             var user = _client.GetGuild(Context.Guild.Id).GetUser(Context.User.Id);
-            //var character = await _armory.LookupCharacterAsync(user.Nickname ?? user.Username);
-            //character.Id = user.Id;
-            //await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.FactionId is 1 ? "horde" : "alliance");
-            //await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, character.Class ?? string.Empty);
             using var context = await _characterDbContextFactory.CreateDbContextAsync();
             if (context.Characters != null)
             {
                 var character = await context.Characters.FirstOrDefaultAsync(x => x.Name.ToLower() == (user.Nickname ?? user.Username).ToLower());
                 if (character != null)
-                    await ReplyAsync($"{character.Name} is a level {character.Level} {((WoWRace)character.Race).GetDescription()} {((WoWClass)character.Class).GetDescription()} with guid: {character.Guid}");
+                {
+                    await _role.UpdateFactionRoleAsync(Context.Guild, (SocketGuildUser)Context.User, RoleService.horde.Any(x => x == (WoWRace)character.Race) ? "horde" : "alliance");
+                    await _role.UpdateClassRoleAsync(Context.Guild, (SocketGuildUser)Context.User, ((WoWClass)character.Class).GetDescription().ToLower());
+                }
             }
         }
 
