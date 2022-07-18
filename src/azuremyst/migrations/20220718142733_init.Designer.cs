@@ -11,7 +11,7 @@ using azuremyst.contexts;
 namespace azuremyst.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20220527202332_init")]
+    [Migration("20220718142733_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,9 @@ namespace azuremyst.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<ulong?>("DiscordId")
+                        .HasColumnType("bigint unsigned");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -141,8 +144,6 @@ namespace azuremyst.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -153,78 +154,6 @@ namespace azuremyst.Migrations
                     b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<int>("UserType").IsComplete(true);
-                });
-
-            modelBuilder.Entity("azuremyst.models.realmd.Account", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
-
-                    b.Property<uint>("ActiveRealmId")
-                        .HasColumnType("int unsigned");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
-                    b.Property<byte>("Expansion")
-                        .HasColumnType("tinyint unsigned");
-
-                    b.Property<uint>("FailedLogins")
-                        .HasColumnType("int unsigned");
-
-                    b.Property<uint>("Flags")
-                        .HasColumnType("int unsigned");
-
-                    b.Property<byte>("Gmlevel")
-                        .HasColumnType("tinyint unsigned");
-
-                    b.Property<DateTime>("Joindate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("LastModule")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Locale")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<byte>("Locked")
-                        .HasColumnType("tinyint unsigned");
-
-                    b.Property<string>("LockedIp")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<uint>("ModuleDay")
-                        .HasColumnType("int unsigned");
-
-                    b.Property<ulong>("Mutetime")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("Os")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("S")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Sessionkey")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("V")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -383,15 +312,6 @@ namespace azuremyst.Migrations
                     b.HasOne("azuremyst.models.abstractions.User", null)
                         .WithMany("Tokens")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("azuremyst.models.abstractions.User", b =>
-                {
-                    b.HasOne("azuremyst.models.realmd.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

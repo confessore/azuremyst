@@ -102,7 +102,6 @@
                                 {
                                     Email = model.Email!.ToUpper(),
                                     UserName = model.Username!.ToUpper(),
-                                    Account = account,
                                     AccountId = account.Id
                                 };
                                 var result = await _userManager.CreateAsync(user, model.Password);

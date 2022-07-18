@@ -14,48 +14,6 @@ namespace azuremyst.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Account",
-                columns: table => new
-                {
-                    Id = table.Column<uint>(type: "int unsigned", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Gmlevel = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    Sessionkey = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    V = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    S = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Joindate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LockedIp = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FailedLogins = table.Column<uint>(type: "int unsigned", nullable: false),
-                    Locked = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    LastModule = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModuleDay = table.Column<uint>(type: "int unsigned", nullable: false),
-                    ActiveRealmId = table.Column<uint>(type: "int unsigned", nullable: false),
-                    Expansion = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    Mutetime = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    Locale = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Os = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Token = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Flags = table.Column<uint>(type: "int unsigned", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Account", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -83,6 +41,7 @@ namespace azuremyst.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserType = table.Column<int>(type: "int", nullable: false),
                     AccountId = table.Column<uint>(type: "int unsigned", nullable: true),
+                    DiscordId = table.Column<ulong>(type: "bigint unsigned", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -109,11 +68,6 @@ namespace azuremyst.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Account_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Account",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -305,11 +259,6 @@ namespace azuremyst.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_AccountId",
-                table: "Users",
-                column: "AccountId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "Users",
                 column: "NormalizedUserName",
@@ -341,9 +290,6 @@ namespace azuremyst.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Account");
         }
     }
 }
