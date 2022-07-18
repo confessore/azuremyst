@@ -7,7 +7,7 @@ using azuremyst.services.interfaces;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using System.Reflection;
 
-namespace azuremyst.auth.services
+namespace azuremyst.services
 {
     /// <inheritdoc cref="ILocalStorageService" />
     public sealed class LocalStorageService : ILocalStorageService
