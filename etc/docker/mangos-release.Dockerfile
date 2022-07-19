@@ -108,8 +108,8 @@ FROM base as build
 
 ARG DOCKER_USER=mangos
 
-RUN mkdir -p /azuremyst/src/mangos/build
 RUN --mount=type=cache,target=/azuremyst/src/mangos/build,uid=1000,gid=1000 \
+    mkdir -p /azuremyst/src/mangos/build && \
     cd /azuremyst/src/mangos/build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=\../run -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=OFF && \
     make install -j2

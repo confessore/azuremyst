@@ -7,15 +7,34 @@ namespace azuremyst.services
 {
     public class BoostService : IBoostService
     {
+        readonly IDbContextFactory<AuthDbContext> _authDbContextFactory;
         readonly IDbContextFactory<CharacterDbContext> _characterDbContextFactory;
         readonly ISoapService _soapService;
 
         public BoostService(
+            IDbContextFactory<AuthDbContext> authDbContextFactory,
             IDbContextFactory<CharacterDbContext> characterDbContextFactory,
             ISoapService soapService)
         {
+            _authDbContextFactory = authDbContextFactory;
             _characterDbContextFactory = characterDbContextFactory;
             _soapService = soapService;
+        }
+
+        public async Task<IEnumerable<string?>> LookupAccountCharactersAsync(string username)
+        {
+            using var authContext = await _authDbContextFactory.CreateDbContextAsync();
+            if (authContext.Accounts != null)
+            {
+                var account = await authContext.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+                if (account != null)
+                {
+                    using var characterContext = await _characterDbContextFactory.CreateDbContextAsync();
+                    if (characterContext.Characters != null)
+                        return await characterContext.Characters.Where(x => x.Account == account.Id).Select(x => x.Name).ToArrayAsync();
+                }
+            }
+            return Enumerable.Empty<string?>();
         }
 
         public async Task<bool> Boost60Async(string name)
