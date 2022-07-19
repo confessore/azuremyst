@@ -1,10 +1,11 @@
-﻿using azuremyst.services.interfaces;
+﻿using azuremyst.models.characters;
+using azuremyst.services.interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace azuremyst.pages
+namespace azuremyst.pages.account
 {
-    sealed partial class Account
+    sealed partial class Manage
     {
         [Inject]
         AuthenticationStateProvider? _authenticationStateProvider { get; set; }
@@ -15,7 +16,7 @@ namespace azuremyst.pages
         [Inject]
         IBoostService? _boostService { get; set; }
 
-        public Account()
+        public Manage()
         {
             model = new();
         }
@@ -27,7 +28,8 @@ namespace azuremyst.pages
             public bool Initialized { get; set; }
             public string? Username { get; set; }
             public string? Email { get; set; }
-            public IEnumerable<string?>? Characters { get; set; }
+            public IEnumerable<string?>? CharacterNames { get; set; } = Enumerable.Empty<string?>();
+            public IEnumerable<Character?>? Characters { get; set; } = Enumerable.Empty<Character?>();
         }
 
         public async Task ExecuteBoostAsync()
@@ -36,9 +38,9 @@ namespace azuremyst.pages
             {
                 if (model.Username != null)
                 {
-                    model.Characters = await _boostService.LookupAccountCharactersAsync(model.Username);
-                    if (model.Characters != null)
-                        await _boostService.Boost60Async(model.Characters.FirstOrDefault() ?? string.Empty);
+                    model.CharacterNames = await _boostService.LookupAccountCharacterNamesAsync(model.Username);
+                    if (model.CharacterNames != null)
+                        await _boostService.Boost60Async(model.CharacterNames.FirstOrDefault() ?? string.Empty);
                 }
             }
         }
@@ -52,6 +54,14 @@ namespace azuremyst.pages
                 if (authenticationState.User.Identity != null)
                 {
                     model.Username = authenticationState.User.Identity.Name;
+                }
+            }
+            if (_boostService != null)
+            {
+                if (model.Username != null)
+                {
+                    model.CharacterNames = await _boostService.LookupAccountCharacterNamesAsync(model.Username);
+                    model.Characters = await _boostService.LookupAccountCharactersAsync(model.Username);
                 }
             }
             model.Initialized = true;

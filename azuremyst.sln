@@ -106,6 +106,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{908D9F
 		etc\docker\web-release.Dockerfile = etc\docker\web-release.Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mariadb", "mariadb", "{6824C2C9-382B-4827-A712-BAFED3C9714C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,7 @@ Global
 		{1255FB28-9A69-4727-AD65-87205327F096} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{2047B09A-C27B-4D74-AC95-EF2E92EBB3D6} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{908D9F9F-00EE-4672-BEC9-78477082FDF7} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
+		{6824C2C9-382B-4827-A712-BAFED3C9714C} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E78D131-C2F2-4EBA-BC37-E2BE5081BECA}

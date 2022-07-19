@@ -1,4 +1,4 @@
-﻿@page "/account"
+﻿@page "/account/manage"
 
 <div class="d-flex flex-column">
     <div class="d-flex flex-wrap justify-content-center my-1 py-1">
@@ -8,12 +8,8 @@
                     @model.Username
                 </div>
                 <div class="d-flex flex-column w-100">
-                    <div class="d-flex justify-content-center my-1">
-                        @*<button @onclick="async () => await ExecuteBoostAsync()">boost</button>*@
-                    </div>
-                    <div class="d-flex justify-content-center my-1">
-
-                    </div>
+                    <CharacterList
+                        Characters="@model.Characters" />
                 </div>
             </Authorized>
             <NotAuthorized> 

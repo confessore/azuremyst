@@ -1,0 +1,30 @@
+﻿<div class="container-fluid">
+    <div class="d-flex flex-column m-1">
+        @if (Characters != null)
+        {
+            foreach (var character in Characters)
+            {
+                <div class="d-flex border border-primary">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex mt-1">
+                            <div class="d-flex flex-column m-1">
+                                @character.Name
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1">
+                            <div class="d-flex flex-column m-1">
+                                <img src="icons/@(((WoWRace)character.Race).GetDescription().ToLower())_@(((WoWGender)character.Gender).GetDescription().ToLower()).png" style="max-height: 25px; max-width: 25px;" />
+                            </div>
+                            <div class="d-flex flex-column m-1">
+                                <img src="icons/@(((WoWClass)character.Class).GetDescription().ToLower()).png" style="max-height: 25px; max-width: 25px;" />
+                            </div>
+                            <div class="d-flex flex-column m-1">
+                                @character.Level
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            }
+        }
+    </div>
+</div>

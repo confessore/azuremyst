@@ -10,5 +10,7 @@ namespace azuremyst.models.abstractions
     {
         [JsonConstructor]
         public Role() { }
+
+        public long? CreatedAt { get; set; }
     }
 }
