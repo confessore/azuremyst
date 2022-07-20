@@ -22,23 +22,24 @@ namespace azuremyst.handlers
             _hostEnvironmentAuthenticationStateProvider = hostEnvironmentAuthenticationStateProvider;
         }
 
-        public override Task OnCircuitClosedAsync(Circuit circuit, CancellationToken cancellationToken)
+        public override async Task OnCircuitClosedAsync(Circuit circuit, CancellationToken cancellationToken)
         {
-            return base.OnCircuitClosedAsync(circuit, cancellationToken);
+            await base.OnCircuitClosedAsync(circuit, cancellationToken);
         }
 
-        public override Task OnCircuitOpenedAsync(Circuit circuit, CancellationToken cancellationToken)
+        public override async Task OnCircuitOpenedAsync(Circuit circuit, CancellationToken cancellationToken)
         {
-            return base.OnCircuitOpenedAsync(circuit, cancellationToken);
+            await base.OnCircuitOpenedAsync(circuit, cancellationToken);
         }
 
-        public override Task OnConnectionDownAsync(Circuit circuit, CancellationToken cancellationToken)
+        public override async Task OnConnectionDownAsync(Circuit circuit, CancellationToken cancellationToken)
         {
-            return base.OnConnectionDownAsync(circuit, cancellationToken);
+            await base.OnConnectionDownAsync(circuit, cancellationToken);
         }
 
         public override async Task OnConnectionUpAsync(Circuit circuit, CancellationToken cancellationToken)
         {
+            await base.OnConnectionUpAsync(circuit, cancellationToken);
             try
             {
                 var user = await _localStorageService.GetDefaultUserAsync();
@@ -47,7 +48,6 @@ namespace azuremyst.handlers
                     if (await _authService.TokenAuthenticateAsync(user))
                         _hostEnvironmentAuthenticationStateProvider.SetAuthenticationState(_authService.BuildAuthenticationStateAsync(user));
                 }
-                await base.OnConnectionUpAsync(circuit, cancellationToken);
             }
             catch (Exception e)
             {
