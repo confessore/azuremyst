@@ -13,10 +13,10 @@
                         </div>
                         <div class="d-flex mb-1">
                             <div class="d-flex flex-column m-1">
-                                <img src="icons/@(((WoWRace)character.Race).GetDescription().ToLower())_@(((WoWGender)character.Gender).GetDescription().ToLower()).png" style="max-height: 25px; max-width: 25px;" />
+                                <img src="@BuildRaceIconSource((WoWRace)character.Race, (WoWGender)character.Gender)" style="max-height: 25px; max-width: 25px;" />
                             </div>
                             <div class="d-flex flex-column m-1">
-                                <img src="icons/@(((WoWClass)character.Class).GetDescription().ToLower()).png" style="max-height: 25px; max-width: 25px;" />
+                                <img src="@BuildClassIconSource((WoWClass)character.Class)" style="max-height: 25px; max-width: 25px;" />
                             </div>
                             <div class="d-flex flex-column m-1">
                                 @character.Level

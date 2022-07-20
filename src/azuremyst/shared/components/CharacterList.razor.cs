@@ -1,4 +1,6 @@
-﻿using azuremyst.models.characters;
+﻿using azuremyst.extensions;
+using azuremyst.models.characters;
+using azuremyst.models.enums;
 using Microsoft.AspNetCore.Components;
 
 namespace azuremyst.shared.components
@@ -25,5 +27,11 @@ namespace azuremyst.shared.components
             await base.OnInitializedAsync();
             model.Initialized = true;
         }
+
+        public string? BuildClassIconSource(WoWClass @class) =>
+            $"icons/{@class.GetDescription().ToLower()}.png";
+
+        public string? BuildRaceIconSource(WoWRace race, WoWGender gender = WoWGender.Male) =>
+            $"icons/{race.GetDescription().ToLower()}_{gender.GetDescription().ToLower()}.png";
     }
 }
