@@ -270,6 +270,7 @@ namespace azuremyst.services
         public static Token GenerateAuthenticationToken(User user) =>
             new AuthenticationToken()
             {
+                CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 TokenType = TokenType.Authentication,
                 Hash = Guid.NewGuid().ToString(),
                 Expiration = DateTimeOffset.UtcNow.AddDays(1).ToUnixTimeSeconds(),
@@ -279,6 +280,7 @@ namespace azuremyst.services
         public static Token GenerateRefreshToken(User user) =>
             new RefreshToken()
             {
+                CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 TokenType = TokenType.Refresh,
                 Hash = Guid.NewGuid().ToString(),
                 Expiration = DateTimeOffset.UtcNow.AddDays(7).ToUnixTimeSeconds(),
@@ -288,6 +290,7 @@ namespace azuremyst.services
         public static Token GenerateConfirmationToken(User user) =>
             new ConfirmationToken()
             {
+                CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 TokenType = TokenType.Confirmation,
                 Hash = Guid.NewGuid().ToString(),
                 Expiration = DateTimeOffset.UtcNow.AddDays(1).ToUnixTimeSeconds(),
@@ -297,6 +300,7 @@ namespace azuremyst.services
         public static Token GenerateDefaultToken(TokenType tokenType, int days) =>
             new DefaultToken()
             {
+                CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 TokenType = tokenType,
                 Hash = Guid.NewGuid().ToString(),
                 Expiration = DateTimeOffset.UtcNow.AddDays(days).ToUnixTimeSeconds()
