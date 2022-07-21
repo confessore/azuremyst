@@ -4,7 +4,7 @@
         {
             foreach (var service in Services)
             {
-                <div class="d-flex" @onclick="async () => { await OnServiceClickedAsync(); }">
+                <div class="d-flex btn btn-success m-1" @onclick="async () => { await OnServiceClickedAsync(); }">
                     <ServiceItem
                         Name="@service.Item1"
                         Price="@service.Item2" />

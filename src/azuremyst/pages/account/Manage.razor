@@ -5,7 +5,7 @@
         <AuthorizeView>
             <Authorized>
                 <div class="d-flex justify-content-center my-1">
-                    @model.Username <button @onclick="async () => await DonateAsync()">donate</button>
+                    @model.Username
                 </div>
                 <div class="d-flex flex-wrap">
                     <div class="d-flex flex-column">
@@ -16,8 +16,10 @@
                     @if (model.SelectedCharacter != null)
                     {
                         <div class="d-flex flex-column">
-                            <CharacterItem
-                                Character="@model.SelectedCharacter" />
+                            <div class="d-flex border border-success m-1">
+                                <CharacterItem
+                                    Character="@model.SelectedCharacter" />
+                            </div>
                             <ServiceList
                                 Services="@model.Services" />
                         </div>

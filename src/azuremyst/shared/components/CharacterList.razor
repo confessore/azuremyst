@@ -4,7 +4,7 @@
         {
             foreach (var character in Characters)
             {
-                <div class="d-flex" @onclick="async () => { await OnCharacterClickedAsync(character); }">
+                <div class="d-flex btn btn-primary m-1" @onclick="async () => { await OnCharacterClickedAsync(character); }">
                     <CharacterItem
                         Character="@character" />
                 </div>
