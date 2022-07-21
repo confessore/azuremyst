@@ -5,18 +5,12 @@ using Microsoft.AspNetCore.Components;
 
 namespace azuremyst.shared.components
 {
-    sealed partial class CharacterList
+    sealed partial class CharacterItem
     {
         [Parameter]
-        public IEnumerable<Character?>? Characters { get; set; } = Enumerable.Empty<Character?>();
+        public Character? Character { get; set; }
 
-        [Parameter]
-        public Character? SelectedCharacter { get; set; }
-
-        [Parameter]
-        public EventCallback<Character?> SelectedCharacterChanged { get; set; }
-
-        public CharacterList()
+        public CharacterItem()
         {
             model = new();
         }
@@ -33,12 +27,6 @@ namespace azuremyst.shared.components
             await base.OnInitializedAsync();
 
             model.Initialized = true;
-        }
-
-        public async Task OnCharacterClickedAsync(Character? character)
-        {
-            SelectedCharacter = character;
-            await SelectedCharacterChanged.InvokeAsync(SelectedCharacter);
         }
 
         public string? BuildClassIconSource(WoWClass @class) =>

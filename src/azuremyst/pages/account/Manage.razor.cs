@@ -30,6 +30,7 @@ namespace azuremyst.pages.account
             public string? Email { get; set; }
             public IEnumerable<string?>? CharacterNames { get; set; } = Enumerable.Empty<string?>();
             public IEnumerable<Character?>? Characters { get; set; } = Enumerable.Empty<Character?>();
+            public Character? SelectedCharacter { get; set; }
         }
 
         public async Task ExecuteBoostAsync()
@@ -62,6 +63,8 @@ namespace azuremyst.pages.account
                 {
                     model.CharacterNames = await _boostService.LookupAccountCharacterNamesAsync(model.Username);
                     model.Characters = await _boostService.LookupAccountCharactersAsync(model.Username);
+                    if (model.Characters != null)
+                        model.SelectedCharacter = model.Characters.FirstOrDefault();
                 }
             }
             model.Initialized = true;

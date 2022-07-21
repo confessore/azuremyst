@@ -1,18 +1,28 @@
 ﻿@page "/account/manage"
 
-<div class="d-flex flex-column">
-    <div class="d-flex flex-wrap justify-content-center my-1 py-1">
+<div class="container-fluid">
+    <div class="d-flex flex-column justify-content-center my-1 py-1">
         <AuthorizeView>
             <Authorized>
                 <div class="d-flex justify-content-center my-1 py-1">
                     @model.Username
                 </div>
-                <div class="d-flex flex-column w-100">
-                    <CharacterList
-                        Characters="@model.Characters" />
+                <div class="d-flex flex-wrap w-100">
+                    <div class="d-flex flex-column">
+                        <CharacterList
+                            Characters="@model.Characters"
+                            @bind-SelectedCharacter="model.SelectedCharacter" />
+                    </div>
+                    @if (model.SelectedCharacter != null)
+                    {
+                        <div class="d-flex flex-column">
+                            <CharacterItem
+                                Character="@model.SelectedCharacter" />
+                        </div>
+                    }
                 </div>
             </Authorized>
-            <NotAuthorized> 
+            <NotAuthorized>
                 <div class="d-flex justify-content-center my-1">
                     <a class="btn btn-secondary m-1" href="/register">need account?</a>
                     <a class="btn btn-secondary m-1" href="/login">have account?</a>
