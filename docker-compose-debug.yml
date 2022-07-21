@@ -7,7 +7,7 @@ services:
         ports:
             - 3306:3306
         volumes:
-            - ./sql/mariadb-init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./etc/mariadb/mariadb-init.sql:/docker-entrypoint-initdb.d/init.sql
             - azuremyst-db:/var/lib/mysql
         secrets:
             - sql-password-root
@@ -33,6 +33,8 @@ services:
             - discord-clientid
             - discord-clientsecret
             - discord-bottoken
+            - paypal-clientid
+            - paypal-clientsecret
             - sql-server
             - sql-username
             - sql-password
@@ -51,6 +53,8 @@ services:
             - APPLICATION__DISCORDOPTIONS__CLIENTID=/run/secrets/discord-clientid
             - APPLICATION__DISCORDOPTIONS__SECRETID=/run/secrets/discord-clientsecret
             - APPLICATION__DISCORDOPTIONS__BOTTOKEN=/run/secrets/discord-bottoken
+            - APPLICATION__PAYPALOPTIONS__CLIENTID=/run/secrets/paypal-clientid
+            - APPLICATION__PAYPALOPTIONS__CLIENTSECRET=/run/secrets/paypal-clientsecret
             - APPLICATION__SQLCLIENTOPTIONS__SERVER=/run/secrets/sql-server
             - APPLICATION__SQLCLIENTOPTIONS__USERNAME=/run/secrets/sql-username
             - APPLICATION__SQLCLIENTOPTIONS__PASSWORD=/run/secrets/sql-password
@@ -114,6 +118,10 @@ secrets:
         file: secrets/discord-clientsecret
     discord-bottoken:
         file: secrets/discord-bottoken
+    paypal-clientid:
+        file: secrets/paypal-clientid
+    paypal-clientsecret:
+        file: secrets/paypal-clientsecret
     sql-server:
         file: secrets/sql-server
     sql-password-root:
@@ -140,8 +148,4 @@ secrets:
 volumes:
 
     azuremyst-db:
-        external: true
-    azuremyst-ssl:
-        external: true
-    azuremyst-data:
         external: true

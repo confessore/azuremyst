@@ -1,13 +1,13 @@
 ﻿@page "/account/manage"
 
 <div class="container-fluid">
-    <div class="d-flex flex-column justify-content-center my-1 py-1">
+    <div class="d-flex flex-column justify-content-center my-1">
         <AuthorizeView>
             <Authorized>
-                <div class="d-flex justify-content-center my-1 py-1">
-                    @model.Username
+                <div class="d-flex justify-content-center my-1">
+                    @model.Username <button @onclick="async () => await DonateAsync()">donate</button>
                 </div>
-                <div class="d-flex flex-wrap w-100">
+                <div class="d-flex flex-wrap">
                     <div class="d-flex flex-column">
                         <CharacterList
                             Characters="@model.Characters"
@@ -18,6 +18,8 @@
                         <div class="d-flex flex-column">
                             <CharacterItem
                                 Character="@model.SelectedCharacter" />
+                            <ServiceList
+                                Services="@model.Services" />
                         </div>
                     }
                 </div>
@@ -32,3 +34,4 @@
         </AuthorizeView>
     </div>
 </div>
+    

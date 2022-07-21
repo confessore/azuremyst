@@ -68,6 +68,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{1910
 		secrets\mangos-password = secrets\mangos-password
 		secrets\mangos-port = secrets\mangos-port
 		secrets\mangos-username = secrets\mangos-username
+		secrets\paypal-clientid = secrets\paypal-clientid
+		secrets\paypal-clientsecret = secrets\paypal-clientsecret
 		secrets\smtp-fromaddress = secrets\smtp-fromaddress
 		secrets\smtp-fromname = secrets\smtp-fromname
 		secrets\smtp-host = secrets\smtp-host
@@ -107,6 +109,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{908D9F
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mariadb", "mariadb", "{6824C2C9-382B-4827-A712-BAFED3C9714C}"
+	ProjectSection(SolutionItems) = preProject
+		etc\mariadb\mariadb-init.sql = etc\mariadb\mariadb-init.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
