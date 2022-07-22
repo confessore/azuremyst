@@ -12,6 +12,7 @@ namespace azuremyst.models.abstractions
         [JsonConstructor]
         public User() { }
 
+        public long? CreatedAt { get; set; }
         public UserType UserType { get; set; }
         public virtual uint? AccountId { get; set; }
         public virtual ulong? DiscordId { get; set; }

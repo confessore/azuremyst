@@ -1,0 +1,18 @@
+﻿<div class="container-fluid"  style="width: 10rem;">
+    <div class="d-flex flex-column">
+        <div class="d-flex mt-1">
+            @Character.Name
+        </div>
+        <div class="d-flex">
+            <div class="d-flex flex-column m-1">
+                <img src="@BuildRaceIconSource((WoWRace)Character.Race, (WoWGender)Character.Gender)" style="max-height: 25px; max-width: 25px;" />
+            </div>
+            <div class="d-flex flex-column m-1">
+                <img src="@BuildClassIconSource((WoWClass)Character.Class)" style="max-height: 25px; max-width: 25px;" />
+            </div>
+            <div class="d-flex flex-column m-1">
+                @Character.Level
+            </div>
+        </div>
+    </div>
+</div>

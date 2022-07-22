@@ -15,22 +15,16 @@
         </div>
         <div class="offcanvas-body">  
             <div class="navbar-nav m-1 p-1">
-                <NavItem Title="home" Icon="home" Active="true" />
-                <NavItem Title="connect" Icon="infinity" />
-                @*<NavItem Title="services" Icon="script" />
-                <NavItem Title="technologies" Icon="compass" />
-                <NavItem Title="showcase" Icon="monitor" />
-                <NavItem Title="about" Icon="infinity" />
-                <NavItem Title="contact" Icon="envelope-open" />
-                <NavItem Title="cart" Icon="cart" />*@
+                <NavItem Title="home" Href="/" Icon="home" Active="true" />
+                <NavItem Title="connect" Href="/connect" Icon="infinity" />
                 <AuthorizeView>
                     <Authorized>
-                        <NavItem Title="account" Icon="aperture" />
+                        <NavItem Title="account" Href="/account/manage" Icon="aperture" />
                         <LogoutNavItem />
                     </Authorized>
                     <NotAuthorized>
-                        <NavItem Title="register" Icon="flag" />
-                        <NavItem Title="login" Icon="account-login" />
+                        <NavItem Title="register" Href="/register" Icon="flag" />
+                        <NavItem Title="login" Href="/login" Icon="account-login" />
                     </NotAuthorized>
                 </AuthorizeView>
             </div>

@@ -68,6 +68,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{1910
 		secrets\mangos-password = secrets\mangos-password
 		secrets\mangos-port = secrets\mangos-port
 		secrets\mangos-username = secrets\mangos-username
+		secrets\paypal-clientid = secrets\paypal-clientid
+		secrets\paypal-clientsecret = secrets\paypal-clientsecret
 		secrets\smtp-fromaddress = secrets\smtp-fromaddress
 		secrets\smtp-fromname = secrets\smtp-fromname
 		secrets\smtp-host = secrets\smtp-host
@@ -79,11 +81,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secrets", "secrets", "{1910
 		secrets\sql-password-root = secrets\sql-password-root
 		secrets\sql-server = secrets\sql-server
 		secrets\sql-username = secrets\sql-username
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{2F26C58C-65B2-4CB9-963D-37C9AF976821}"
-	ProjectSection(SolutionItems) = preProject
-		sql\mariadb-init.sql = sql\mariadb-init.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{EDB9DFF7-F138-4379-A16C-55C0EB456F96}"
@@ -104,6 +101,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{908D9F
 		etc\docker\nginx-release.Dockerfile = etc\docker\nginx-release.Dockerfile
 		etc\docker\web-debug.Dockerfile = etc\docker\web-debug.Dockerfile
 		etc\docker\web-release.Dockerfile = etc\docker\web-release.Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mariadb", "mariadb", "{6824C2C9-382B-4827-A712-BAFED3C9714C}"
+	ProjectSection(SolutionItems) = preProject
+		etc\mariadb\mariadb-init.sql = etc\mariadb\mariadb-init.sql
 	EndProjectSection
 EndProject
 Global
@@ -129,13 +131,13 @@ Global
 		{C10F8FB1-CFED-4E06-9C69-E58B3D8824E2} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
 		{8122276B-7890-4D46-8D6E-3A4B7973AD07} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
 		{19102EDC-D1EF-4BC3-B477-3005E29DB1AA} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
-		{2F26C58C-65B2-4CB9-963D-37C9AF976821} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
 		{EDB9DFF7-F138-4379-A16C-55C0EB456F96} = {48BA2481-CAA3-4D76-AE21-5147FD02DA9E}
 		{00E79D1D-6D76-49B2-A372-F8E00A5B1ACB} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{908A6FC7-AB26-43A7-A9BD-E02266D51DA9} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{1255FB28-9A69-4727-AD65-87205327F096} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{2047B09A-C27B-4D74-AC95-EF2E92EBB3D6} = {EDB9DFF7-F138-4379-A16C-55C0EB456F96}
 		{908D9F9F-00EE-4672-BEC9-78477082FDF7} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
+		{6824C2C9-382B-4827-A712-BAFED3C9714C} = {FE2CC504-E36D-4B0E-B70F-8476AD861887}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E78D131-C2F2-4EBA-BC37-E2BE5081BECA}

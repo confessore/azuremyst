@@ -1,4 +1,5 @@
 ﻿using azuremyst.contexts;
+using azuremyst.models.characters;
 using azuremyst.models.enums;
 using azuremyst.services.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace azuremyst.services
             _soapService = soapService;
         }
 
-        public async Task<IEnumerable<string?>> LookupAccountCharactersAsync(string username)
+        public async Task<IEnumerable<string?>> LookupAccountCharacterNamesAsync(string username)
         {
             using var authContext = await _authDbContextFactory.CreateDbContextAsync();
             if (authContext.Accounts != null)
@@ -35,6 +36,22 @@ namespace azuremyst.services
                 }
             }
             return Enumerable.Empty<string?>();
+        }
+
+        public async Task<IEnumerable<Character?>> LookupAccountCharactersAsync(string username)
+        {
+            using var authContext = await _authDbContextFactory.CreateDbContextAsync();
+            if (authContext.Accounts != null)
+            {
+                var account = await authContext.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+                if (account != null)
+                {
+                    using var characterContext = await _characterDbContextFactory.CreateDbContextAsync();
+                    if (characterContext.Characters != null)
+                        return await characterContext.Characters.Where(x => x.Account == account.Id).ToArrayAsync();
+                }
+            }
+            return Enumerable.Empty<Character?>();
         }
 
         public async Task<bool> Boost60Async(string name)

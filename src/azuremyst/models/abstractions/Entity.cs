@@ -6,5 +6,6 @@ namespace azuremyst.models.abstractions
         where TId : IEquatable<TId>
     {
         public TId? Id { get; set; }
+        public long? CreatedAt { get; set; }
     }
 }

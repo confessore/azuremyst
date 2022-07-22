@@ -51,6 +51,13 @@ namespace azuremyst.extensions
             return Task.FromResult(options);
         }
 
+        public static Task<PayPalOptions> BuildPayPalOptionsAsync(this IConfiguration configuration)
+        {
+            var options = new PayPalOptions();
+            configuration.GetSection("APPLICATION:PAYPALOPTIONS").Bind(options);
+            return Task.FromResult(options);
+        }
+
         public static Task<MangosOptions> BuildMangosOptionsAsync(this IConfiguration configuration)
         {
             var options = new MangosOptions();

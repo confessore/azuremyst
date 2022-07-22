@@ -1,7 +1,9 @@
-﻿using azuremyst.services;
+﻿using azuremyst.models.options;
+using azuremyst.services;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using PayPalCheckoutSdk.Core;
 
 namespace azuremyst.extensions
 {
@@ -84,6 +86,15 @@ namespace azuremyst.extensions
             var config = new DiscordSocketConfig();
             config.GatewayIntents |= GatewayIntents.GuildMembers;
             var client = new DiscordSocketClient(config);
+            services.AddSingleton(client);
+            return services;
+        }
+
+        public static IServiceCollection AddPaypalClient(this IServiceCollection services, PayPalOptions options)
+        {
+            var environment = new SandboxEnvironment(options.ClientId.Trim(), options.ClientSecret.Trim());
+            //var environment = new LiveEnvironment(options.ClientId.Trim(), options.ClientSecret.Trim());
+            var client = new PayPalHttpClient(environment);
             services.AddSingleton(client);
             return services;
         }

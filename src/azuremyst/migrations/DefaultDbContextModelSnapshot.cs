@@ -29,6 +29,9 @@ namespace azuremyst.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<long?>("CreatedAt")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -56,6 +59,9 @@ namespace azuremyst.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<long?>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("Expiration")
                         .HasColumnType("bigint");
@@ -93,6 +99,9 @@ namespace azuremyst.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
+
+                    b.Property<long?>("CreatedAt")
+                        .HasColumnType("bigint");
 
                     b.Property<ulong?>("DiscordId")
                         .HasColumnType("bigint unsigned");
@@ -301,6 +310,9 @@ namespace azuremyst.Migrations
             modelBuilder.Entity("azuremyst.models.users.DefaultUser", b =>
                 {
                     b.HasBaseType("azuremyst.models.abstractions.User");
+
+                    b.Property<int?>("Coins")
+                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue(0);
                 });

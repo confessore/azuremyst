@@ -8,6 +8,7 @@ using azuremyst.services.interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Server.Circuits;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,7 @@ var worldConnection = await configuration.BuildWorldConnectionStringAsync();
 var discordOptions = await configuration.BuildDiscordOptionsAsync();
 var mangosOptions = await configuration.BuildMangosOptionsAsync();
 var smtpOptions = await configuration.BuildSmtpOptionsAsync();
+var paypalOptions = await configuration.BuildPayPalOptionsAsync();
 var options = new WebApplicationOptions()
 {
     ApplicationName = executingAssemblyName,
@@ -180,6 +182,8 @@ builder.WebHost
             x.EnableSensitiveDataLogging();
             x.EnableDetailedErrors();
         });
+        x.AddDataProtection()
+            .PersistKeysToDbContext<KeyDbContext>();
         x.AddIdentity<User, Role>(x =>
         {
             x.User.RequireUniqueEmail = true;
@@ -229,6 +233,7 @@ builder.WebHost
         //x.AddScoped<IMarketService, MarketService>();
         //x.AddScoped<IAtomService, AtomService>();
         //x.AddScoped<IUserService, UserService>();
+        x.AddScoped<IDonationService, DonationService>();
         x.AddScoped<AuthenticationStateProvider, DefaultRevalidatingServerAuthenticationStateProvider>();
         x.AddScoped<IHostEnvironmentAuthenticationStateProvider>(x =>
         {
@@ -239,6 +244,7 @@ builder.WebHost
         });
         x.AddScoped<CircuitHandler, DefaultCircuitHandler>();
         x.AddDiscordSocketClient();
+        x.AddPaypalClient(paypalOptions);
         //await x.AddQuartzAsync();
     });
 try
