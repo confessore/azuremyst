@@ -3,7 +3,8 @@ using azuremyst.services;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using PayPalCheckoutSdk.Core;
+using Stripe;
+using Stripe.Checkout;
 
 namespace azuremyst.extensions
 {
@@ -90,12 +91,12 @@ namespace azuremyst.extensions
             return services;
         }
 
-        public static IServiceCollection AddPaypalClient(this IServiceCollection services, PayPalOptions options)
+        public static IServiceCollection AddStripe(this IServiceCollection services, StripeOptions options)
         {
-            var environment = new SandboxEnvironment(options.ClientId.Trim(), options.ClientSecret.Trim());
-            //var environment = new LiveEnvironment(options.ClientId.Trim(), options.ClientSecret.Trim());
-            var client = new PayPalHttpClient(environment);
-            services.AddSingleton(client);
+            StripeConfiguration.ApiKey = options.SecretKey.Trim();
+            services.AddSingleton<SessionService>();
+            services.AddSingleton<ChargeService>();
+            services.AddSingleton<RefundService>();
             return services;
         }
     }

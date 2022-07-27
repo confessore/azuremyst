@@ -1,10 +1,10 @@
-﻿using PayPalCheckoutSdk.Orders;
+﻿using Stripe;
+using Stripe.Checkout;
 
 namespace azuremyst.services.interfaces
 {
     public interface IDonationService
     {
-        Task<Order> CreateOrderAsync();
-        Task<Order> CaptureOrderAsync(string orderId);
+        Task<Session> CreateSessionAsync();
     }
 }

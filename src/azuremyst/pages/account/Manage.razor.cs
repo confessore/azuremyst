@@ -16,6 +16,12 @@ namespace azuremyst.pages.account
         [Inject]
         IBoostService? _boostService { get; set; }
 
+        [Inject]
+        NavigationManager? _navigationManager { get; set; }
+
+        [Inject]
+        IDonationService? _donationService { get; set; }
+
         public Manage()
         {
             model = new();
@@ -82,7 +88,10 @@ namespace azuremyst.pages.account
 
         public async Task DonateAsync()
         {
-
+            if (_donationService != null)
+            {
+                
+            }
         }
     }
 }

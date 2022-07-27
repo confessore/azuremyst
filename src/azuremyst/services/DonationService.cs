@@ -1,64 +1,49 @@
 ﻿using azuremyst.services.interfaces;
-using PayPalCheckoutSdk.Core;
-using PayPalCheckoutSdk.Orders;
 using Serilog;
+using Stripe;
+using Stripe.Checkout;
 
 namespace azuremyst.services
 {
     sealed class DonationService : IDonationService
     {
-        readonly PayPalHttpClient _paypalHttpClient;
+        readonly ChargeService _chargeService;
+        readonly SessionService _sessionService;
 
         public DonationService(
-            PayPalHttpClient paypalHttpClient)
+            ChargeService chargeService,
+            SessionService sessionService)
         {
-            _paypalHttpClient = paypalHttpClient;
+            _chargeService = chargeService;
+            _sessionService = sessionService;
         }
 
-        public async Task<Order> CreateOrderAsync()
+        public async Task<Session> CreateSessionAsync()
         {
-            // Construct a request object and set desired parameters
-            // creates a POST request to /v2/checkout/orders
-            var orderRequest = new OrderRequest()
+            var options = new SessionCreateOptions()
             {
-                CheckoutPaymentIntent = "CAPTURE",
-                PurchaseUnits = new()
+                LineItems = new List<SessionLineItemOptions>()
                 {
-                    new()
+                    new SessionLineItemOptions()
                     {
-                        AmountWithBreakdown = new()
+                        PriceData = new SessionLineItemPriceDataOptions()
                         {
-                            CurrencyCode = "USD",
-                            Value = "100.00"
-                        }
+                            ProductData = new SessionLineItemPriceDataProductDataOptions()
+                            {
+                                Name = "12 azuremyst coins"
+                            },
+                            UnitAmount = 1000,
+                            Currency = "USD"
+                        },
+                        Quantity = 1
                     }
                 },
-                ApplicationContext = new()
-                {
-                    ReturnUrl = "https://localhost",
-                    CancelUrl = "https://localhost"
-                }
+                Mode = "payment",
+                SuccessUrl = "https://localhost/",
+                CancelUrl = "https://localhost/"
             };
-
-            // Call API with your client and get a response for your call
-            var request = new OrdersCreateRequest();
-            request.Prefer("return=representation");
-            request.RequestBody(orderRequest);
-            var response = await _paypalHttpClient.Execute(request);
-            var orderResult = response.Result<Order>();
-            Log.Information("Links:");
-            foreach (var link in orderResult.Links)
-                Log.Information("\t{0}: {1}\tCall Type: {2}", link.Rel, link.Href, link.Method);
-            return response.Result<Order>();
-        }
-
-        public async Task<Order> CaptureOrderAsync(string orderId)
-        {
-            var request = new OrdersCaptureRequest(orderId);
-            request.Prefer("return=representation");
-            request.RequestBody(new OrderActionRequest());
-            var response = await _paypalHttpClient.Execute(request);
-            return response.Result<Order>();
+            var session = await _sessionService.CreateAsync(options);
+            return session;
         }
     }
 }

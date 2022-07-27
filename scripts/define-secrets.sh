@@ -9,6 +9,8 @@ read -p "please enter the discord client secret: " discordClientSecret
 read -p "please enter the discord bot token: " discordBotToken
 read -p "please enter the paypal client id: " paypalClientId
 read -p "please enter the paypal client secret: " paypalClientSecret
+read -p "please enter the stripe public key: " stripePublicKey
+read -p "please enter the stripe secret key: " stripeSecretKey
 read -p "please enter the sql server address (example - 'mariadb' for docker-compose): " sqlServer
 read -p "please enter the sql root password: " sqlPasswordRoot
 read -p "please enter the sql username (example - 'root'): " sqlUsername
@@ -37,8 +39,8 @@ echo "$mangosPassword" > mangos-password
 echo "$discordClientId" > discord-clientid
 echo "$discordClientSecret" > discord-clientsecret
 echo "$discordBotToken" > discord-bottoken
-echo "$paypalClientId" > paypal-clientid
-echo "$paypalClientSecret" > paypal-clientsecret
+echo "$stripePublicKey" > stripe-publickey
+echo "$stripeSecretKey" > stripe-secretkey
 echo "$sqlServer" > sql-server
 echo "$sqlPasswordRoot" > sql-password-root
 echo "$sqlUsername" > sql-username

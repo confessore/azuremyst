@@ -57,7 +57,7 @@ var worldConnection = await configuration.BuildWorldConnectionStringAsync();
 var discordOptions = await configuration.BuildDiscordOptionsAsync();
 var mangosOptions = await configuration.BuildMangosOptionsAsync();
 var smtpOptions = await configuration.BuildSmtpOptionsAsync();
-var paypalOptions = await configuration.BuildPayPalOptionsAsync();
+var stripeOptions = await configuration.BuildStripeOptionsAsync();
 var options = new WebApplicationOptions()
 {
     ApplicationName = executingAssemblyName,
@@ -244,7 +244,7 @@ builder.WebHost
         });
         x.AddScoped<CircuitHandler, DefaultCircuitHandler>();
         x.AddDiscordSocketClient();
-        x.AddPaypalClient(paypalOptions);
+        x.AddStripe(stripeOptions);
         //await x.AddQuartzAsync();
     });
 try

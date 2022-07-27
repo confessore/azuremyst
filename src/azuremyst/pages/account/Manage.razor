@@ -7,6 +7,11 @@
                 <div class="d-flex justify-content-center my-1">
                     @model.Username
                 </div>
+                <div class="d-flex justify-content-center my-1">
+                    <form action="/stripe/createcheckoutsession" method="POST">
+                        <button type="submit" class="btn btn-primary m-1">donate</button>
+                    </form>
+                </div>
                 <div class="d-flex flex-wrap justify-content-center my-1">
                     <div class="d-flex flex-column">
                         <CharacterList

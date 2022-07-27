@@ -51,10 +51,10 @@ namespace azuremyst.extensions
             return Task.FromResult(options);
         }
 
-        public static Task<PayPalOptions> BuildPayPalOptionsAsync(this IConfiguration configuration)
+        public static Task<StripeOptions> BuildStripeOptionsAsync(this IConfiguration configuration)
         {
-            var options = new PayPalOptions();
-            configuration.GetSection("APPLICATION:PAYPALOPTIONS").Bind(options);
+            var options = new StripeOptions();
+            configuration.GetSection("APPLICATION:STRIPEOPTIONS").Bind(options);
             return Task.FromResult(options);
         }
 
