@@ -4,7 +4,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS dotnet-build-base
 WORKDIR /src
 RUN --mount=type=cache,target=/var/cache/apt apt update && apt install curl -y \
-  && curl -sL https://deb.nodesource.com/setup_14.x | bash -\
+  && curl -sL https://deb.nodesource.com/setup_16.x | bash -\
   && apt install nodejs -y && rm -rf /var/lib/apt/lists/*
 COPY azuremyst.sln .
 COPY ./src/azuremyst ./src/azuremyst

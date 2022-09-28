@@ -6,7 +6,7 @@
 #
 #=================================================================
 
-FROM ubuntu:20.04 as base
+FROM debian:bookworm-slim as base
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -31,10 +31,11 @@ RUN addgroup --gid $GROUP_ID $DOCKER_USER && \
 
 # install dependencies
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt apt update && apt install -y build-essential gcc g++ \
-    automake git-core autoconf make patch libmysql++-dev \
-    mysql-server libtool libssl-dev grep binutils zlibc \
-    libbz2-dev cmake libboost-all-dev && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,target=/var/cache/apt apt update && apt install -y \
+    grep build-essential gcc g++ automake git-core autoconf make patch cmake \
+    libmariadb-dev libmariadb-dev-compat mariadb-server libtool libssl-dev binutils \
+    libc6 libbz2-dev subversion libboost-all-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # change timezone in container
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
@@ -57,49 +58,6 @@ LABEL description="dev image for dev containers"
 
 #================================================================
 #
-# base: the base image from which we will build our containers
-#
-#=================================================================
-
-FROM ubuntu:20.04 as servicebase
-
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-ARG DOCKER_USER=mangos
-
-LABEL description="servicebase image for containers"
-
-ENV DOCKER=1
-
-# list of timezones: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-# set timezone environment variable
-ENV TZ=Etc/UTC
-
-# set noninteractive mode so tzdata doesn't ask to set timezone on install
-ENV DEBIAN_FRONTEND=noninteractive
-
-# create a non-root user
-RUN addgroup --gid $GROUP_ID $DOCKER_USER && \
-    adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID $DOCKER_USER && \
-    passwd -d $DOCKER_USER && \
-    echo '$DOCKER_USER ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
-
-# install dependencies
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt apt update && apt install -y build-essential gcc g++ \
-    automake git-core autoconf make patch libmysql++-dev \
-    mysql-server libtool libssl-dev grep binutils zlibc \
-    libbz2-dev cmake libboost-all-dev && rm -rf /var/lib/apt/lists/*
-
-# change timezone in container
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
-
-USER $DOCKER_USER
-
-WORKDIR /azuremyst
-
-#================================================================
-#
 # build: compile source
 #
 #=================================================================
@@ -112,7 +70,7 @@ RUN --mount=type=cache,target=/azuremyst/src/mangos/build,uid=1000,gid=1000 \
     mkdir -p /azuremyst/src/mangos/build && \
     cd /azuremyst/src/mangos/build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=\../run -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=OFF && \
-    make install -j8
+    make install
 
 WORKDIR /azuremyst
 
@@ -122,7 +80,7 @@ WORKDIR /azuremyst
 # with binaries included
 #
 #=================================================================
-FROM servicebase as realmd
+FROM base as realmd
 
 LABEL description="authserver"
 
@@ -140,7 +98,7 @@ ENTRYPOINT ["/azuremyst/scripts/realmd-entrypoint.sh"]
 # with binaries and data included
 #
 #=================================================================
-FROM servicebase as mangosd
+FROM base as mangosd
 
 LABEL description="worldserver"
 

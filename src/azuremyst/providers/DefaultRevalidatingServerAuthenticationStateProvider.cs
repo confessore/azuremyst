@@ -20,7 +20,7 @@ namespace azuremyst.providers
         }
 
         protected override TimeSpan RevalidationInterval =>
-            TimeSpan.FromHours(2);
+            TimeSpan.FromHours(1);
 
         public async override Task<AuthenticationState> GetAuthenticationStateAsync() =>
             await base.GetAuthenticationStateAsync();
