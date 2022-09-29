@@ -69,7 +69,7 @@ ARG DOCKER_USER=mangos
 RUN --mount=type=cache,target=/azuremyst/src/mangos/build,uid=1000,gid=1000 \
     mkdir -p /azuremyst/src/mangos/build && \
     cd /azuremyst/src/mangos/build && \
-    cmake ../ -DCMAKE_INSTALL_PREFIX=\../run -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=OFF && \
+    cmake ../ -DCMAKE_INSTALL_PREFIX=\../run -DPCH=1 -DDEBUG=0 -DBUILD_PLAYERBOT=ON && \
     make install
 
 WORKDIR /azuremyst
