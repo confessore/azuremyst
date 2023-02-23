@@ -376,3 +376,4 @@ appsettings.json
 secrets/*
 data/*
 !src/azuremyst/models/logs/
+.env
