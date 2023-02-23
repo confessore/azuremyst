@@ -1,5 +1,10 @@
 #!/bin/sh
 
+sed -i "s/{{MYSQL_USER}}/$MYSQL_USER/g" /azuremyst/src/db/InstallFullDB.config
+sed -i "s/{{MYSQL_PASSWORD}}/$MYSQL_PASSWORD/g" /azuremyst/src/db/InstallFullDB.config
+sed -i "s/{{MYSQL_USER}}/$MYSQL_USER/g" /azuremyst/src/mangos/run/etc/mangosd.conf
+sed -i "s/{{MYSQL_PASSWORD}}/$MYSQL_PASSWORD/g" /azuremyst/src/mangos/run/etc/mangosd.conf
+
 mysql -s -N -h db -uroot -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%';"
 mysql -s -N -h db -uroot -p$MYSQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
 
