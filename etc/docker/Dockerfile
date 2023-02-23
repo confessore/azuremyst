@@ -68,7 +68,7 @@ COPY --chown=$DOCKER_USER:$DOCKER_USER ./src/mangos /azuremyst/src/mangos
 RUN mkdir -p /azuremyst/src/mangos/build && \ 
     cd /azuremyst/src/mangos/build && \
     cmake ../ -DCMAKE_INSTALL_PREFIX=\../run -DPCH=1 -DDEBUG=1 -DBUILD_PLAYERBOT=OFF && \
-    make install -j8
+    make install -j2
 
 WORKDIR /azuremyst
 
