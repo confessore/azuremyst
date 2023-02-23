@@ -15,10 +15,10 @@
 
 &nbsp;
 
-
+create your .env file from the example.
 
 this deployment guide is tailored for debian based operating systems
-and always a work in progress
+and always a work in progress. everything should "just work".
 
 it is tested against debian:bullseye-slim
 
@@ -46,11 +46,16 @@ $ git submodule update --recursive --remote
 * build and run the composition
 ```sh
     $ sudo docker compose build
+    # go make some food or fold laundry
+    # todo: add some more advanced caching to reduce subsequent build time
     $ sudo docker compose up -d db
     # wait a few seconds for db to init
     $ sudo docker compose up -d
+    # first run installs db
 ```
 
 &nbsp;
+
+(public boxes require that the realm in db be bound to the gateway ip)
 
 set realmlist and enjoy!
