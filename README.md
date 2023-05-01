@@ -12,7 +12,6 @@ todo:reimage
 
 &nbsp;
 
-[join us on discord!](https://discord.gg/B44vuM2xxG)
 
 &nbsp;
 
