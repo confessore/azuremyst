@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CA83D30F-79F4-46CE-97F4-0B306E73967A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azuremyst", "src\Azuremyst\Azuremyst.csproj", "{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FEFA7FF9-35F7-4A0D-A0E2-7E04BD345F70} = {CA83D30F-79F4-46CE-97F4-0B306E73967A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D094B214-6390-4183-B042-98923F47FEFE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,32 @@
+﻿namespace Azuremyst.Models.Acore.World;
+
+public partial class GossipMenuOption
+{
+    public uint MenuId { get; set; }
+
+    public ushort OptionId { get; set; }
+
+    public uint OptionIcon { get; set; }
+
+    public string? OptionText { get; set; }
+
+    public int OptionBroadcastTextId { get; set; }
+
+    public byte OptionType { get; set; }
+
+    public uint OptionNpcFlag { get; set; }
+
+    public uint ActionMenuId { get; set; }
+
+    public uint ActionPoiId { get; set; }
+
+    public byte BoxCoded { get; set; }
+
+    public uint BoxMoney { get; set; }
+
+    public string? BoxText { get; set; }
+
+    public int BoxBroadcastTextId { get; set; }
+
+    public int? VerifiedBuild { get; set; }
+}

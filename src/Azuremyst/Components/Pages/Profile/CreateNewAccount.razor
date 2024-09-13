@@ -1,0 +1,89 @@
+﻿@page "/profile/createnewaccount"
+@using Azuremyst.Contexts
+@using Azuremyst.Models
+@using Azuremyst.Services
+@using Microsoft.EntityFrameworkCore
+@using MudBlazor
+@inject NavigationManager _navigationManager
+@inject UserService _userService
+@inject AccountAssociationService _accountAssociationService
+@inject AcoreAuthService _acoreAuthService
+@inject SoapService _soapService
+@inject IDbContextFactory<AcoreAuthContext> _authDbContextFactory
+@attribute [Authorize]
+
+<h3>Create New Account</h3>
+<MudContainer Class="d-flex flex-column justify-content-center">
+    <MudInput @bind-Value="username" Placeholder="Username"></MudInput>
+    <MudInput @bind-Value="password" InputType="InputType.Password" Placeholder="Password"></MudInput>
+    <MudInput @bind-Value="passwordConfirm" InputType="InputType.Password" Placeholder="Password Confirm"></MudInput>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCreateNewAccountClicked">Create New Account</MudButton>
+</MudContainer>
+
+@code {
+    private User? user = new();
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string passwordConfirm = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _userService.InitializeUserAsync();
+        if (user == null)
+            _navigationManager.NavigateTo("/");
+    }
+
+    private async Task OnCreateNewAccountClicked()
+    {
+        if (
+            !string.IsNullOrEmpty(username) &&
+            !string.IsNullOrEmpty(password) &&
+            !string.IsNullOrEmpty(passwordConfirm)
+        )
+            if (password == passwordConfirm)
+            {
+                using var context = await _authDbContextFactory.CreateDbContextAsync();
+                var any = await context.Accounts.AnyAsync(account => account.Username.ToUpper() == username.ToUpper());
+                if (any)
+                {
+                    Console.WriteLine("That account already exists.");
+                }
+                else
+                {
+                    if (await _soapService.CreateAccountAsync(username, password))
+                    {
+                        var account = await _acoreAuthService.GetAccountByUsernameAsync(username);
+                        if (account is null)
+                        {
+                            Console.WriteLine("Something went wrong...");
+                        }
+                        else
+                        {
+                            var now = DateTime.UtcNow;
+                            var accountAssociation = new AccountAssociation()
+                                {
+                                    Guid = Guid.NewGuid().ToString(),
+                                    UserId = user.Id,
+                                    AccountId = account.Id,
+                                    CreatedAt = now,
+                                    CreatedBy = user.Id,
+                                    UpdatedAt = now,
+                                    UpdatedBy = user.Id
+                                };
+                            accountAssociation = await _accountAssociationService.UpsertAccountAssociationAsync(accountAssociation);
+                            if (accountAssociation is null)
+                            {
+                                // error
+                                Console.WriteLine("error");
+                            }
+                            else
+                            {
+                                Console.WriteLine("nav");
+                                _navigationManager.NavigateTo("/profile");
+                            }
+                        }
+                    }
+                }
+            }
+    }
+}
