@@ -1,0 +1,61 @@
+﻿@page "/profile/characterdetail/{Id}"
+@using Azuremyst.Models
+@using Azuremyst.Models.Acore.Auth
+@using Azuremyst.Models.Acore.Characters
+@using Azuremyst.Models.Enums
+@using Azuremyst.Services
+@inject AcoreAuthService _acoreAuthService
+@inject AcoreCharactersService _acoreCharactersService
+@inject AccountAssociationService _accountAssociationService
+@inject UserService _userService
+@inject NavigationManager _navigationManager
+@inject SoapService _soapService
+
+<h3>@character?.Name</h3>
+<h4>@((RaceType)character?.Race) @((ClassType)character?.Class)</h4>
+<h5>Level @character?.Level</h5>
+<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCharacterLevel60Clicked">Level 60</MudButton>
+
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    private User? user = new();
+    private Character? character = new();
+    private Account? account = new();
+    private AccountAssociation? accountAssociation = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _userService.InitializeUserAsync();
+        if (user is null)
+            _navigationManager.NavigateTo("/");
+        var parseResult = uint.TryParse(Id, out var id);
+        character = await _acoreCharactersService.GetCharacterByGuid(parseResult ? id : 0);
+        if (character is null)
+        {
+            _navigationManager.NavigateTo("/profile");
+        }
+        else
+        {
+            account = await _acoreAuthService.GetAccountByIdAsync(character.Account);
+            if (account is null)
+            {
+                _navigationManager.NavigateTo("/profile");
+            }
+            else
+            {
+                accountAssociation = await _accountAssociationService.GetAccountAssociationByAccountIdAsync(account.Id);
+                if ((accountAssociation?.UserId ?? 0) != user?.Id)
+                {
+                    _navigationManager.NavigateTo("/profile");
+                }
+            }
+        }
+    }
+
+    private async Task OnCharacterLevel60Clicked()
+    {
+        await _soapService.CharacterLevel(character?.Name, 60);
+    }
+}

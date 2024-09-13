@@ -1,0 +1,17 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+    <MudNavLink Href="https://discord.com/invite/B44vuM2xxG" Match="NavLinkMatch.Prefix">Join Discord</MudNavLink>
+    <MudNavGroup Title="Pages" Expanded="true">
+        <MudNavLink Href="/profile" Match="NavLinkMatch.Prefix">Profile</MudNavLink>
+        <MudNavLink Href="/profile/createnewaccount" Match="NavLinkMatch.Prefix">Create New Account</MudNavLink>
+    </MudNavGroup>
+    <AuthorizeView>
+        <Authorized>
+            Welcome, @context?.User?.Identity?.Name
+            <MudNavLink Href="Authentication/Logout" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
+        </Authorized>
+        <NotAuthorized>
+            <MudNavLink Href="Authentication/Login" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+        </NotAuthorized>
+    </AuthorizeView>
+</MudNavMenu>

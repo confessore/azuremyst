@@ -1,0 +1,109 @@
+﻿@page "/profile/accountdetail/{Id}"
+@using Azuremyst.Models
+@using Azuremyst.Models.Acore.Auth
+@using Azuremyst.Models.Acore.Characters
+@using Azuremyst.Models.Enums
+@using Azuremyst.Services
+@inject NavigationManager _navigationManager
+@inject UserService _userService
+@inject AccountAssociationService _accountAssociationService
+@inject AcoreAuthService _acoreAuthService
+@inject AcoreCharactersService _acoreCharactersService
+@inject SoapService _soapService
+@attribute [Authorize]
+
+<h3>Account Detail</h3>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnChangePasswordClicked">Change Password</MudButton>
+
+<MudTable Items="@characters" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Character,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Characters</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Race</MudTh>
+        <MudTh>Class</MudTh>
+        <MudTh>Level</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Race">@((RaceType)context.Race)</MudTd>
+        <MudTd DataLabel="Class">@((ClassType)context.Class)</MudTd>
+        <MudTd DataLabel="Level">@context.Level</MudTd>
+        <MudTd DataLabel=""><MudButton Color="Color.Primary" OnClick="async () => await OnEditClicked(context.Guid)">Edit</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Value="hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Value="dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Value="striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Value="bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
+    <div style="min-width:200px;">
+        <MudText Class="align-self-center d-inline">Selected1: @selectedItem1?.Name</MudText>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private User? user = new();
+    private AccountAssociation? accountAssociation = new();
+    private Account? account = new();
+    private IEnumerable<Character>? characters = [];
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private Character selectedItem1 = null;
+    private HashSet<Character> selectedItems = new HashSet<Character>();
+
+
+    private bool FilterFunc1(Character character) => FilterFunc(character, searchString1);
+
+    private bool FilterFunc(Character character, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (character.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _userService.InitializeUserAsync();
+        if (user is null)
+            _navigationManager.NavigateTo("/");
+        var parseResult = uint.TryParse(Id, out var id);
+        accountAssociation = await _accountAssociationService.GetAccountAssociationByAccountIdAsync(parseResult ? id : 0);
+        if ((accountAssociation?.UserId ?? 0) != user?.Id)
+        {
+            _navigationManager.NavigateTo("/profile");
+        }
+        else
+        {
+            account = await _acoreAuthService.GetAccountByIdAsync(parseResult ? id : 0);
+            characters = await _acoreCharactersService.GetAllCharactersByAccountIdAsync(id);
+        }
+    }
+
+    private async Task OnEditClicked(uint id)
+    {
+        _navigationManager.NavigateTo($"/profile/characterdetail/{id}");
+    }
+
+    private void OnChangePasswordClicked()
+    {
+        _navigationManager.NavigateTo($"/profile/changepassword/{account?.Id}");
+    }
+}

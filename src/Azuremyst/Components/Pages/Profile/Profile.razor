@@ -1,0 +1,101 @@
+﻿@page "/profile"
+@using Azuremyst.Models
+@using Azuremyst.Models.Acore.Auth
+@using Azuremyst.Services
+@inject NavigationManager _navigationManager
+@inject UserService _userService
+@inject AccountAssociationService _accountAssociationService
+@inject AcoreAuthService _acoreAuthService;
+@inject SoapService _soapService
+@attribute [Authorize]
+
+<h3>Profile</h3>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCreateNewAccountClicked">Create New Account</MudButton>
+
+<MudTable Items="@accounts" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<Account,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Accounts</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Username</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Username">@context.Username</MudTd>
+        <MudTd DataLabel=""><MudButton Color="Color.Primary" OnClick="async () => await OnEditClicked(context.Id)">Edit</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Value="hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Value="dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Value="striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Value="bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
+    <div style="min-width:200px;">
+        <MudText Class="align-self-center d-inline">Selected1: @selectedItem1?.Username</MudText>
+    </div>
+</div>
+
+@code {
+    private User? user = new();
+    private IEnumerable<AccountAssociation>? accountAssociations = [];
+    private List<Account>? accounts = [];
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private Account selectedItem1 = new();
+    private HashSet<Account> selectedItems = new HashSet<Account>();
+
+    private bool FilterFunc1(Account account) => FilterFunc(account, searchString1);
+
+    private bool FilterFunc(Account account, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (account.Username.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _userService.InitializeUserAsync();
+        if (user is null)
+            _navigationManager.NavigateTo("/");
+        else
+        {
+            accountAssociations = await _accountAssociationService.GetAccountAssociationsByUserIdAsync(user.Id);
+            foreach (var accountAssociation in accountAssociations)
+            {
+                var account = await _acoreAuthService.GetAccountByIdAsync(accountAssociation.AccountId ?? 0);
+                if (account is null)
+                {
+                    _navigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    accounts?.Add(account);
+                }
+            }
+            accounts = accounts?.OrderBy(x => x.Username).ToList();
+        }
+    }
+
+    private async Task OnEditClicked(uint id)
+    {
+        _navigationManager.NavigateTo($"/profile/accountdetail/{id}");
+    }
+
+    private void OnCreateNewAccountClicked()
+    {
+        _navigationManager.NavigateTo("/profile/createnewaccount");
+    }
+}

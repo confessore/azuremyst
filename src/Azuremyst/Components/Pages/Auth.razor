@@ -1,0 +1,51 @@
+﻿@page "/auth"
+@using Azuremyst.Models
+@using Azuremyst.Models.Interfaces
+@using Azuremyst.Services
+@using Azuremyst.Models.Acore.Auth
+@using Microsoft.AspNetCore.Authorization
+@inject AcoreAuthService _acoreAuthService
+@inject SoapService _soapService
+@inject UserService _userService
+@attribute [Authorize]
+
+<PageTitle>Auth</PageTitle>
+
+<h1>You are authenticated</h1>
+
+<AuthorizeView>
+    Hello @context.User.Identity?.Name!
+</AuthorizeView>
+
+Welcome to your new app, @name @id @email
+
+@code {
+    string name = string.Empty;
+    ulong id = 0;
+    string email = string.Empty;
+    string actor = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        //await _soapService.SendMoneyAsync("orfa", 1000);
+        var user = await _userService.InitializeUserAsync();
+        name = user.Name;
+        id = user.Id;
+        email = user.Email;
+
+        /*var accounts = await _acoreAuthService.GetAllAccountsAsync();
+        var account = accounts.FirstOrDefault();
+        if (account != null)
+        {
+            name = account!.Username;
+        }
+
+        var auctions = await _acoreAuthService.GetAllAuctionsAsync();
+        var auction = auctions.FirstOrDefault();
+        if (auction != null)
+        {
+            guid = auction.Itemguid.ToString();
+        }*/
+    }
+}

@@ -1,6 +1,0 @@
-[submodule "src/mangos"]
-	path = src/mangos
-	url = https://github.com/cmangos/mangos-tbc.git
-[submodule "src/db"]
-	path = src/db
-	url = https://github.com/cmangos/tbc-db.git
