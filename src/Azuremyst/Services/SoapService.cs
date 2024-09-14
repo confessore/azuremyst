@@ -2,6 +2,7 @@
 using System.Xml;
 using Azuremyst.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Azuremyst.Services;
 
@@ -91,9 +92,27 @@ internal sealed class SoapService
         return await ExecuteSOAPCommandAsync(command);
     }
 
+    public async Task<bool> UnstuckToInnAsync(string name)
+    {
+        var command = $"unstuck {name.ToUpper()} inn";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
+    public async Task<bool> UnstuckToGraveyardAsync(string name)
+    {
+        var command = $"unstuck {name.ToUpper()} graveyard";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
     public async Task<bool> CharacterLevel(string name, int level)
     {
         var command = $"character level {name.ToUpper()} {level}";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
+    public async Task<bool> UnstuckToStartZoneAsync(string name)
+    {
+        var command = $"unstuck {name.ToUpper()} startzone";
         return await ExecuteSOAPCommandAsync(command);
     }
 

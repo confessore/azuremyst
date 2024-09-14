@@ -149,6 +149,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AccountAssociationService>();
 builder.Services.AddScoped<AcoreAuthService>();
 builder.Services.AddScoped<AcoreCharactersService>();
+builder.Services.AddScoped<AcoreWorldService>();
 builder.Services.TryAddEnumerable(ServiceDescriptor.Scoped<CircuitHandler, UserCircuitHandler>());
 builder.Services.ConfigureDiscordBot();
 

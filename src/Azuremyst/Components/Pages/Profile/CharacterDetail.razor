@@ -14,7 +14,10 @@
 <h3>@character?.Name</h3>
 <h4>@((RaceType)character?.Race) @((ClassType)character?.Class)</h4>
 <h5>Level @character?.Level</h5>
-<MudButton Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCharacterLevel60Clicked">Level 60</MudButton>
+<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToInnAsync(character?.Name)">Unstuck: Inn</MudButton>
+<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToGraveyardAsync(character?.Name)">Unstuck: Graveyard</MudButton>
+<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToStartZoneAsync(character?.Name)">Unstuck: Start Zone</MudButton>
+<MudButton Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCharacterLevel60Clicked">Level: 60</MudButton>
 
 
 @code {

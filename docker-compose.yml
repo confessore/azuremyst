@@ -4,8 +4,6 @@ services:
     image: redis
     ports:
       - 6379:6379
-    networks:
-      - azerothcore-wotlk_ac-network
     restart: always
 
   azuremyst:
@@ -17,14 +15,14 @@ services:
       - 5000:5000
     environment:
       - MYSQL_UID=${MYSQL_UID}
-      - MYSQL_PWD=${MYSQL_PWD}
+      - MYSQL_PWD=${MYSQL_PWD:-password}
       - AC_SOAP_HOST=${AC_SOAP_HOST}
       - AC_SOAP_PORT=${AC_SOAP_PORT}
       - AC_SOAP_USERNAME=${AC_SOAP_USERNAME}
-      - AC_SOAP_PASSWORD=${AC_SOAP_PASSWORD}
+      - AC_SOAP_PASSWORD=${AC_SOAP_PASSWORD:-password}
       - REDIS_URL=${REDIS_URL}
       - DISCORD_CLIENTID=${DISCORD_CLIENTID}
-      - DISCORD_CLIENTSECRET=${DISCORD_CLIENTSECRET}
+      - DISCORD_CLIENTSECRET=${DISCORD_CLIENTSECRET:-password}
       - DISCORD_TOKEN=${DISCORD_TOKEN}
     networks:
       - azerothcore-wotlk_ac-network
@@ -41,8 +39,6 @@ services:
       - 443:443
     volumes:
       - ./letsencrypt:/etc/letsencrypt
-    networks:
-      - azerothcore-wotlk_ac-network
     restart: always
 
 networks:
