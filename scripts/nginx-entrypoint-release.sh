@@ -9,7 +9,7 @@ then
         --nginx \
         --register-unsafely-without-email \
         --agree-tos \
-        -d azuremy.st \
+        -d azuremy.st
     echo "SSL Certificate Generated!"
     echo "Copying SSL Config..."
     cp /nginx-release.conf /etc/nginx/nginx.conf
