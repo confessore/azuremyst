@@ -4,6 +4,8 @@ services:
     image: redis
     ports:
       - 6379:6379
+    networks:
+      - azerothcore-wotlk_ac-network
     restart: always
 
   azuremyst:
@@ -24,6 +26,8 @@ services:
       - DISCORD_CLIENTID=${DISCORD_CLIENTID}
       - DISCORD_CLIENTSECRET=${DISCORD_CLIENTSECRET}
       - DISCORD_TOKEN=${DISCORD_TOKEN}
+    networks:
+      - azerothcore-wotlk_ac-network
     restart: always
 
   nginx:
@@ -37,4 +41,10 @@ services:
       - 443:443
     volumes:
       - ./etc/openssl:/etc/ssl
+    networks:
+      - azerothcore-wotlk_ac-network
     restart: always
+
+networks:
+  azerothcore-wotlk_ac-network:
+    external: true
