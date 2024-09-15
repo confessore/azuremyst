@@ -1,9 +1,11 @@
 ﻿@page "/"
 @using Azuremyst.Models
+@using Azuremyst.Models.Acore.Characters
 @using Azuremyst.Models.Interfaces
 @using Azuremyst.Services
 @using Azuremyst.Models.Acore.Auth
 @inject AcoreAuthService _acoreAuthService
+@inject AcoreCharactersService _acoreCharactersService
 @inject SoapService _soapService
 @inject UserService _userService
 
@@ -15,3 +17,20 @@
 
 <h3>Azuremyst is a x8 Wrath of the Lich King server proudly hosted on AzerothCore.</h3>
 <h4>Connecting to Azuremyst is as easy as setting your realmlist to <b>set realmlist logon.azuremy.st</b></h4>
+
+<MudPaper Class="pa-4">
+    <MudChart ChartOptions=@(new() { ChartPalette = new[] { "#8c1616", "#004a93" } }) ChartType="ChartType.Pie" InputData="@data" @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />
+</MudPaper>
+
+@code {
+    private int Index = -1;
+    private readonly string[] labels = ["Horde", "Alliance"];
+    private double[] data = [0, 0];
+    private IEnumerable<IGrouping<byte, byte>> hordeClasses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        data[0] = await _acoreCharactersService.CountHordeCharactersAboveLevel20Async();
+        data[1] = await _acoreCharactersService.CountAllianceCharactersAboveLevel20Async();
+    }
+}

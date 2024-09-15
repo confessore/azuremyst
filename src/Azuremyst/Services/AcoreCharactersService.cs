@@ -37,4 +37,40 @@ public class AcoreCharactersService(
         using var context = await _acoreCharactersContextFactory.CreateDbContextAsync();
         return await GetAllAuctionsAsync(context);
     }
+
+    public async Task<int> CountHordeCharactersAboveLevel20Async(AcoreCharactersContext context) =>
+        await context.Characters.CountAsync(x => horde.Contains(x.Race) && x.Level >= 20);
+
+    public async Task<int> CountHordeCharactersAboveLevel20Async()
+    {
+        using var context = await _acoreCharactersContextFactory.CreateDbContextAsync();
+        return await CountHordeCharactersAboveLevel20Async(context);
+    }
+
+    public async Task<int> CountAllianceCharactersAboveLevel20Async(AcoreCharactersContext context) =>
+        await context.Characters.CountAsync(x => alliance.Contains(x.Race) && x.Level >= 20);
+
+    public async Task<int> CountAllianceCharactersAboveLevel20Async()
+    {
+        using var context = await _acoreCharactersContextFactory.CreateDbContextAsync();
+        return await CountAllianceCharactersAboveLevel20Async(context);
+    }
+
+    private byte[] alliance =
+    [
+        1, // Human
+            3, // Dwarf
+            4, // NightElf
+            7, // Gnome
+            11 // Draenei
+    ];
+
+    private byte[] horde = 
+        [
+            2, // Orc
+            5, // Scourge
+            6, // Tauren
+            8, // Troll
+            10 // BloodElf
+        ];
 }
