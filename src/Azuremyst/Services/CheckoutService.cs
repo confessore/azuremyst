@@ -14,7 +14,7 @@ namespace Azuremyst.Services
             _sessionService = sessionService;
         }
 
-        public async Task<Session> CreateSessionAsync()
+        public async Task<Session> CreateSessionAsync(ulong userId)
         {
             var options = new SessionCreateOptions()
             {
@@ -26,8 +26,7 @@ namespace Azuremyst.Services
                         {
                             ProductData = new SessionLineItemPriceDataProductDataOptions()
                             {
-                                Name = "Donation",
-                                Description = "ulong value"
+                                Name = "Donation"
                             },
                             UnitAmount = 1000,
                             Currency = "USD",
@@ -36,6 +35,10 @@ namespace Azuremyst.Services
                     }
                 },
                 Mode = "payment",
+                Metadata = new Dictionary<string, string>()
+                {
+                    { "userId",  userId.ToString() },
+                },
                 SuccessUrl = "https://azuremy.st/",
                 CancelUrl = "https://azuremy.st/"
             };

@@ -67,7 +67,7 @@
 
     private async Task DonateAsync()
     {
-        var session = await _checkoutService.CreateSessionAsync();
+        var session = await _checkoutService.CreateSessionAsync(user.Id);
         _navigationManager.NavigateTo(session.Url);
     }
 }

@@ -31,6 +31,7 @@ namespace Azuremyst.Controllers
                         Console.WriteLine(item.Description);
                         var price = item.Price.UnitAmount / 100m;
                         Console.WriteLine(price);
+                        Console.WriteLine(session.Metadata["userId"]);
                     }
                 }
                 // ... handle other event types
