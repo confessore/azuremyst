@@ -32,8 +32,9 @@ namespace Azuremyst.Controllers
 
                 return Ok();
             }
-            catch (StripeException)
+            catch (StripeException ex)
             {
+                Console.WriteLine(ex.Message);
                 return BadRequest();
             }
         }
