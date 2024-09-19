@@ -9,4 +9,5 @@ public class User : Entity<ulong>, IEntity<ulong>
 {
     public string? Name { get; set; }
     public string? Email { get; set; }
+    public int Soj { get; set; } // stone of jordan
 }
