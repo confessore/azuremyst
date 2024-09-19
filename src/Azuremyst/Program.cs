@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MudBlazor.Services;
+using Stripe;
+using Stripe.Checkout;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -152,6 +154,13 @@ builder.Services.AddScoped<AcoreCharactersService>();
 builder.Services.AddScoped<AcoreWorldService>();
 builder.Services.TryAddEnumerable(ServiceDescriptor.Scoped<CircuitHandler, UserCircuitHandler>());
 builder.Services.ConfigureDiscordBot();
+StripeConfiguration.ApiKey =
+    Environment.GetEnvironmentVariable("STRIPE_PRIVATE_KEY")
+    ?? builder.Configuration.GetValue<string>("STRIPE_PRIVATE_KEY")
+    ?? throw new Exception("STRIPE_PRIVATE_KEY");
+builder.Services.AddScoped<ChargeService>();
+builder.Services.AddScoped<SessionService>();
+builder.Services.AddScoped<CheckoutService>();
 
 builder.Services.AddHttpClient<SoapService>(
     nameof(SoapService),

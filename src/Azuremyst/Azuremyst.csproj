@@ -19,6 +19,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2" />
 		<PackageReference Include="MudBlazor" Version="7.8.0" />
 		<PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Stripe.net" Version="45.14.0" />
 	</ItemGroup>
 
 	<ItemGroup>

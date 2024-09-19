@@ -2,7 +2,6 @@
 using System.Xml;
 using Azuremyst.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace Azuremyst.Services;
 
@@ -89,6 +88,24 @@ internal sealed class SoapService
     public async Task<bool> SetGmLevelAsync(string name, int level)
     {
         var command = $"account set gmlevel {name.ToUpper()} {level}";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
+    public async Task<bool> CharacterChangeFactionAsync(string name)
+    {
+        var command = $"character changefaction {name.ToUpper()}";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
+    public async Task<bool> CharacterChangeRaceAsync(string name)
+    {
+        var command = $"character changerace {name.ToUpper()}";
+        return await ExecuteSOAPCommandAsync(command);
+    }
+
+    public async Task<bool> CharacterCustomizeAsync(string name)
+    {
+        var command = $"character customize {name.ToUpper()}";
         return await ExecuteSOAPCommandAsync(command);
     }
 

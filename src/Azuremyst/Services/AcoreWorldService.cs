@@ -1,5 +1,4 @@
 ﻿using Azuremyst.Contexts;
-using Azuremyst.Models.Acore.Auth;
 using Azuremyst.Models.Acore.World;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +7,20 @@ namespace Azuremyst.Services;
 public class AcoreWorldService(
     IDbContextFactory<AcoreAuthContext> _acoreAuthContextFactory,
     IDbContextFactory<AcoreCharactersContext> _acoreCharactersContextFactory,
-    IDbContextFactory<AcoreWorldContext> _acoreWorldContextFactory)
+    IDbContextFactory<AcoreWorldContext> _acoreWorldContextFactory
+)
 {
-    public async Task<GameGraveyard?> GetGameGraveyardByCharacterZoneAsync(AcoreWorldContext context, ushort characterZone)
+    public async Task<GameGraveyard?> GetGameGraveyardByCharacterZoneAsync(
+        AcoreWorldContext context,
+        ushort characterZone
+    )
     {
-        var ghostZone = await context.GraveyardZones.FirstOrDefaultAsync(x => x.GhostZone == characterZone);
-        var gameGraveyard = await context.GameGraveyards.FirstOrDefaultAsync(x => x.Id == ghostZone.Id);
+        var ghostZone = await context.GraveyardZones.FirstOrDefaultAsync(x =>
+            x.GhostZone == characterZone
+        );
+        var gameGraveyard = await context.GameGraveyards.FirstOrDefaultAsync(x =>
+            x.Id == ghostZone.Id
+        );
         return gameGraveyard;
     }
 

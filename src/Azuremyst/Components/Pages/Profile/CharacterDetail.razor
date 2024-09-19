@@ -10,15 +10,23 @@
 @inject UserService _userService
 @inject NavigationManager _navigationManager
 @inject SoapService _soapService
+@inject CheckoutService _checkoutService
+
+<PageTitle>Azuremyst | Character Detail</PageTitle>
 
 <h3>@character?.Name</h3>
 <h4>@((RaceType)character?.Race) @((ClassType)character?.Class)</h4>
 <h5>Level @character?.Level</h5>
-<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToInnAsync(character?.Name)">Unstuck: Inn</MudButton>
-<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToGraveyardAsync(character?.Name)">Unstuck: Graveyard</MudButton>
-<MudButton Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToStartZoneAsync(character?.Name)">Unstuck: Start Zone</MudButton>
-<MudButton Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="OnCharacterLevel60Clicked">Level: 60</MudButton>
-
+<MudContainer Class="d-flex flex-column justify-content-center">
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToInnAsync(character?.Name)">Unstuck: Inn</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToGraveyardAsync(character?.Name)">Unstuck: Graveyard</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToStartZoneAsync(character?.Name)">Unstuck: Start Zone</MudButton>
+    <MudButton Class="m-1" Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterLevel(character?.Name, 60)">Level: 60</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterChangeFactionAsync(character?.Name)">Faction Change</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterChangeRaceAsync(character?.Name)">Race Change</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterCustomizeAsync(character?.Name)">Customize</MudButton>
+    <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await DonateAsync()">Donate</MudButton>
+</MudContainer>
 
 @code {
     [Parameter]
@@ -57,8 +65,9 @@
         }
     }
 
-    private async Task OnCharacterLevel60Clicked()
+    private async Task DonateAsync()
     {
-        await _soapService.CharacterLevel(character?.Name, 60);
+        var session = await _checkoutService.CreateSessionAsync();
+        _navigationManager.NavigateTo(session.Url);
     }
 }

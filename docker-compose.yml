@@ -26,6 +26,9 @@ services:
       - DISCORD_CLIENTID=${DISCORD_CLIENTID}
       - DISCORD_CLIENTSECRET=${DISCORD_CLIENTSECRET:-password}
       - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+      - STRIPE_PRIVATE_KEY=${STRIPE_PRIVATE_KEY:-password}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-password}
     networks:
       - azerothcore-wotlk_ac-network
     restart: always

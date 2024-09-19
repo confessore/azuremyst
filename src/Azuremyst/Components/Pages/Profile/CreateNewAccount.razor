@@ -12,6 +12,8 @@
 @inject IDbContextFactory<AcoreAuthContext> _authDbContextFactory
 @attribute [Authorize]
 
+<PageTitle>Azuremyst | Create New Account</PageTitle>
+
 <h3>Create New Account</h3>
 <MudContainer Class="d-flex flex-column justify-content-center">
     <MudInput @bind-Value="username" Placeholder="Username"></MudInput>
