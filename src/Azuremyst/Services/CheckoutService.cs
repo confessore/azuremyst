@@ -26,10 +26,11 @@ namespace Azuremyst.Services
                         {
                             ProductData = new SessionLineItemPriceDataProductDataOptions()
                             {
-                                Name = "Donation"
+                                Name = "Donation",
+                                Description = "ulong value"
                             },
                             UnitAmount = 1000,
-                            Currency = "USD"
+                            Currency = "USD",
                         },
                         Quantity = 1
                     }
