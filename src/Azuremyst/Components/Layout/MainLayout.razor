@@ -17,7 +17,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         Azuremyst
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen">
+    <MudDrawer @bind-Open="@_drawerOpen" Style="background-image: url('/images/azuremyst_base.png'); background-size: cover; background-position: center; min-height: 100vh;">
         <NavMenu/>
     </MudDrawer>
     <MudMainContent Style="background-image: url('/images/azuremyst_base.png'); background-size: cover; background-position: center; min-height: 100vh;">
