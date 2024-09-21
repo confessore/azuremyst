@@ -37,6 +37,7 @@ namespace Azuremyst.Controllers
                         var userId = ulong.Parse(metadataUserId);
                         var user = await _userService.GetUserByIdAsync(userId);
                         user.Soj += Convert.ToInt32(Math.Ceiling(price ?? 0m));
+                        await _userService.UpsertUserAsync(user);
                     }
                 }
                 // ... handle other event types
