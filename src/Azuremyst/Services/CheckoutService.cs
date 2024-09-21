@@ -3,7 +3,7 @@ using Stripe.Checkout;
 
 namespace Azuremyst.Services
 {
-    internal sealed class CheckoutService
+    public sealed class CheckoutService
     {
         private readonly ChargeService _chargeService;
         private readonly SessionService _sessionService;
@@ -14,7 +14,7 @@ namespace Azuremyst.Services
             _sessionService = sessionService;
         }
 
-        public async Task<Session> CreateSessionAsync(ulong userId)
+        public async Task<Session> CreateSessionAsync(ulong userId, long? amount = 1000)
         {
             var options = new SessionCreateOptions()
             {
@@ -28,7 +28,7 @@ namespace Azuremyst.Services
                             {
                                 Name = "Donation"
                             },
-                            UnitAmount = 1000,
+                            UnitAmount = amount,
                             Currency = "USD",
                         },
                         Quantity = 1

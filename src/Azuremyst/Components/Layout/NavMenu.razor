@@ -1,4 +1,9 @@
-﻿<MudNavMenu>
+﻿@using Azuremyst.Models
+@using Azuremyst.Services
+@inject UserService _userService
+@inject NavigationManager _navigationManager
+
+<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
     <MudNavLink Href="https://discord.com/invite/B44vuM2xxG" Match="NavLinkMatch.Prefix">Join Discord</MudNavLink>
     <MudNavGroup Title="Pages" Expanded="true">
@@ -8,6 +13,7 @@
     <AuthorizeView>
         <Authorized>
             Welcome, @context?.User?.Identity?.Name
+            you have @user.Soj Soj
             <MudNavLink Href="Authentication/Logout" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
         </Authorized>
         <NotAuthorized>
@@ -15,3 +21,14 @@
         </NotAuthorized>
     </AuthorizeView>
 </MudNavMenu>
+
+@code {
+    private User? user = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await _userService.InitializeUserAsync();
+        if (user == null)
+            _navigationManager.NavigateTo("/");
+    }
+}

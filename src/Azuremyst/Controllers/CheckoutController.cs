@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azuremyst.Models;
+using Azuremyst.Services;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
 
 namespace Azuremyst.Controllers
 {
     [Route("[controller]/[action]")]
-    public class CheckoutController(SessionService _sessionService) : ControllerBase
+    public class CheckoutController(
+        SessionService _sessionService,
+        UserService _userService) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> WebhookAsync()
@@ -28,10 +32,11 @@ namespace Azuremyst.Controllers
                     var lineItems = _sessionService.ListLineItems(session.Id);
                     foreach (var item in lineItems)
                     {
-                        Console.WriteLine(item.Description);
                         var price = item.Price.UnitAmount / 100m;
-                        Console.WriteLine(price);
-                        Console.WriteLine(session.Metadata["userId"]);
+                        var metadataUserId = session.Metadata["userId"];
+                        var userId = ulong.Parse(metadataUserId);
+                        var user = await _userService.GetUserByIdAsync(userId);
+                        user.Soj += Convert.ToInt32(Math.Ceiling(price ?? 0m));
                     }
                 }
                 // ... handle other event types

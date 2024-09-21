@@ -21,7 +21,7 @@
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToInnAsync(character?.Name)">Unstuck: Inn</MudButton>
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToGraveyardAsync(character?.Name)">Unstuck: Graveyard</MudButton>
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.UnstuckToStartZoneAsync(character?.Name)">Unstuck: Start Zone</MudButton>
-    <MudButton Class="m-1" Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterLevel(character?.Name, 60)">Level: 60</MudButton>
+    <MudButton Class="m-1" hidden="true" Disabled="true" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterLevel(character?.Name, 60)">Level: 60</MudButton>
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterChangeFactionAsync(character?.Name)">Faction Change</MudButton>
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterChangeRaceAsync(character?.Name)">Race Change</MudButton>
     <MudButton Class="m-1" Disabled="false" Variant="Variant.Filled" Color="Color.Primary" OnClick="async () => await _soapService.CharacterCustomizeAsync(character?.Name)">Customize</MudButton>
