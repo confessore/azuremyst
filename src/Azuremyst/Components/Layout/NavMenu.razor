@@ -13,7 +13,7 @@
     <AuthorizeView>
         <Authorized>
             Welcome, @context?.User?.Identity?.Name
-            you have @user.Soj Soj
+            you have @user?.Soj Soj
             <MudNavLink Href="Authentication/Logout" Match="NavLinkMatch.Prefix">Logout</MudNavLink>
         </Authorized>
         <NotAuthorized>
@@ -28,7 +28,5 @@
     protected override async Task OnInitializedAsync()
     {
         user = await _userService.InitializeUserAsync();
-        if (user == null)
-            _navigationManager.NavigateTo("/");
     }
 }
